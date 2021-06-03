@@ -1,0 +1,19 @@
+{
+  "name": "solarspell-react-lib",
+  "version": "1.0.0",
+  "description": "Solarspell UI library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SolarSPELL-Main/solarspell-react-lib.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SolarSPELL-Main/solarspell-react-lib/issues"
+  },
+  "homepage": "https://github.com/SolarSPELL-Main/solarspell-react-lib#readme"
+}
