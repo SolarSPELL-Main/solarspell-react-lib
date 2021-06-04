@@ -4,7 +4,6 @@ import Tooltip from '@material-ui/core/Tooltip/';
 import { SvgIconComponent } from '@material-ui/icons';
 
 interface ActionPanelButtonItemProps<T> {
-  name: string
   tooltip?: string
   item: T
   icon: SvgIconComponent

@@ -4,7 +4,6 @@ import Tooltip from '@material-ui/core/Tooltip/';
 import { SvgIconComponent } from '@material-ui/icons';
 
 interface ActionPanelCheckboxItemProps<T> {
-  name: string
   tooltip?: string
   item: T
   toggle: (item: T, active: boolean, dispatch: React.Dispatch<React.SetStateAction<boolean>>) => void
