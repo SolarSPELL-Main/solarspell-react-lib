@@ -16,6 +16,11 @@ const pointerStyle: React.CSSProperties = {
   cursor: 'pointer',
 };
 
+/**
+ * Creates a clickable icon backed with checkbox logic.
+ * @param props The properties of the icon.
+ * @returns A toggleable icon.
+ */
 function ActionPanelCheckboxItem<T>(props: ActionPanelCheckboxItemProps<T>): React.ReactElement {
   const [active, setActive] = React.useState(props.active ?? false);
   const activate = props.toggle.bind(null, props.item, true, setActive);

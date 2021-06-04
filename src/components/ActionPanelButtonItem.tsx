@@ -14,6 +14,11 @@ const pointerStyle: React.CSSProperties = {
   cursor: 'pointer',
 };
 
+/**
+ * Creates a clickable icon.
+ * @param props The properties of the icon.
+ * @returns A clickable icon.
+ */
 function ActionPanelButtonItem<T>(props: ActionPanelButtonItemProps<T>): React.ReactElement {
   const func = props.func.bind(null, props.item);
 

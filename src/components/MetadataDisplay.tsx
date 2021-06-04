@@ -4,6 +4,8 @@ import MetadataTable from './MetadataTable';
 interface MetadataDisplayProps {
   metadataTypes: SerializedMetadataType[]
   metadata: Record<string, SerializedMetadata[]>
+  onEdit: (item: SerializedMetadata) => void
+  onDelete: (item: SerializedMetadata) => void
 }
 
 /**
@@ -16,7 +18,14 @@ function MetadataDisplay(props: MetadataDisplayProps): React.ReactElement {
   return (
     <>
       {props.metadataTypes.map(metadataType => {
-        return (<MetadataTable metadataType={metadataType} metadata={props.metadata[metadataType.name]} />);
+        return (
+          <MetadataTable
+            metadataType={metadataType}
+            metadata={props.metadata[metadataType.name]}
+            onEdit={props.onEdit}
+            onDelete={props.onDelete}
+          />
+        );
       })}
     </>
   );

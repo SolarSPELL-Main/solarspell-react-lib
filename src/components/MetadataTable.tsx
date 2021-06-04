@@ -6,18 +6,15 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 
+import ActionPanelButtonItem from './ActionPanelButtonItem';
+import { Edit, Delete } from '@material-ui/icons';
+
 interface MetadataTableProps {
   metadataType: SerializedMetadataType
   metadata: SerializedMetadata[]
+  onEdit: (item: SerializedMetadata) => void
+  onDelete: (item: SerializedMetadata) => void
 }
-
-const columns: GridColDef[] = [
-  {
-    field: 'name',
-    headerName: 'Metadata Name',
-    flex: 1,
-  },
-];
 
 const accordionHeaderStyle: React.CSSProperties = {
   fontWeight: 600,
@@ -30,6 +27,37 @@ const accordionHeaderStyle: React.CSSProperties = {
  * @returns An expandable panel containing the metadata in a table.
  */
 function MetadataTable(props: MetadataTableProps): React.ReactElement {
+  const columns: GridColDef[] = [
+    {
+      field: 'actions',
+      headerName: 'Actions',
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <>
+            <ActionPanelButtonItem
+              tooltip={'Edit'}
+              item={params.row as SerializedMetadata}
+              icon={Edit}
+              func={props.onEdit}
+            />
+            <ActionPanelButtonItem
+              tooltip={'Delete'}
+              item={params.row as SerializedMetadata}
+              icon={Delete}
+              func={props.onDelete}
+            />
+          </>
+        );
+      },
+    },
+    {
+      field: 'name',
+      headerName: 'Metadata Name',
+      flex: 1,
+    },
+  ];
+
   return (
     <Accordion>
       <AccordionSummary>
