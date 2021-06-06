@@ -1,10 +1,11 @@
-interface BaseMetadataType {
+export interface BaseMetadataType {
     name: string
     id: number
 }
 
-interface BaseMetadata {
+export interface BaseMetadata {
     name: string
     id: number
     type_id: number
 }
+
