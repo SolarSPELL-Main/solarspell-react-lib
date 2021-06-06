@@ -2,8 +2,8 @@ import React from 'react';
 import MetadataTable from './MetadataTable';
 
 interface MetadataDisplayProps {
-  metadataTypes: SerializedMetadataType[]
-  metadata: Record<string, SerializedMetadata[]>
+  metadataTypes: BaseMetadataType[]
+  metadata: Record<string, BaseMetadata[]>
 }
 
 /**
@@ -12,14 +12,10 @@ interface MetadataDisplayProps {
  * @param props The data for the tables.
  * @returns A series of expandable panels containing the metadata in tables.
  */
-function MetadataDisplay(props: MetadataDisplayProps): React.ReactElement {
-  return (
-    <>
-      {props.metadataTypes.map(metadataType => {
-        return (<MetadataTable metadataType={metadataType} metadata={props.metadata[metadataType.name]} />);
-      })}
+const MetadataDisplay = (props: MetadataDisplayProps) => <>
+        {props.metadataTypes.map(metadataType => {
+            return (<MetadataTable metadataType={metadataType} metadata={props.metadata[metadataType.name]} />);
+        })}
     </>
-  );
-}
 
 export default MetadataDisplay;

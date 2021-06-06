@@ -7,8 +7,8 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 
 interface MetadataTableProps {
-  metadataType: SerializedMetadataType
-  metadata: SerializedMetadata[]
+  metadataType: BaseMetadataType
+  metadata: BaseMetadata[]
 }
 
 const columns: GridColDef[] = [

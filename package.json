@@ -15,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/SolarSPELL-Main/solarspell-react-lib/issues"
   },
-  "homepage": "https://github.com/SolarSPELL-Main/solarspell-react-lib#readme"
+  "homepage": "https://github.com/SolarSPELL-Main/solarspell-react-lib#readme",
+  "dependencies": {
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/data-grid": "^4.0.0-alpha.30",
+    "react": "^17.0.2"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.9"
+  }
 }
