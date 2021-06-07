@@ -9,11 +9,13 @@ import Typography from '@material-ui/core/Typography';
 import ActionPanelButtonItem from './ActionPanelButtonItem';
 import { Edit, Delete } from '@material-ui/icons';
 
+import { BaseMetadata, BaseMetadataType } from '../types';
+
 interface MetadataTableProps {
-  metadataType: SerializedMetadataType
-  metadata: SerializedMetadata[]
-  onEdit: (item: SerializedMetadata) => void
-  onDelete: (item: SerializedMetadata) => void
+  onEdit: (item: BaseMetadata) => void
+  onDelete: (item: BaseMetadata) => void
+  metadataType: BaseMetadataType
+  metadata: BaseMetadata[]
 }
 
 const accordionHeaderStyle: React.CSSProperties = {
@@ -38,12 +40,12 @@ function MetadataTable(props: MetadataTableProps): React.ReactElement {
             <ActionPanelButtonItem
               tooltip={'Edit'}
               icon={Edit}
-              func={() => props.onEdit(params.row as SerializedMetadata)}
+              func={() => props.onEdit(params.row as BaseMetadata)}
             />
             <ActionPanelButtonItem
               tooltip={'Delete'}
               icon={Delete}
-              func={() => props.onDelete(params.row as SerializedMetadata)}
+              func={() => props.onDelete(params.row as BaseMetadata)}
             />
           </>
         );

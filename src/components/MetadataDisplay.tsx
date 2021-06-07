@@ -1,11 +1,13 @@
 import React from 'react';
 import MetadataTable from './MetadataTable';
 
+import { BaseMetadata, BaseMetadataType } from '../types';
+
 interface MetadataDisplayProps {
-  metadataTypes: SerializedMetadataType[]
-  metadata: Record<string, SerializedMetadata[]>
-  onEdit: (item: SerializedMetadata) => void
-  onDelete: (item: SerializedMetadata) => void
+  onEdit: (item: BaseMetadata) => void
+  onDelete: (item: BaseMetadata) => void
+  metadataTypes: BaseMetadataType[]
+  metadata: Record<string, BaseMetadata[]>
 }
 
 /**
