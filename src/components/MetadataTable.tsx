@@ -37,15 +37,13 @@ function MetadataTable(props: MetadataTableProps): React.ReactElement {
           <>
             <ActionPanelButtonItem
               tooltip={'Edit'}
-              item={params.row as SerializedMetadata}
               icon={Edit}
-              func={props.onEdit}
+              func={() => props.onEdit(params.row as SerializedMetadata)}
             />
             <ActionPanelButtonItem
               tooltip={'Delete'}
-              item={params.row as SerializedMetadata}
               icon={Delete}
-              func={props.onDelete}
+              func={() => props.onDelete(params.row as SerializedMetadata)}
             />
           </>
         );

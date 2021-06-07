@@ -3,11 +3,11 @@ import Tooltip from '@material-ui/core/Tooltip/';
 
 import { SvgIconComponent } from '@material-ui/icons';
 
-interface ActionPanelButtonItemProps<T> {
+interface ActionPanelButtonItemProps {
   tooltip?: string
-  item: T
   icon: SvgIconComponent
-  func: (item: T) => void
+  func: () => void
+  confirmed?: boolean
 }
 
 const pointerStyle: React.CSSProperties = {
@@ -19,14 +19,12 @@ const pointerStyle: React.CSSProperties = {
  * @param props The properties of the icon.
  * @returns A clickable icon.
  */
-function ActionPanelButtonItem<T>(props: ActionPanelButtonItemProps<T>): React.ReactElement {
-  const func = React.useCallback(() => props.func(props.item), [props.item, props.func]);
-
+function ActionPanelButtonItem(props: ActionPanelButtonItemProps): React.ReactElement {
   return (
     <Tooltip title={props.tooltip || ''}>
       <props.icon
         style={pointerStyle}
-        onClick={func}
+        onClick={props.func}
       />
     </Tooltip>
   );
