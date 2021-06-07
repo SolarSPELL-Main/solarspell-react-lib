@@ -2,8 +2,11 @@
   "name": "solarspell-react-lib",
   "version": "1.0.0",
   "description": "Solarspell UI library",
-  "main": "index.js",
-  "types": "./src/types.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/types.d.ts",
+  "files": [
+      "/dist"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

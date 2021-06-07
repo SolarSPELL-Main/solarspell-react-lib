@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "module": "esnext",
+        "target": "es2015",
+        "declaration": true,
+        "outDir": "./dist",
+        "jsx": "react-jsx"
+      },
+    "include": [
+        "src/**/*"
+    ]
+}
