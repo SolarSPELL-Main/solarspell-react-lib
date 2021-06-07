@@ -7,7 +7,6 @@ interface ActionPanelButtonItemProps {
   tooltip?: string
   icon: SvgIconComponent
   func: () => void
-  confirmed?: boolean
 }
 
 const pointerStyle: React.CSSProperties = {

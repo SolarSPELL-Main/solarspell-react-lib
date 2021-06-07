@@ -35,17 +35,19 @@ function MetadataTable(props: MetadataTableProps): React.ReactElement {
       headerName: 'Actions',
       flex: 1,
       renderCell: (params) => {
+        const metadata = params.row as BaseMetadata;
+
         return (
           <>
             <ActionPanelButtonItem
               tooltip={'Edit'}
               icon={Edit}
-              func={() => props.onEdit(params.row as BaseMetadata)}
+              func={() => props.onEdit(metadata)}
             />
             <ActionPanelButtonItem
               tooltip={'Delete'}
               icon={Delete}
-              func={() => props.onDelete(params.row as BaseMetadata)}
+              func={() => props.onDelete(metadata)}
             />
           </>
         );
