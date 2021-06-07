@@ -7,13 +7,13 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 
 import ActionPanel from './ActionPanel';
-import ActionPanelButtonItem from './ActionPanelButtonItem';
+import ActionPanelItem from './ActionPanelItem';
 import { Edit, Delete } from '@material-ui/icons';
 
 import { BaseMetadata, BaseMetadataType } from '../types';
 
 interface MetadataTableProps {
-  onEdit: (item: BaseMetadata) => void
+  onEdit: (item: BaseMetadata, val: string) => void
   onDelete: (item: BaseMetadata) => void
   metadataType: BaseMetadataType
   metadata: BaseMetadata[]
@@ -40,16 +40,19 @@ function MetadataTable(props: MetadataTableProps): React.ReactElement {
 
         return (
           <ActionPanel>
-            <ActionPanelButtonItem
+            <ActionPanelItem
+              type={'text_input'}
               tooltip={'Edit'}
               icon={Edit}
-              func={() => props.onEdit(metadata)}
+              onAction={(val: string) => props.onEdit(metadata, val)}
+              textInputTitle={`Edit Metadata ${metadata.name}`}
+              textInputLabel={'Metadata Name'}
             />
-            <ActionPanelButtonItem
+            <ActionPanelItem
+              type={'confirm'}
               tooltip={'Delete'}
               icon={Delete}
-              func={() => props.onDelete(metadata)}
-              confirmed
+              onAction={() => props.onDelete(metadata)}
               confirmationTitle={`Delete Metadata item ${metadata.name} of type ${props.metadataType.name}?`}
               confirmationDescription={'WARNING: Deleting a metadata will also delete each of that metadata on every content and is irreversible.'}
             />

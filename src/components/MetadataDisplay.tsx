@@ -4,7 +4,7 @@ import MetadataTable from './MetadataTable';
 import { BaseMetadata, BaseMetadataType } from '../types';
 
 interface MetadataDisplayProps {
-  onEdit: (item: BaseMetadata) => void
+  onEdit: (item: BaseMetadata, val: string) => void
   onDelete: (item: BaseMetadata) => void
   metadataTypes: BaseMetadataType[]
   metadata: Record<number, BaseMetadata[]>

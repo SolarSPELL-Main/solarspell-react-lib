@@ -21,6 +21,8 @@ function ConfirmationDialog(props: ConfirmationDialogProps): React.ReactElement 
     <Dialog
       open={props.open}
       onClose={disagree}
+      maxWidth={'md'}
+      fullWidth
     >
       <DialogTitle>{props.title}</DialogTitle>
       {props.description && <DialogContent>
@@ -28,10 +30,10 @@ function ConfirmationDialog(props: ConfirmationDialogProps): React.ReactElement 
       </DialogContent>}
       <DialogActions>
         <Button onClick={disagree} color='primary'>
-          No
+          Cancel
         </Button>
         <Button onClick={agree} color='secondary'>
-          Yes
+          Confirm
         </Button>
       </DialogActions>
     </Dialog>
