@@ -66,23 +66,12 @@ function ActionPanelItem(props: ActionPanelItemProps): React.ReactElement {
       const toggle = React.useCallback(() => props.toggle(!active, setActive), [active, props.toggle]);
 
       return (
-        <>
-          {active ? 
-            <ActionPanelItem
-              type={'button'}
-              tooltip={props.tooltip}
-              icon={props.activeIcon}
-              onAction={toggle}
-            />
-            :
-            <ActionPanelItem
-              type={'button'}
-              tooltip={props.tooltip}
-              icon={props.inactiveIcon}
-              onAction={toggle}
-            />
-          }
-        </>
+        <ActionPanelItem
+          type={'button'}
+          tooltip={props.tooltip}
+          icon={active ? props.activeIcon : props.inactiveIcon}
+          onAction={toggle}
+        />
       );
     }
     case 'confirm': {
@@ -97,12 +86,12 @@ function ActionPanelItem(props: ActionPanelItemProps): React.ReactElement {
 
       return (
         <>
-          <Tooltip title={props.tooltip || ''}>
-            <props.icon
-              style={pointerStyle}
-              onClick={openConfirmationDialog}
-            />
-          </Tooltip>
+          <ActionPanelItem
+            type={'button'}
+            tooltip={props.tooltip}
+            icon={props.icon}
+            onAction={openConfirmationDialog}
+          />
           <ConfirmationDialog
             title={props.confirmationTitle}
             description={props.confirmationDescription}
@@ -124,12 +113,12 @@ function ActionPanelItem(props: ActionPanelItemProps): React.ReactElement {
 
       return (
         <>
-          <Tooltip title={props.tooltip || ''}>
-            <props.icon
-              style={pointerStyle}
-              onClick={openTextInputDialog}
-            />
-          </Tooltip>
+          <ActionPanelItem
+            type={'button'}
+            tooltip={props.tooltip}
+            icon={props.icon}
+            onAction={openTextInputDialog}
+          />
           <TextInputDialog
             title={props.textInputTitle}
             description={props.textInputDescription}
