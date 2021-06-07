@@ -1,5 +1,5 @@
 import React from 'react';
-import Tooltip from '@material-ui/core/Tooltip/';
+import ActionPanelButtonItem from './ActionPanelButtonItem';
 
 import { SvgIconComponent } from '@material-ui/icons';
 
@@ -12,10 +12,6 @@ interface ActionPanelCheckboxItemProps<T> {
   active?: boolean
 }
 
-const pointerStyle: React.CSSProperties = {
-  cursor: 'pointer',
-};
-
 /**
  * Creates a clickable icon backed with checkbox logic.
  * @param props The properties of the icon.
@@ -23,23 +19,26 @@ const pointerStyle: React.CSSProperties = {
  */
 function ActionPanelCheckboxItem<T>(props: ActionPanelCheckboxItemProps<T>): React.ReactElement {
   const [active, setActive] = React.useState(props.active ?? false);
-  const activate = props.toggle.bind(null, props.item, true, setActive);
-  const deactivate = props.toggle.bind(null, props.item, false, setActive);
+  const toggle = React.useCallback(item => props.toggle(item, !active, setActive), [active, props.toggle]);
 
   return (
-    <Tooltip title={props.tooltip || ''}>
-      {active ?
-        <props.activeIcon
-          style={pointerStyle}
-          onClick={deactivate}
+    <>
+      {active ? 
+        <ActionPanelButtonItem
+          tooltip={props.tooltip}
+          item={props.item}
+          icon={props.activeIcon}
+          func={toggle}
         />
         :
-        <props.inactiveIcon
-          style={pointerStyle}
-          onClick={activate}
+        <ActionPanelButtonItem
+          tooltip={props.tooltip}
+          item={props.item}
+          icon={props.inactiveIcon}
+          func={toggle}
         />
       }
-    </Tooltip>
+    </>
   );
 }
 

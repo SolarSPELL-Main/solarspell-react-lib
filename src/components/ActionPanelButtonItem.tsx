@@ -20,7 +20,7 @@ const pointerStyle: React.CSSProperties = {
  * @returns A clickable icon.
  */
 function ActionPanelButtonItem<T>(props: ActionPanelButtonItemProps<T>): React.ReactElement {
-  const func = props.func.bind(null, props.item);
+  const func = React.useCallback(() => props.func(props.item), [props.item, props.func]);
 
   return (
     <Tooltip title={props.tooltip || ''}>
