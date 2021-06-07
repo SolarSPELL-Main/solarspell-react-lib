@@ -30,7 +30,7 @@ function ConfirmationDialog(props: ConfirmationDialogProps): React.ReactElement 
         <Button onClick={disagree} color='primary'>
           No
         </Button>
-        <Button onClick={agree} color='primary'>
+        <Button onClick={agree} color='secondary'>
           Yes
         </Button>
       </DialogActions>

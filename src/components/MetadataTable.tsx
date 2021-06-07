@@ -6,6 +6,7 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 
+import ActionPanel from './ActionPanel';
 import ActionPanelButtonItem from './ActionPanelButtonItem';
 import { Edit, Delete } from '@material-ui/icons';
 
@@ -38,7 +39,7 @@ function MetadataTable(props: MetadataTableProps): React.ReactElement {
         const metadata = params.row as BaseMetadata;
 
         return (
-          <>
+          <ActionPanel>
             <ActionPanelButtonItem
               tooltip={'Edit'}
               icon={Edit}
@@ -48,8 +49,11 @@ function MetadataTable(props: MetadataTableProps): React.ReactElement {
               tooltip={'Delete'}
               icon={Delete}
               func={() => props.onDelete(metadata)}
+              confirmed
+              confirmationTitle={`Delete Metadata item ${metadata.name} of type ${props.metadataType.name}?`}
+              confirmationDescription={'WARNING: Deleting a metadata will also delete each of that metadata on every content and is irreversible.'}
             />
-          </>
+          </ActionPanel>
         );
       },
     },
