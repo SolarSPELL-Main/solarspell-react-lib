@@ -6,6 +6,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { preventEventFactory, preventEvent } from '../utils';
+
+import { PropTypes } from '@material-ui/core';
+import { DialogWidth } from './types';
 
 interface TextInputDialogProps {
   open: boolean
@@ -13,18 +17,36 @@ interface TextInputDialogProps {
   title: string
   description?: string
   label: string
+  submitText?: string
+  submitColor?: PropTypes.Color
+  cancelText?: string
+  cancelColor?: PropTypes.Color
+  size?: DialogWidth
 }
 
+/**
+ * Creates a dialog with a text input box that will call a callback.
+ * @param props The styling and functional properties of the dialog.
+ * @returns A text input dialog component.
+ */
 function TextInputDialog(props: TextInputDialogProps): React.ReactElement {
   const [input, setInput] = React.useState('');
-  const submit = React.useCallback(() => props.onClose(input), [input, props.onClose]);
-  const cancel = React.useCallback(() => props.onClose(''), [props.onClose]);
+  const submit = React.useCallback(preventEventFactory(() => {
+    props.onClose(input);
+    setInput('');
+  }), [input, props.onClose]);
+  const cancel = React.useCallback(preventEventFactory(() => {
+    props.onClose('');
+    setInput('');
+  }), [props.onClose]);
 
   return (
     <Dialog
       open={props.open}
       onClose={cancel}
-      maxWidth={'xs'}
+      onClick={preventEvent()}
+      onFocus={preventEvent()}
+      maxWidth={props.size ?? 'xs'}
       fullWidth
     >
       <DialogTitle>{props.title}</DialogTitle>
@@ -32,18 +54,22 @@ function TextInputDialog(props: TextInputDialogProps): React.ReactElement {
         {props.description && <DialogContentText>{props.description}</DialogContentText>}
         <TextField
           fullWidth
+          autoFocus
           margin={'dense'}
           label={props.label}
           value={input}
-          onChange={e => setInput(e.target.value)}
+          onChange={e => {
+            setInput(e.target.value);
+          }}
+          onKeyDown={preventEvent(true, false)}
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={cancel} color='secondary'>
-          Cancel
+        <Button onClick={cancel} color={props.cancelColor ?? 'secondary'}>
+          {props.cancelText ?? 'Cancel'}
         </Button>
-        <Button onClick={submit} color='primary'>
-          Confirm
+        <Button onClick={submit} color={props.submitColor ?? 'primary'}>
+          {props.submitText ?? 'Confirm'}
         </Button>
       </DialogActions>
     </Dialog>
