@@ -6,18 +6,18 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 
+import ActionPanel from './ActionPanel';
+import ActionPanelItem from './ActionPanelItem';
+import { Edit, Delete } from '@material-ui/icons';
+
+import { BaseMetadata, BaseMetadataType } from '../types';
+
 interface MetadataTableProps {
+  onEdit: (item: BaseMetadata, val: string) => void
+  onDelete: (item: BaseMetadata) => void
   metadataType: BaseMetadataType
   metadata: BaseMetadata[]
 }
-
-const columns: GridColDef[] = [
-  {
-    field: 'name',
-    headerName: 'Metadata Name',
-    flex: 1,
-  },
-];
 
 const accordionHeaderStyle: React.CSSProperties = {
   fontWeight: 600,
@@ -30,6 +30,43 @@ const accordionHeaderStyle: React.CSSProperties = {
  * @returns An expandable panel containing the metadata in a table.
  */
 function MetadataTable(props: MetadataTableProps): React.ReactElement {
+  const columns: GridColDef[] = [
+    {
+      field: 'actions',
+      headerName: 'Actions',
+      flex: 1,
+      renderCell: (params) => {
+        const metadata = params.row as BaseMetadata;
+
+        return (
+          <ActionPanel>
+            <ActionPanelItem
+              type={'text_input'}
+              tooltip={'Edit'}
+              icon={Edit}
+              onAction={(val: string) => props.onEdit(metadata, val)}
+              textInputTitle={`Edit Metadata ${metadata.name}`}
+              textInputLabel={'Metadata Name'}
+            />
+            <ActionPanelItem
+              type={'confirm'}
+              tooltip={'Delete'}
+              icon={Delete}
+              onAction={() => props.onDelete(metadata)}
+              confirmationTitle={`Delete Metadata item ${metadata.name} of type ${props.metadataType.name}?`}
+              confirmationDescription={'WARNING: Deleting a metadata will also delete each of that metadata on every content and is irreversible.'}
+            />
+          </ActionPanel>
+        );
+      },
+    },
+    {
+      field: 'name',
+      headerName: 'Metadata Name',
+      flex: 1,
+    },
+  ];
+
   return (
     <Accordion>
       <AccordionSummary>
