@@ -4,7 +4,9 @@
         "target": "es2015",
         "declaration": true,
         "outDir": "./dist",
-        "jsx": "react-jsx"
+        "jsx": "react-jsx",
+        "allowSyntheticDefaultImports": true,
+        "moduleResolution": "node"
       },
     "include": [
         "src/**/*"
