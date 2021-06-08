@@ -1,6 +1,6 @@
 export interface BaseMetadataType {
     name: string;
-    id: number
+    id: number;
 }
 
 export interface BaseMetadata {
