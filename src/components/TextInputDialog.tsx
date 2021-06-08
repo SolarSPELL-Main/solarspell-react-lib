@@ -29,7 +29,14 @@ interface TextInputDialogProps {
  * @param props The styling and functional properties of the dialog.
  * @returns A text input dialog component.
  */
-function TextInputDialog(props: TextInputDialogProps): React.ReactElement {
+function TextInputDialog({
+  size='xs',
+  cancelColor='secondary',
+  cancelText='Cancel',
+  submitColor='primary',
+  submitText='Confirm',
+  ...props
+}: TextInputDialogProps): React.ReactElement {
   const [input, setInput] = React.useState('');
   const submit = React.useCallback(preventEventFactory(() => {
     props.onClose(input);
@@ -46,7 +53,7 @@ function TextInputDialog(props: TextInputDialogProps): React.ReactElement {
       onClose={cancel}
       onClick={preventEvent()}
       onFocus={preventEvent()}
-      maxWidth={props.size ?? 'xs'}
+      maxWidth={size}
       fullWidth
     >
       <DialogTitle>{props.title}</DialogTitle>
@@ -65,11 +72,11 @@ function TextInputDialog(props: TextInputDialogProps): React.ReactElement {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={cancel} color={props.cancelColor ?? 'secondary'}>
-          {props.cancelText ?? 'Cancel'}
+        <Button onClick={cancel} color={cancelColor}>
+          {cancelText}
         </Button>
-        <Button onClick={submit} color={props.submitColor ?? 'primary'}>
-          {props.submitText ?? 'Confirm'}
+        <Button onClick={submit} color={submitColor}>
+          {submitText}
         </Button>
       </DialogActions>
     </Dialog>

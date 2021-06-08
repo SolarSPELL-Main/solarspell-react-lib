@@ -27,7 +27,14 @@ interface ConfirmationDialogProps {
  * @param props The styling and functional properties of the dialog.
  * @returns A confirmation dialog component.
  */
-function ConfirmationDialog(props: ConfirmationDialogProps): React.ReactElement {
+function ConfirmationDialog({
+  size='md',
+  cancelColor='primary',
+  cancelText='Cancel',
+  confirmColor='secondary',
+  confirmText='Confirm',
+  ...props
+}: ConfirmationDialogProps): React.ReactElement {
   const agree = React.useCallback(preventEventFactory(() => props.onClose(true)), [props.onClose]);
   const disagree = React.useCallback(preventEventFactory(() => props.onClose(false)), [props.onClose]);
 
@@ -35,7 +42,7 @@ function ConfirmationDialog(props: ConfirmationDialogProps): React.ReactElement 
     <Dialog
       open={props.open}
       onClose={disagree}
-      maxWidth={props.size ?? 'md'}
+      maxWidth={size}
       fullWidth
     >
       <DialogTitle>{props.title}</DialogTitle>
@@ -43,11 +50,11 @@ function ConfirmationDialog(props: ConfirmationDialogProps): React.ReactElement 
         <DialogContentText>{props.description}</DialogContentText>
       </DialogContent>}
       <DialogActions>
-        <Button onClick={disagree} color={props.cancelColor ?? 'primary'}>
-          {props.cancelText ?? 'Cancel'}
+        <Button onClick={disagree} color={cancelColor}>
+          {cancelText}
         </Button>
-        <Button onClick={agree} color={props.confirmColor ?? 'secondary'}>
-          {props.confirmText ?? 'Confirm'}
+        <Button onClick={agree} color={confirmColor}>
+          {confirmText}
         </Button>
       </DialogActions>
     </Dialog>
