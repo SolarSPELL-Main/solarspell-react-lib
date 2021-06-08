@@ -2,6 +2,16 @@ import { PropTypes } from '@material-ui/core';
 
 export type DialogWidth = false | 'md' | 'xs' | 'sm' | 'lg' | 'xl' | undefined
 
+export type DialogStyleProps = {
+  title: string
+  description?: string
+  confirmText?: string
+  confirmColor?: PropTypes.Color
+  cancelText?: string
+  cancelColor?: PropTypes.Color
+  size?: DialogWidth
+}
+
 type ConfirmProps<T> = {
   type: 'confirm'
   confirmationTitle: string

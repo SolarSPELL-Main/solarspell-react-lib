@@ -5,22 +5,14 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { preventEventFactory } from '../utils';
+import { preventEventFactory, preventEvent } from '../utils';
 
-import { PropTypes } from '@material-ui/core';
-import { DialogWidth } from './types';
+import { DialogStyleProps } from './types';
 
-interface ConfirmationDialogProps {
+type ConfirmationDialogProps = {
   open: boolean
   onClose: (agreed: boolean) => void
-  title: string
-  description?: string
-  confirmText?: string
-  confirmColor?: PropTypes.Color
-  cancelText?: string
-  cancelColor?: PropTypes.Color
-  size?: DialogWidth
-}
+} & DialogStyleProps
 
 /**
  * Creates a confirmation dialog that will call a callback.
@@ -34,7 +26,7 @@ function ConfirmationDialog({
   confirmColor='secondary',
   confirmText='Confirm',
   ...props
-}: ConfirmationDialogProps): React.ReactElement {
+}: React.PropsWithChildren<ConfirmationDialogProps>): React.ReactElement {
   const agree = React.useCallback(preventEventFactory(() => props.onClose(true)), [props.onClose]);
   const disagree = React.useCallback(preventEventFactory(() => props.onClose(false)), [props.onClose]);
 
@@ -42,12 +34,15 @@ function ConfirmationDialog({
     <Dialog
       open={props.open}
       onClose={disagree}
+      onClick={preventEvent()}
+      onFocus={preventEvent()}
       maxWidth={size}
       fullWidth
     >
       <DialogTitle>{props.title}</DialogTitle>
-      {props.description && <DialogContent>
+      {(props.description || props.children) && <DialogContent>
         <DialogContentText>{props.description}</DialogContentText>
+        {props.children}
       </DialogContent>}
       <DialogActions>
         <Button onClick={disagree} color={cancelColor}>

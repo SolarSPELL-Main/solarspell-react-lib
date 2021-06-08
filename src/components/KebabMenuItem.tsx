@@ -81,8 +81,8 @@ function KebabMenuItem(props: KebabMenuItemProps): React.ReactElement {
             label={props.textInputLabel}
             open={textInputDialogActive}
             onClose={onSubmit}
-            submitText={props.submitButtonText}
-            submitColor={props.submitButtonColor}
+            confirmText={props.submitButtonText}
+            confirmColor={props.submitButtonColor}
             cancelText={props.cancelButtonText}
             cancelColor={props.cancelButtonColor}
             size={props.textInputSize}
