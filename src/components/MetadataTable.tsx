@@ -21,6 +21,7 @@ interface MetadataTableProps {
   onAdd: (type: BaseMetadataType, val: string) => void
   onEditType: (type: BaseMetadataType, val: string) => void
   onDeleteType: (type: BaseMetadataType) => void
+  onDownload: (type: BaseMetadataType) => void
   metadataType: BaseMetadataType
   metadata: BaseMetadata[]
 }
@@ -43,6 +44,7 @@ function MetadataTable(props: MetadataTableProps): React.ReactElement {
       props.onDeleteType(props.metadataType);
     }
   }, [props.onDeleteType, props.metadataType]);
+  const onDownload = React.useCallback(props.onDownload.bind(null, props.metadataType), [props.onDownload, props.metadataType]);
 
   const columns: GridColDef[] = [
     {
@@ -123,7 +125,7 @@ function MetadataTable(props: MetadataTableProps): React.ReactElement {
               <KebabMenuItem
                 type={'button'}
                 label={'Download Spreadsheet'}
-                onAction={() => console.log('Hello, world!')}
+                onAction={onDownload}
               />
             </KebabMenu>
           </Grid>

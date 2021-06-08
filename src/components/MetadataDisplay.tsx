@@ -9,6 +9,7 @@ interface MetadataDisplayProps {
   onAdd: (type: BaseMetadataType, val: string) => void
   onEditType: (type: BaseMetadataType, val: string) => void
   onDeleteType: (type: BaseMetadataType) => void
+  onDownload: (type: BaseMetadataType) => void
   metadataTypes: BaseMetadataType[]
   metadata: Record<number, BaseMetadata[]>
 }
@@ -34,6 +35,7 @@ function MetadataDisplay(props: MetadataDisplayProps): React.ReactElement {
             onAdd={props.onAdd}
             onEditType={props.onEditType}
             onDeleteType={props.onDeleteType}
+            onDownload={props.onDownload}
           />
         );
       })}
