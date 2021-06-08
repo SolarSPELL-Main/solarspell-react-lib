@@ -7,6 +7,7 @@ export interface BaseMetadata {
     name: string;
     id: number;
     type_id: number;
+    base_metadata_type: BaseMetadataType;
 }
 
 export interface BaseContent {
@@ -17,5 +18,5 @@ export interface BaseContent {
     date_published: string;
     copyright: string;
     rights_statement: string;
-    
+    base_metadata: BaseMetadata;
 }
