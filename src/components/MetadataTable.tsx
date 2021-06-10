@@ -7,24 +7,25 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
-import KebabMenu from './KebabMenu';
-import KebabMenuItem from './KebabMenuItem';
-import ActionPanel from './ActionPanel';
-import ActionPanelItem from './ActionPanelItem';
-import { Edit, Delete } from '@material-ui/icons';
-
+import { MetadataTyped, MetadataTagged } from './types';
 import { BaseMetadata, BaseMetadataType } from '../types';
 
-interface MetadataTableProps {
-  onEdit: (item: BaseMetadata, val: string) => void
-  onDelete: (item: BaseMetadata) => void
-  onAdd: (type: BaseMetadataType, val: string) => void
-  onEditType: (type: BaseMetadataType, val: string) => void
-  onDeleteType: (type: BaseMetadataType) => void
-  onDownload: (type: BaseMetadataType) => void
+type MetadataTableMenuProps<P extends MetadataTyped, V extends MetadataTagged> = {
+  components: {
+    KebabMenu: React.JSXElementConstructor<P>
+    ActionPanel: React.JSXElementConstructor<V>
+  }
+  componentProps: {
+    KebabMenu: any
+    ActionPanel: any
+  }
+  additionalColumns?: GridColDef[]
+}
+
+type MetadataTableProps<P extends MetadataTyped, V extends MetadataTagged> = {
   metadataType: BaseMetadataType
   metadata: BaseMetadata[]
-}
+} & MetadataTableMenuProps<P,V>
 
 const accordionHeaderStyle: React.CSSProperties = {
   fontWeight: 600,
@@ -36,16 +37,7 @@ const accordionHeaderStyle: React.CSSProperties = {
  * @param props The data for the table.
  * @returns An expandable panel containing the metadata in a table.
  */
-function MetadataTable(props: MetadataTableProps): React.ReactElement {
-  const onAdd = React.useCallback(props.onAdd.bind(null, props.metadataType), [props.onAdd, props.metadataType]);
-  const onEditType = React.useCallback(props.onEditType.bind(null, props.metadataType), [props.onAdd, props.metadataType]);
-  const onDeleteType = React.useCallback((confirmation: string) => {
-    if (confirmation === props.metadataType.name) {
-      props.onDeleteType(props.metadataType);
-    }
-  }, [props.onDeleteType, props.metadataType]);
-  const onDownload = React.useCallback(props.onDownload.bind(null, props.metadataType), [props.onDownload, props.metadataType]);
-
+function MetadataTable<P extends MetadataTyped, V extends MetadataTagged>(props: MetadataTableProps<P,V>): React.ReactElement {
   const columns: GridColDef[] = [
     {
       field: 'actions',
@@ -57,24 +49,7 @@ function MetadataTable(props: MetadataTableProps): React.ReactElement {
         const metadata = params.row as BaseMetadata;
 
         return (
-          <ActionPanel>
-            <ActionPanelItem
-              type={'text_input'}
-              tooltip={'Edit'}
-              icon={Edit}
-              onAction={(val: string) => props.onEdit(metadata, val)}
-              textInputTitle={`Edit Metadata ${metadata.name}`}
-              textInputLabel={'Metadata Name'}
-            />
-            <ActionPanelItem
-              type={'confirm'}
-              tooltip={'Delete'}
-              icon={Delete}
-              onAction={() => props.onDelete(metadata)}
-              confirmationTitle={`Delete Metadata item ${metadata.name} of type ${props.metadataType.name}?`}
-              confirmationDescription={'WARNING: Deleting a metadata will also delete each of that metadata on every content and is irreversible.'}
-            />
-          </ActionPanel>
+          <props.components.ActionPanel {...props.componentProps.ActionPanel} metadata={metadata} metadataType={props.metadataType} />
         );
       },
     },
@@ -84,6 +59,7 @@ function MetadataTable(props: MetadataTableProps): React.ReactElement {
       flex: 1,
       disableColumnMenu: true,
     },
+    ...props.additionalColumns ?? []
   ];
 
   return (
@@ -94,40 +70,7 @@ function MetadataTable(props: MetadataTableProps): React.ReactElement {
             <Typography style={accordionHeaderStyle}>{props.metadataType.name}</Typography>
           </Grid>
           <Grid item xs={6} style={{ textAlign: 'right' }}>
-            <KebabMenu>
-              <KebabMenuItem
-                type={'text_input'}
-                label={'Add Metadata'}
-                onAction={onAdd}
-                textInputTitle={`Create a new Metadata of type ${props.metadataType.name}`}
-                textInputLabel={'Metadata Name'}
-                submitButtonText={'Create'}
-              />
-              <KebabMenuItem
-                type={'text_input'}
-                label={'Edit Metadata Type'}
-                onAction={onEditType}
-                textInputTitle={`Edit Metadata Type ${props.metadataType.name}`}
-                textInputLabel={'Metadata Type Name'}
-                textInputSize={'xs'}
-              />
-              <KebabMenuItem
-                type={'text_input'}
-                label={'Delete Metadata Type'}
-                onAction={onDeleteType}
-                textInputTitle={`Delete Metadata Type ${props.metadataType.name}`}
-                textInputDescription={`WARNING: Deleting a metadata type will also delete all metadata of that type and is irreversible. Enter "${props.metadataType.name}" to confirm deletion`}
-                textInputLabel={`Enter "${props.metadataType.name}" here to confirm deletion`}
-                submitButtonColor={'secondary'}
-                cancelButtonColor={'primary'}
-                textInputSize={'md'}
-              />
-              <KebabMenuItem
-                type={'button'}
-                label={'Download Spreadsheet'}
-                onAction={onDownload}
-              />
-            </KebabMenu>
+            <props.components.KebabMenu {...props.componentProps.KebabMenu} metadataType={props.metadataType} />
           </Grid>
         </Grid>
       </AccordionSummary>
@@ -138,4 +81,5 @@ function MetadataTable(props: MetadataTableProps): React.ReactElement {
   );
 }
 
+export type { MetadataTableMenuProps };
 export default MetadataTable;
