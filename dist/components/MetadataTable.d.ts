@@ -1,5 +1,8 @@
 import React from 'react';
+import { BaseMetadata, BaseMetadataType } from '../types';
 interface MetadataTableProps {
+    onEdit: (item: BaseMetadata, val: string) => void;
+    onDelete: (item: BaseMetadata) => void;
     metadataType: BaseMetadataType;
     metadata: BaseMetadata[];
 }

@@ -7,3 +7,4 @@ interface BaseMetadataType {
     name: string;
     id: number;
 }
+export { BaseMetadata, BaseMetadataType };
