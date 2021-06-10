@@ -1,60 +1,30 @@
 import React from 'react';
-import Tooltip from '@material-ui/core/Tooltip/';
+import MenuItem from '@material-ui/core/MenuItem';
 import ConfirmationDialog from './ConfirmationDialog';
 import TextInputDialog from './TextInputDialog';
+import { preventEventFactory } from '../utils';
 
-import { SvgIconComponent } from '@material-ui/icons';
 import { CustomizableActionProps } from './types';
 
 type BaseProps = {
-  tooltip?: string
-  icon: SvgIconComponent
+  label: string
   onAction: () => void
 }
 
-type ToggleProps = {
-  type: 'toggle'
-  tooltip?: string
-  toggle: (active: boolean, dispatch: React.Dispatch<React.SetStateAction<boolean>>) => void
-  activeIcon: SvgIconComponent
-  inactiveIcon: SvgIconComponent
-  active?: boolean
-}
-
-type ActionPanelItemProps = CustomizableActionProps<BaseProps> | ToggleProps
-
-const pointerStyle: React.CSSProperties = {
-  cursor: 'pointer',
-};
+type KebabMenuItemProps = CustomizableActionProps<BaseProps>
 
 /**
- * Creates a clickable icon for a variety of different use cases.
- * @param props The properties of the icon.
- * @returns A clickable icon.
+ * Creates a clickable menu item for a variety of different use cases.
+ * @param props The properties of the menu item.
+ * @returns A clickable menu item.
  */
-function ActionPanelItem(props: ActionPanelItemProps): React.ReactElement {
+function KebabMenuItem(props: KebabMenuItemProps): React.ReactElement {
   switch (props.type) {
     case 'button': {
-      return (
-        <Tooltip title={props.tooltip || ''}>
-          <props.icon
-            style={pointerStyle}
-            onClick={props.onAction}
-          />
-        </Tooltip>
-      );
-    }
-    case 'toggle': {
-      const [active, setActive] = React.useState(props.active ?? false);
-      const toggle = React.useCallback(() => props.toggle(!active, setActive), [active, props.toggle]);
+      const onClick = React.useCallback(preventEventFactory(props.onAction), [props.onAction]);
 
       return (
-        <ActionPanelItem
-          type={'button'}
-          tooltip={props.tooltip}
-          icon={active ? props.activeIcon : props.inactiveIcon}
-          onAction={toggle}
-        />
+        <MenuItem onClick={onClick}>{props.label}</MenuItem>
       );
     }
     case 'confirm': {
@@ -69,10 +39,9 @@ function ActionPanelItem(props: ActionPanelItemProps): React.ReactElement {
 
       return (
         <>
-          <ActionPanelItem
+          <KebabMenuItem
             type={'button'}
-            tooltip={props.tooltip}
-            icon={props.icon}
+            label={props.label}
             onAction={openConfirmationDialog}
           />
           <ConfirmationDialog
@@ -101,10 +70,9 @@ function ActionPanelItem(props: ActionPanelItemProps): React.ReactElement {
 
       return (
         <>
-          <ActionPanelItem
+          <KebabMenuItem
             type={'button'}
-            tooltip={props.tooltip}
-            icon={props.icon}
+            label={props.label}
             onAction={openTextInputDialog}
           />
           <TextInputDialog
@@ -125,4 +93,4 @@ function ActionPanelItem(props: ActionPanelItemProps): React.ReactElement {
   }
 }
 
-export default ActionPanelItem;
+export default KebabMenuItem;

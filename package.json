@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Solarspell UI library",
   "main": "./dist/index.js",
-  "types": "./dist/types.d.ts",
+  "types": "./dist/index.d.ts",
   "files": [
     "/dist"
   ],

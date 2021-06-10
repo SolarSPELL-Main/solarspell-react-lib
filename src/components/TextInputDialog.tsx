@@ -1,52 +1,63 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import ConfirmationDialog from './ConfirmationDialog';
+import { preventEvent } from '../utils';
 
-interface TextInputDialogProps {
+import { DialogStyleProps } from './types';
+
+type TextInputDialogProps = {
   open: boolean
   onClose: (input: string) => void
-  title: string
-  description?: string
   label: string
-}
+} & DialogStyleProps
 
-function TextInputDialog(props: TextInputDialogProps): React.ReactElement {
+/**
+ * Creates a dialog with a text input box that will call a callback.
+ * @param props The styling and functional properties of the dialog.
+ * @returns A text input dialog component.
+ */
+function TextInputDialog({
+  size='xs',
+  cancelColor='secondary',
+  cancelText='Cancel',
+  confirmColor='primary',
+  confirmText='Confirm',
+  ...props
+}: TextInputDialogProps): React.ReactElement {
   const [input, setInput] = React.useState('');
-  const submit = React.useCallback(() => props.onClose(input), [input, props.onClose]);
-  const cancel = React.useCallback(() => props.onClose(''), [props.onClose]);
+  const onClose = React.useCallback((accepted: boolean) => {
+    if (accepted) {
+      props.onClose(input);
+    } else {
+      props.onClose('');
+    }
+    setInput('');
+  }, [input, props.onClose]);
 
   return (
-    <Dialog
+    <ConfirmationDialog
       open={props.open}
-      onClose={cancel}
-      maxWidth={'xs'}
-      fullWidth
+      title={props.title}
+      description={props.description}
+      size={size}
+      cancelColor={cancelColor}
+      cancelText={cancelText}
+      confirmColor={confirmColor}
+      confirmText={confirmText}
+      onClose={onClose}
     >
-      <DialogTitle>{props.title}</DialogTitle>
-      <DialogContent>
-        {props.description && <DialogContentText>{props.description}</DialogContentText>}
-        <TextField
-          fullWidth
-          margin={'dense'}
-          label={props.label}
-          value={input}
-          onChange={e => setInput(e.target.value)}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={cancel} color='secondary'>
-          Cancel
-        </Button>
-        <Button onClick={submit} color='primary'>
-          Confirm
-        </Button>
-      </DialogActions>
-    </Dialog>
+      <TextField
+        fullWidth
+        autoFocus
+        margin={'dense'}
+        label={props.label}
+        value={input}
+        onChange={e => {
+          setInput(e.target.value);
+        }}
+        onKeyDown={preventEvent(true, false)}
+      />
+    </ConfirmationDialog>
   );
 }
 

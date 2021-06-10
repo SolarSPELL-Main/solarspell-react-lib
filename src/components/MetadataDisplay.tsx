@@ -6,6 +6,10 @@ import { BaseMetadata, BaseMetadataType } from '../types';
 interface MetadataDisplayProps {
   onEdit: (item: BaseMetadata, val: string) => void
   onDelete: (item: BaseMetadata) => void
+  onAdd: (type: BaseMetadataType, val: string) => void
+  onEditType: (type: BaseMetadataType, val: string) => void
+  onDeleteType: (type: BaseMetadataType) => void
+  onDownload: (type: BaseMetadataType) => void
   metadataTypes: BaseMetadataType[]
   metadata: Record<number, BaseMetadata[]>
 }
@@ -23,10 +27,15 @@ function MetadataDisplay(props: MetadataDisplayProps): React.ReactElement {
       {props.metadataTypes.map(metadataType => {
         return (
           <MetadataTable
+            key={metadataType.id}
             metadataType={metadataType}
             metadata={props.metadata[metadataType.id]}
             onEdit={props.onEdit}
             onDelete={props.onDelete}
+            onAdd={props.onAdd}
+            onEditType={props.onEditType}
+            onDeleteType={props.onDeleteType}
+            onDownload={props.onDownload}
           />
         );
       })}
