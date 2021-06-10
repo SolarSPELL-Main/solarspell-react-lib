@@ -10,15 +10,18 @@ import Grid from '@material-ui/core/Grid';
 import { MetadataTyped, MetadataTagged } from './types';
 import { BaseMetadata, BaseMetadataType } from '../types';
 
+type ComponentsDef<P extends MetadataTyped = any, V extends MetadataTagged = any> = {
+  KebabMenu?: React.JSXElementConstructor<P>
+  ActionPanel?: React.JSXElementConstructor<V>
+}
+
+type ComponentsPropsDef = {
+  [Component in keyof ComponentsDef]: any
+}
+
 type MetadataTableMenuProps<P extends MetadataTyped, V extends MetadataTagged> = {
-  components: {
-    KebabMenu: React.JSXElementConstructor<P>
-    ActionPanel: React.JSXElementConstructor<V>
-  }
-  componentProps: {
-    KebabMenu: any
-    ActionPanel: any
-  }
+  components?: ComponentsDef<P,V>
+  componentProps?: ComponentsPropsDef
   additionalColumns?: GridColDef[]
 }
 
@@ -40,6 +43,21 @@ const accordionHeaderStyle: React.CSSProperties = {
 function MetadataTable<P extends MetadataTyped, V extends MetadataTagged>(props: MetadataTableProps<P,V>): React.ReactElement {
   const columns: GridColDef[] = [
     {
+      field: 'name',
+      headerName: 'Metadata Name',
+      flex: 1,
+      disableColumnMenu: true,
+    },
+    ...props.additionalColumns ?? []
+  ];
+
+  // Add Actions column only if ActionPanel component specified
+  // Prioritizes Actions column, Name column, followed by custom columns
+  if (props.components?.ActionPanel) {
+    const ActionPanel = props.components.ActionPanel;
+    const ActionPanelProps = props.componentProps?.ActionPanel;
+
+    columns.unshift({
       field: 'actions',
       headerName: 'Actions',
       flex: 1,
@@ -49,18 +67,11 @@ function MetadataTable<P extends MetadataTyped, V extends MetadataTagged>(props:
         const metadata = params.row as BaseMetadata;
 
         return (
-          <props.components.ActionPanel {...props.componentProps.ActionPanel} metadata={metadata} metadataType={props.metadataType} />
+          <ActionPanel {...ActionPanelProps} metadata={metadata} metadataType={props.metadataType} />
         );
       },
-    },
-    {
-      field: 'name',
-      headerName: 'Metadata Name',
-      flex: 1,
-      disableColumnMenu: true,
-    },
-    ...props.additionalColumns ?? []
-  ];
+    });
+  }
 
   return (
     <Accordion>
@@ -69,13 +80,13 @@ function MetadataTable<P extends MetadataTyped, V extends MetadataTagged>(props:
           <Grid item xs={6} style={{ textAlign: 'left' }}>
             <Typography style={accordionHeaderStyle}>{props.metadataType.name}</Typography>
           </Grid>
-          <Grid item xs={6} style={{ textAlign: 'right' }}>
-            <props.components.KebabMenu {...props.componentProps.KebabMenu} metadataType={props.metadataType} />
-          </Grid>
+          {props.components?.KebabMenu && <Grid item xs={6} style={{ textAlign: 'right' }}>
+            <props.components.KebabMenu {...props.componentProps?.KebabMenu} metadataType={props.metadataType} />
+          </Grid>}
         </Grid>
       </AccordionSummary>
       <AccordionDetails>
-        <DataGrid columns={columns} rows={props.metadata} autoHeight />
+        <DataGrid columns={columns} rows={props.metadata} autoHeight rowsPerPageOptions={[10, 25, 50]} />
       </AccordionDetails>
     </Accordion>
   );

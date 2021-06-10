@@ -9,9 +9,14 @@ type DLMSActionPanelProps = {
   metadataType: BaseMetadataType
 }
 
-function DLMSActionPanel(props: DLMSActionPanelProps): React.ReactElement {
-  const onAction = React.useCallback(props.onEdit.bind(null, props.metadata), [props.onEdit, props.metadata]);
-  const onDelete = React.useCallback(props.onDelete.bind(null, props.metadata), [props.onDelete, props.metadata]);
+function DLMSActionPanel({
+  onEdit,
+  onDelete,
+  metadata,
+  metadataType,
+}: DLMSActionPanelProps): React.ReactElement {
+  const onAction = React.useCallback((val: string) => onEdit(metadata, val), [onEdit, metadata]);
+  const onDelete_ = React.useCallback(() => onDelete(metadata), [onDelete, metadata]);
 
   return (
     <ActionPanel>
@@ -20,15 +25,15 @@ function DLMSActionPanel(props: DLMSActionPanelProps): React.ReactElement {
         tooltip={'Edit'}
         icon={Edit}
         onAction={onAction}
-        textInputTitle={`Edit Metadata ${props.metadata.name}`}
+        textInputTitle={`Edit Metadata ${metadata.name}`}
         textInputLabel={'Metadata Name'}
       />
       <ActionPanelItem
         type={'confirm'}
         tooltip={'Delete'}
         icon={Delete}
-        onAction={onDelete}
-        confirmationTitle={`Delete Metadata item ${props.metadata.name} of type ${props.metadataType.name}?`}
+        onAction={onDelete_}
+        confirmationTitle={`Delete Metadata item ${metadata.name} of type ${metadataType.name}?`}
         confirmationDescription={'WARNING: Deleting a metadata will also delete each of that metadata on every content and is irreversible.'}
       />
     </ActionPanel>

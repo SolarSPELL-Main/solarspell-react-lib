@@ -9,41 +9,47 @@ type DLMSKebabMenuProps = {
   metadataType: BaseMetadataType
 }
 
-function DLMSKebabMenu(props: DLMSKebabMenuProps): React.ReactElement {
-  const onAdd = React.useCallback(props.onAdd.bind(null, props.metadataType), [props.onAdd, props.metadataType]);
-  const onEditType = React.useCallback(props.onEditType.bind(null, props.metadataType), [props.onAdd, props.metadataType]);
-  const onDeleteType = React.useCallback((confirmation: string) => {
-    if (confirmation === props.metadataType.name) {
-      props.onDeleteType(props.metadataType);
+function DLMSKebabMenu({
+  onAdd,
+  onEditType,
+  onDeleteType,
+  onDownload,
+  metadataType,
+}: DLMSKebabMenuProps): React.ReactElement {
+  const onAdd_ = React.useCallback((val: string) => onAdd(metadataType, val), [onAdd, metadataType]);
+  const onEditType_ = React.useCallback((val: string) => onEditType(metadataType, val), [onEditType, metadataType]);
+  const onDeleteType_ = React.useCallback((confirmation: string) => {
+    if (confirmation === metadataType.name) {
+      onDeleteType(metadataType);
     }
-  }, [props.onDeleteType, props.metadataType]);
-  const onDownload = React.useCallback(props.onDownload.bind(null, props.metadataType), [props.onDownload, props.metadataType]);
+  }, [onDeleteType, metadataType]);
+  const onDownload_ = React.useCallback(() => onDownload(metadataType), [onDownload, metadataType]);
 
   return (
     <KebabMenu>
       <KebabMenuItem
         type={'text_input'}
         label={'Add Metadata'}
-        onAction={onAdd}
-        textInputTitle={`Create a new Metadata of type ${props.metadataType.name}`}
+        onAction={onAdd_}
+        textInputTitle={`Create a new Metadata of type ${metadataType.name}`}
         textInputLabel={'Metadata Name'}
         submitButtonText={'Create'}
       />
       <KebabMenuItem
         type={'text_input'}
         label={'Edit Metadata Type'}
-        onAction={onEditType}
-        textInputTitle={`Edit Metadata Type ${props.metadataType.name}`}
+        onAction={onEditType_}
+        textInputTitle={`Edit Metadata Type ${metadataType.name}`}
         textInputLabel={'Metadata Type Name'}
         textInputSize={'xs'}
       />
       <KebabMenuItem
         type={'text_input'}
         label={'Delete Metadata Type'}
-        onAction={onDeleteType}
-        textInputTitle={`Delete Metadata Type ${props.metadataType.name}`}
-        textInputDescription={`WARNING: Deleting a metadata type will also delete all metadata of that type and is irreversible. Enter "${props.metadataType.name}" to confirm deletion`}
-        textInputLabel={`Enter "${props.metadataType.name}" here to confirm deletion`}
+        onAction={onDeleteType_}
+        textInputTitle={`Delete Metadata Type ${metadataType.name}`}
+        textInputDescription={`WARNING: Deleting a metadata type will also delete all metadata of that type and is irreversible. Enter "${metadataType.name}" to confirm deletion`}
+        textInputLabel={`Enter "${metadataType.name}" here to confirm deletion`}
         submitButtonColor={'secondary'}
         cancelButtonColor={'primary'}
         textInputSize={'md'}
@@ -51,7 +57,7 @@ function DLMSKebabMenu(props: DLMSKebabMenuProps): React.ReactElement {
       <KebabMenuItem
         type={'button'}
         label={'Download Spreadsheet'}
-        onAction={onDownload}
+        onAction={onDownload_}
       />
     </KebabMenu>
   );
