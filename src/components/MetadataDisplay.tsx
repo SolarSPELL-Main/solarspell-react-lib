@@ -7,7 +7,7 @@ import { BaseMetadata, BaseMetadataType } from '../types';
 type MetadataDisplayProps<P extends MetadataTyped, V extends MetadataTagged> = {
   metadataTypes: BaseMetadataType[]
   metadata: Record<number, BaseMetadata[]>
-  tableActionProps: MetadataTableMenuProps<P,V>
+  tableActionProps?: MetadataTableMenuProps<P,V>
 }
 
 /**

@@ -10,5 +10,8 @@ import { BaseMetadata, BaseMetadataType, BaseContent } from "./types"
 
 export {
     MetadataDisplay, MetadataTable, ActionPanel, ActionPanelItem, ConfirmationDialog, TextInputDialog, KebabMenu, KebabMenuItem,
+}
+
+export type {
     BaseMetadata, BaseMetadataType, BaseContent
 }
