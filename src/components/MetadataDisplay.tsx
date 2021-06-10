@@ -1,17 +1,13 @@
 import React from 'react';
-import MetadataTable from './MetadataTable';
+import MetadataTable, { MetadataTableMenuProps } from './MetadataTable';
 
+import { MetadataTyped, MetadataTagged } from './types';
 import { BaseMetadata, BaseMetadataType } from '../types';
 
-interface MetadataDisplayProps {
-  onEdit: (item: BaseMetadata, val: string) => void
-  onDelete: (item: BaseMetadata) => void
-  onAdd: (type: BaseMetadataType, val: string) => void
-  onEditType: (type: BaseMetadataType, val: string) => void
-  onDeleteType: (type: BaseMetadataType) => void
-  onDownload: (type: BaseMetadataType) => void
+type MetadataDisplayProps<P extends MetadataTyped, V extends MetadataTagged> = {
   metadataTypes: BaseMetadataType[]
   metadata: Record<number, BaseMetadata[]>
+  tableActionProps: MetadataTableMenuProps<P,V>
 }
 
 /**
@@ -21,7 +17,7 @@ interface MetadataDisplayProps {
  *        mapping metadata type IDs (not names!) to metadata arrays.
  * @returns A series of expandable panels containing the metadata in tables.
  */
-function MetadataDisplay(props: MetadataDisplayProps): React.ReactElement {
+function MetadataDisplay<P extends MetadataTyped, V extends MetadataTagged>(props: MetadataDisplayProps<P,V>): React.ReactElement {
   return (
     <>
       {props.metadataTypes.map(metadataType => {
@@ -30,12 +26,7 @@ function MetadataDisplay(props: MetadataDisplayProps): React.ReactElement {
             key={metadataType.id}
             metadataType={metadataType}
             metadata={props.metadata[metadataType.id]}
-            onEdit={props.onEdit}
-            onDelete={props.onDelete}
-            onAdd={props.onAdd}
-            onEditType={props.onEditType}
-            onDeleteType={props.onDeleteType}
-            onDownload={props.onDownload}
+            {...props.tableActionProps}
           />
         );
       })}
