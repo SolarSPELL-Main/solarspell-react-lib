@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rm -rf dist && tsc --build tsconfig.json",
     "watch": "tsc --watch",
-    "install": "npm run build"
+    "preinstall": "npm run build"
   },
   "repository": {
     "type": "git",
