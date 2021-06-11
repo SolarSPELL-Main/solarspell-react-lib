@@ -1,5 +1,5 @@
 import React from 'react';
-import MetadataTable, { MetadataTableMenuProps } from './MetadataTable';
+import MetadataTable, { MetadataTableOptionalProps } from './MetadataTable';
 
 import { MetadataTyped, MetadataTagged } from './types';
 import { BaseMetadata, BaseMetadataType } from '../types';
@@ -7,7 +7,7 @@ import { BaseMetadata, BaseMetadataType } from '../types';
 type MetadataDisplayProps<P extends MetadataTyped, V extends MetadataTagged> = {
   metadataTypes: BaseMetadataType[]
   metadata: Record<number, BaseMetadata[]>
-  tableProps?: MetadataTableMenuProps<P,V>
+  tableProps?: MetadataTableOptionalProps<P,V>
 }
 
 /**
