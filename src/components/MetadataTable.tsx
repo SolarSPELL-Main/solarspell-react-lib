@@ -1,7 +1,7 @@
 import React from 'react';
-import { GridColDef } from '@material-ui/data-grid';
+import { GridColDef, GridSelectionModelChangeParams } from '@material-ui/data-grid';
 
-import DataTable, { DataTableOptionalProps } from './DataTable';
+import DataTable from './DataTable';
 
 import { MetadataTyped, MetadataTagged } from './types';
 import { BaseMetadata, BaseMetadataType } from '../types';
@@ -22,7 +22,9 @@ type MetadataTableOptionalProps<P extends MetadataTyped, V extends MetadataTagge
   components?: ComponentsDef<P,V>
   componentProps?: ComponentsPropsDef
   additionalColumns?: GridColDef[]
-} & DataTableOptionalProps
+  selectable?: boolean
+  onSelectChange?: (metadata: BaseMetadata[], metadataType: BaseMetadataType, rows: GridSelectionModelChangeParams) => void
+}
 
 // Actual component props
 type MetadataTableProps<P extends MetadataTyped, V extends MetadataTagged> = {
@@ -74,9 +76,16 @@ function MetadataTable<P extends MetadataTyped, V extends MetadataTagged>(props:
 
   if (props.components?.KebabMenu) {
     headerMenu = (
-      <props.components.KebabMenu {...props.componentProps?.KebabMenu} metadataType={props.metadataType} />
+      <props.components.KebabMenu
+        {...props.componentProps?.KebabMenu}
+        metadataType={props.metadataType}
+      />
     );
   }
+
+  const onSelectChange_ = React.useCallback((rows) => {
+    props.onSelectChange!(props.metadata, props.metadataType, rows)
+  }, [props.onSelectChange, props.metadata, props.metadataType]);
 
   return (
     <DataTable
@@ -85,7 +94,7 @@ function MetadataTable<P extends MetadataTyped, V extends MetadataTagged>(props:
       columns={columns}
       rows={props.metadata}
       selectable={props.selectable}
-      onSelectChange={props.onSelectChange}
+      onSelectChange={props.onSelectChange ? onSelectChange_ : undefined}
     />
   );
 }
