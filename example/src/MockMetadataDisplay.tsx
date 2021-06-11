@@ -31,13 +31,13 @@ const metadata: Record<string, BaseMetadata[]> = {
   ],
   1: [
     {
-      id: 1,
+      id: 2,
       name: 'Mathematics',
       type_id: 1,
       base_metadata_type: metadataTypes[1],
     },
     {
-      id: 2,
+      id: 3,
       name: 'History',
       type_id: 1,
       base_metadata_type: metadataTypes[1],
@@ -48,6 +48,7 @@ const metadata: Record<string, BaseMetadata[]> = {
 function MockMetadataTable(): React.ReactElement {
   const [metadataTypesState, setMetadataTypes] = React.useState(metadataTypes);
   const [metadataState, setMetadata] = React.useState(metadata);
+  const [nextId, setnextId] = React.useState(4);
 
   function onEdit(metadata: BaseMetadata, newVal: string) {
     const metadataType: number = metadata.type_id;
@@ -73,11 +74,12 @@ function MockMetadataTable(): React.ReactElement {
     const newMetadata: Record<number, BaseMetadata[]> = {
       [type.id]: metadataOfType.concat([{
         name: name,
-        id: 42,
+        id: nextId,
         type_id: type.id,
         base_metadata_type: type,
       }]),
     };
+    setnextId(nextId + 1);
     setMetadata(Object.assign({}, metadataState, newMetadata));
   }
 
@@ -92,11 +94,11 @@ function MockMetadataTable(): React.ReactElement {
   }
 
   return (
-    <div style={{ height: 400, width: '100%' }} >
+    <div style={{ height: 'auto', width: '100%' }} >
       <MetadataDisplay
         metadataTypes={metadataTypesState}
         metadata={metadataState}
-        tableActionProps={{
+        tableProps={{
           components: {
             KebabMenu: DLMSKebabMenu,
             ActionPanel: DLMSActionPanel,

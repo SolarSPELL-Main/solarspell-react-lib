@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataGrid, GridColDef } from '@material-ui/data-grid';
+import { DataGrid, GridColDef, GridSelectionModelChangeParams } from '@material-ui/data-grid';
 
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -10,21 +10,34 @@ import Grid from '@material-ui/core/Grid';
 import { MetadataTyped, MetadataTagged } from './types';
 import { BaseMetadata, BaseMetadataType } from '../types';
 
+// Optional components addable to the table
 type ComponentsDef<P extends MetadataTyped = any, V extends MetadataTagged = any> = {
   KebabMenu?: React.JSXElementConstructor<P>
   ActionPanel?: React.JSXElementConstructor<V>
 }
 
+// Corresponding properties to pass to optional components
 type ComponentsPropsDef = {
   [Component in keyof ComponentsDef]: any
 }
 
+// Optional selection enabling/disabling
+type SelectableProps = {
+  selectable?: false
+  onSelectChange?: never
+} | {
+  selectable: true
+  onSelectChange: (rows: GridSelectionModelChangeParams) => void
+}
+
+// Optional customizable properties of the table
 type MetadataTableMenuProps<P extends MetadataTyped, V extends MetadataTagged> = {
   components?: ComponentsDef<P,V>
   componentProps?: ComponentsPropsDef
   additionalColumns?: GridColDef[]
-}
+} & SelectableProps
 
+// Actual component props
 type MetadataTableProps<P extends MetadataTyped, V extends MetadataTagged> = {
   metadataType: BaseMetadataType
   metadata: BaseMetadata[]
@@ -86,7 +99,13 @@ function MetadataTable<P extends MetadataTyped, V extends MetadataTagged>(props:
         </Grid>
       </AccordionSummary>
       <AccordionDetails>
-        <DataGrid columns={columns} rows={props.metadata} autoHeight rowsPerPageOptions={[10, 25, 50]} />
+        <DataGrid
+          columns={columns}
+          rows={props.metadata}
+          autoHeight
+          checkboxSelection={props.selectable}
+          onSelectionModelChange={props.onSelectChange}
+        />
       </AccordionDetails>
     </Accordion>
   );
