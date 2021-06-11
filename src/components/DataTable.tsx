@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataGrid, GridColDef, GridRowData, GridSelectionModelChangeParams } from '@material-ui/data-grid';
+import { DataGrid, GridColDef, GridRowData, GridSelectionModelChangeParams, GridSlotsComponent, GridSlotsComponentsProps } from '@material-ui/data-grid';
 
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -11,6 +11,8 @@ import Grid from '@material-ui/core/Grid';
 type SelectableProps = {
   selectable?: boolean
   onSelectChange?: (rows: GridSelectionModelChangeParams) => void
+  components?: GridSlotsComponent
+  componentsProps?: GridSlotsComponentsProps
 }
 
 type DataTableOptionalProps = SelectableProps
@@ -50,8 +52,11 @@ function DataTable(props: DataTableProps): React.ReactElement {
           columns={props.columns}
           rows={props.rows}
           autoHeight
+          disableSelectionOnClick
           checkboxSelection={props.selectable}
           onSelectionModelChange={props.onSelectChange}
+          components={props.components}
+          componentsProps={props.componentsProps}
         />
       </AccordionDetails>
     </Accordion>
