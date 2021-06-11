@@ -1,5 +1,12 @@
 import React from 'react';
-import { GridColDef, GridSelectionModelChangeParams } from '@material-ui/data-grid';
+import {
+  GridColDef,
+  GridSelectionModelChangeParams,
+  GridColumnMenuProps,
+  GridColumnMenuContainer,
+  SortGridMenuItems,
+  GridFilterMenuItem,
+} from '@material-ui/data-grid';
 
 import DataTable from './DataTable';
 
@@ -32,6 +39,20 @@ type MetadataTableProps<P extends MetadataTyped, V extends MetadataTagged> = {
   metadata: BaseMetadata[]
 } & MetadataTableOptionalProps<P,V>
 
+const CustomGridColumnMenu = React.forwardRef<
+  HTMLUListElement,
+  GridColumnMenuProps
+>(function GridColumnMenu(props: GridColumnMenuProps, ref) {
+  const { hideMenu, currentColumn } = props;
+
+  return (
+    <GridColumnMenuContainer ref={ref} {...props}>
+      <SortGridMenuItems onClick={hideMenu} column={currentColumn!} />
+      <GridFilterMenuItem onClick={hideMenu} column={currentColumn!} />
+    </GridColumnMenuContainer>
+  );
+});
+
 /**
  * This component creates a single table for a metadata type and its corresponding members.
  * All members of the passed in metadata prop should belong to the metadataType prop.
@@ -44,7 +65,9 @@ function MetadataTable<P extends MetadataTyped, V extends MetadataTagged>(props:
       field: 'name',
       headerName: 'Metadata Name',
       flex: 1,
-      disableColumnMenu: true,
+      disableColumnMenu: false,
+      filterable: true,
+      hide: false,
     },
     ...props.additionalColumns ?? []
   ];
@@ -61,6 +84,7 @@ function MetadataTable<P extends MetadataTyped, V extends MetadataTagged>(props:
       flex: 1,
       disableColumnMenu: true,
       sortable: false,
+      filterable: false,
       renderCell: (params) => {
         const metadata = params.row as BaseMetadata;
 
@@ -95,6 +119,9 @@ function MetadataTable<P extends MetadataTyped, V extends MetadataTagged>(props:
       rows={props.metadata}
       selectable={props.selectable}
       onSelectChange={props.onSelectChange ? onSelectChange_ : undefined}
+      components={{
+        ColumnMenu: CustomGridColumnMenu,
+      }}
     />
   );
 }
