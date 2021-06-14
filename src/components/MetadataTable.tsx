@@ -1,82 +1,130 @@
 import React from 'react';
-import { DataGrid, GridColDef } from '@material-ui/data-grid';
+import {
+  GridColDef,
+  GridSelectionModelChangeParams,
+  GridColumnMenuProps,
+  GridColumnMenuContainer,
+  SortGridMenuItems,
+  GridFilterMenuItem,
+} from '@material-ui/data-grid';
 
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import Typography from '@material-ui/core/Typography';
+import DataTable from './DataTable';
 
-import ActionPanel from './ActionPanel';
-import ActionPanelItem from './ActionPanelItem';
-import { Edit, Delete } from '@material-ui/icons';
-
+import { MetadataTyped, MetadataTagged } from './types';
 import { BaseMetadata, BaseMetadataType } from '../types';
 
-interface MetadataTableProps {
-  onEdit: (item: BaseMetadata, val: string) => void
-  onDelete: (item: BaseMetadata) => void
-  metadataType: BaseMetadataType
-  metadata: BaseMetadata[]
+// Optional components addable to the table
+type ComponentsDef<P extends MetadataTyped = any, V extends MetadataTagged = any> = {
+  KebabMenu?: React.JSXElementConstructor<P>
+  ActionPanel?: React.JSXElementConstructor<V>
 }
 
-const accordionHeaderStyle: React.CSSProperties = {
-  fontWeight: 600,
-};
+// Corresponding properties to pass to optional components
+type ComponentsPropsDef = {
+  [Component in keyof ComponentsDef]: any
+}
+
+// Optional customizable properties of the table
+type MetadataTableOptionalProps<P extends MetadataTyped, V extends MetadataTagged> = {
+  components?: ComponentsDef<P,V>
+  componentProps?: ComponentsPropsDef
+  additionalColumns?: GridColDef[]
+  selectable?: boolean
+  onSelectChange?: (metadata: BaseMetadata[], metadataType: BaseMetadataType, rows: GridSelectionModelChangeParams) => void
+}
+
+// Actual component props
+type MetadataTableProps<P extends MetadataTyped, V extends MetadataTagged> = {
+  metadataType: BaseMetadataType
+  metadata: BaseMetadata[]
+} & MetadataTableOptionalProps<P,V>
+
+const CustomGridColumnMenu = React.forwardRef<
+  HTMLUListElement,
+  GridColumnMenuProps
+>(function GridColumnMenu(props: GridColumnMenuProps, ref) {
+  const { hideMenu, currentColumn } = props;
+
+  return (
+    <GridColumnMenuContainer ref={ref} {...props}>
+      <SortGridMenuItems onClick={hideMenu} column={currentColumn!} />
+      <GridFilterMenuItem onClick={hideMenu} column={currentColumn!} />
+    </GridColumnMenuContainer>
+  );
+});
 
 /**
  * This component creates a single table for a metadata type and its corresponding members.
  * All members of the passed in metadata prop should belong to the metadataType prop.
- * @param props The data for the table.
+ * @param props The data and properties for the table.
  * @returns An expandable panel containing the metadata in a table.
  */
-function MetadataTable(props: MetadataTableProps): React.ReactElement {
+function MetadataTable<P extends MetadataTyped, V extends MetadataTagged>(props: MetadataTableProps<P,V>): React.ReactElement {
   const columns: GridColDef[] = [
-    {
-      field: 'actions',
-      headerName: 'Actions',
-      flex: 1,
-      renderCell: (params) => {
-        const metadata = params.row as BaseMetadata;
-
-        return (
-          <ActionPanel>
-            <ActionPanelItem
-              type={'text_input'}
-              tooltip={'Edit'}
-              icon={Edit}
-              onAction={(val: string) => props.onEdit(metadata, val)}
-              textInputTitle={`Edit Metadata ${metadata.name}`}
-              textInputLabel={'Metadata Name'}
-            />
-            <ActionPanelItem
-              type={'confirm'}
-              tooltip={'Delete'}
-              icon={Delete}
-              onAction={() => props.onDelete(metadata)}
-              confirmationTitle={`Delete Metadata item ${metadata.name} of type ${props.metadataType.name}?`}
-              confirmationDescription={'WARNING: Deleting a metadata will also delete each of that metadata on every content and is irreversible.'}
-            />
-          </ActionPanel>
-        );
-      },
-    },
     {
       field: 'name',
       headerName: 'Metadata Name',
       flex: 1,
+      disableColumnMenu: false,
+      filterable: true,
+      hide: false,
     },
+    ...props.additionalColumns ?? []
   ];
 
+  // Add Actions column only if ActionPanel component specified
+  // Prioritizes Actions column, Name column, followed by custom columns
+  if (props.components?.ActionPanel) {
+    const ActionPanel = props.components.ActionPanel;
+    const ActionPanelProps = props.componentProps?.ActionPanel;
+
+    columns.unshift({
+      field: 'actions',
+      headerName: 'Actions',
+      flex: 1,
+      disableColumnMenu: true,
+      sortable: false,
+      filterable: false,
+      renderCell: (params) => {
+        const metadata = params.row as BaseMetadata;
+
+        return (
+          <ActionPanel {...ActionPanelProps} metadata={metadata} metadataType={props.metadataType} />
+        );
+      },
+    });
+  }
+
+  // Create headerMenu JSX element only if KebabMenu assigned
+  let headerMenu: React.ReactElement | undefined;
+
+  if (props.components?.KebabMenu) {
+    headerMenu = (
+      <props.components.KebabMenu
+        {...props.componentProps?.KebabMenu}
+        metadataType={props.metadataType}
+      />
+    );
+  }
+
+  const onSelectChange_ = React.useCallback((rows) => {
+    props.onSelectChange!(props.metadata, props.metadataType, rows)
+  }, [props.onSelectChange, props.metadata, props.metadataType]);
+
   return (
-    <Accordion>
-      <AccordionSummary>
-        <Typography style={accordionHeaderStyle}>{props.metadataType.name}</Typography>
-      </AccordionSummary>
-      <AccordionDetails>
-        <DataGrid columns={columns} rows={props.metadata} autoHeight />
-      </AccordionDetails>
-    </Accordion>
+    <DataTable
+      header={props.metadataType.name}
+      headerMenu={headerMenu}
+      columns={columns}
+      rows={props.metadata}
+      selectable={props.selectable}
+      onSelectChange={props.onSelectChange ? onSelectChange_ : undefined}
+      components={{
+        ColumnMenu: CustomGridColumnMenu,
+      }}
+    />
   );
 }
 
+export type { MetadataTableOptionalProps };
 export default MetadataTable;

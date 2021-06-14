@@ -20,4 +20,4 @@ interface BaseContent {
     base_metadata: BaseMetadata;
 }
 
-export { BaseMetadata, BaseMetadataType, BaseContent }
+export type { BaseMetadata, BaseMetadataType, BaseContent }

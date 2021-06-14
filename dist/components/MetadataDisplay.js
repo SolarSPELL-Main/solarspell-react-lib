@@ -9,7 +9,7 @@ import MetadataTable from './MetadataTable';
  */
 function MetadataDisplay(props) {
     return (_jsx(_Fragment, { children: props.metadataTypes.map(metadataType => {
-            return (_jsx(MetadataTable, { metadataType: metadataType, metadata: props.metadata[metadataType.id], onEdit: props.onEdit, onDelete: props.onDelete }, void 0));
+            return (_jsx(MetadataTable, Object.assign({ metadataType: metadataType, metadata: props.metadata[metadataType.id] }, props.tableProps), metadataType.id));
         }) }, void 0));
 }
 export default MetadataDisplay;

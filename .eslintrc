@@ -1,0 +1,28 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module"
+    },
+    "ignorePatterns": [
+      "build",
+      "public"
+    ],
+    "rules": {
+      "quotes": ["warn", "single"],
+      "indent": ["warn", 2, { "SwitchCase": 1 }],
+      "linebreak-style": ["warn", "unix"],
+      "semi": ["warn", "always"],
+      "comma-dangle": ["warn", "always-multiline"],
+      "eqeqeq": ["warn", "smart"],
+      "curly": ["warn", "all"],
+      "brace-style": ["warn"],
+      "prefer-arrow-callback": ["warn"],
+      "lines-between-class-members": ["warn", "always", {"exceptAfterSingleLine": true}]
+    }
+}
