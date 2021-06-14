@@ -1,7 +1,7 @@
-interface BaseMetadata {
+interface BaseMetadata<MetadataType = BaseMetadataType> {
     name: string;
     id: number;
-    type_id: number;
+    metadata_type: MetadataType;
 }
 interface BaseMetadataType {
     name: string;
@@ -15,6 +15,6 @@ interface BaseContent {
     date_published: string;
     copyright: string;
     rights_statement: string;
-    base_metadata: BaseMetadata;
+    base_metadata: BaseMetadata[];
 }
 export type { BaseMetadata, BaseMetadataType, BaseContent };
