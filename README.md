@@ -1,4 +1,4 @@
-![Build succeeds](https://github.com/github/docs/actions/workflows/build.yml/badge.svg)
+![Build succeeds](https://github.com/Jonathanzhao02/solarspell-react-lib/actions/workflows/build.yml/badge.svg)
 
 # SolarSPELL React Library
 
