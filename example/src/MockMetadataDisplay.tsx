@@ -19,28 +19,24 @@ const metadata: Record<string, BaseMetadata[]> = {
     {
       id: 0,
       name: 'English',
-      type_id: 0,
-      base_metadata_type: metadataTypes[0],
+      metadataType: metadataTypes[0],
     },
     {
       id: 1,
       name: 'Spanish',
-      type_id: 0,
-      base_metadata_type: metadataTypes[0],
+      metadataType: metadataTypes[0],
     },
   ],
   1: [
     {
       id: 2,
       name: 'Mathematics',
-      type_id: 1,
-      base_metadata_type: metadataTypes[1],
+      metadataType: metadataTypes[1],
     },
     {
       id: 3,
       name: 'History',
-      type_id: 1,
-      base_metadata_type: metadataTypes[1],
+      metadataType: metadataTypes[1],
     },
   ],
 };
@@ -51,20 +47,20 @@ function MockMetadataTable(): React.ReactElement {
   const [nextId, setnextId] = React.useState(4);
 
   function onEdit(metadata: BaseMetadata, newVal: string) {
-    const metadataType: number = metadata.type_id;
+    const metadataType: number = metadata.metadataType.id;
     const metadataOfType: BaseMetadata[] = metadataState[metadataType];
     const newMetadata: Record<number, BaseMetadata[]> = {
-      [metadata.type_id]: metadataOfType.filter(v => v.id !== metadata.id),
+      [metadata.metadataType.id]: metadataOfType.filter(v => v.id !== metadata.id),
     };
-    newMetadata[metadata.type_id].push(Object.assign({}, metadata, { name: newVal }));
+    newMetadata[metadata.metadataType.id].push(Object.assign({}, metadata, { name: newVal }));
     setMetadata(Object.assign({}, metadataState, newMetadata));
   }
 
   function onDelete(metadata: BaseMetadata) {
-    const metadataType: number = metadata.type_id;
+    const metadataType: number = metadata.metadataType.id;
     const metadataOfType: BaseMetadata[] = metadataState[metadataType];
     const newMetadata: Record<number, BaseMetadata[]> = {
-      [metadata.type_id]: metadataOfType.filter(v => v.id !== metadata.id),
+      [metadata.metadataType.id]: metadataOfType.filter(v => v.id !== metadata.id),
     };
     setMetadata(Object.assign({}, metadataState, newMetadata));
   }
@@ -75,8 +71,7 @@ function MockMetadataTable(): React.ReactElement {
       [type.id]: metadataOfType.concat([{
         name: name,
         id: nextId,
-        type_id: type.id,
-        base_metadata_type: type,
+        metadataType: type,
       }]),
     };
     setnextId(nextId + 1);
