@@ -26,6 +26,9 @@ jobs:
         node-version: '14'
     - run: |
         npm install
+        cd example
+        npm install
+        cd ..
         npm run build
         cd example
         npm run build
