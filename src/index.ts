@@ -6,10 +6,12 @@ import ConfirmationDialog from "./components/ConfirmationDialog"
 import TextInputDialog from "./components/TextInputDialog"
 import KebabMenu from "./components/KebabMenu"
 import KebabMenuItem from "./components/KebabMenuItem"
+import ContentTagger from "./components/ContentTagger"
 import { BaseMetadata, BaseMetadataType, BaseContent } from "./types"
 
 export {
     MetadataDisplay, MetadataTable, ActionPanel, ActionPanelItem, ConfirmationDialog, TextInputDialog, KebabMenu, KebabMenuItem,
+    ContentTagger,
 }
 
 export type {
