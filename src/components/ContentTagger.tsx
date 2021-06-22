@@ -22,6 +22,8 @@ type ContentTaggerProps = {
 
 /**
  * This component displays the metadata tags of with the ability to add tags.
+ * If creation is enabled, onCreate should handle adding metadata to options
+ * and returning an array of the new metadata.
  * @param props The context and callbacks of the component.
  * @returns A tagger component.
  */
@@ -69,8 +71,7 @@ function ContentTagger(props: ContentTaggerProps): React.ReactElement {
           const customTags = selected.filter(val => val.id === -1);
 
           props.onCreate(customTags).then(res => {
-            regularTags.concat(res);
-            setSelected(regularTags);
+            setSelected(regularTags.concat(res));
           });
         } else {
           setSelected(selected);
