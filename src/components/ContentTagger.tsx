@@ -14,11 +14,17 @@ type CreatableProps = {
   onCreate?: never
 }
 
+type ContentTaggerActionProps = {
+  onSelect?: (tags: BaseMetadata[]) => void
+  onInputChange?: (val: string) => void
+} & CreatableProps
+
 type ContentTaggerProps = {
   metadataType: BaseMetadataType
   initialTags?: BaseMetadata[]
   options: BaseMetadata[]
-} & CreatableProps
+  selected: BaseMetadata[]
+} & ContentTaggerActionProps
 
 /**
  * This component displays the metadata tags of with the ability to add tags.
@@ -29,9 +35,18 @@ type ContentTaggerProps = {
  */
 function ContentTagger(props: ContentTaggerProps): React.ReactElement {
   const filter = createFilterOptions<BaseMetadata>();
-  const [selected, setSelected] = React.useState<BaseMetadata[]>(
-    props.initialTags ?? []
-  );
+
+  const onInputChange = React.useCallback((_event, val: string) => {
+    if (props.onInputChange) {
+      props.onInputChange(val);
+    }
+  }, [props.onInputChange]);
+
+  const onSelect = React.useCallback((tags: BaseMetadata[]) => {
+    if (props.onSelect) {
+      props.onSelect(tags);
+    }
+  }, [props.onSelect]);
 
   return (
     <Autocomplete
@@ -41,7 +56,7 @@ function ContentTagger(props: ContentTaggerProps): React.ReactElement {
       clearOnEscape
       handleHomeEndKeys
       selectOnFocus
-      value={selected}
+      value={props.selected}
       options={props.options}
       getOptionLabel={option => option.name}
       renderInput={(params) => (
@@ -71,12 +86,13 @@ function ContentTagger(props: ContentTaggerProps): React.ReactElement {
           const customTags = selected.filter(val => val.id === -1);
 
           props.onCreate(customTags).then(res => {
-            setSelected(regularTags.concat(res));
+            onSelect(regularTags.concat(res));
           });
         } else {
-          setSelected(selected);
+          onSelect(selected);
         }
       }}
+      onInputChange={onInputChange}
     />
   );
 }
