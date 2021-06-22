@@ -6,7 +6,9 @@ import React from 'react';
  * @param props Contains the children of the component.
  * @returns A React Fragment containing all the children.
  */
-function ActionPanel(props: React.PropsWithChildren<unknown>): React.ReactElement {
+function ActionPanel(
+  props: React.PropsWithChildren<unknown>
+): React.ReactElement {
   return (
     <>
       {props.children}

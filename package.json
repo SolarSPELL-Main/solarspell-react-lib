@@ -13,7 +13,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rm -rf dist && tsc --build tsconfig.json",
     "watch": "tsc --watch",
-    "postinstall": "npm run build"
+    "postinstall": "npm run build",
+    "lint": "eslint src/**"
   },
   "repository": {
     "type": "git",

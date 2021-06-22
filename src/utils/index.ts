@@ -8,7 +8,11 @@ import React from 'react';
  * @returns A function which will prevent an Event accordingly and then
  *          call another function.
  */
-const preventEventFactory = (func: (() => void) | ((e: React.SyntheticEvent) => void), stopPropagation = true, preventDefault = true) => {
+const preventEventFactory = (
+  func: (() => void) | ((e: React.SyntheticEvent) => void),
+  stopPropagation = true,
+  preventDefault = true,
+): ((e: React.SyntheticEvent) => void) => {
   const preventEvent_ = preventEvent(stopPropagation, preventDefault);
   return (e: React.SyntheticEvent) => {
     preventEvent_(e);
@@ -22,7 +26,10 @@ const preventEventFactory = (func: (() => void) | ((e: React.SyntheticEvent) => 
  * @param preventDefault Whether to call preventDefault on the event.
  * @returns A function which will prevent an Event accordingly.
  */
-const preventEvent = (stopPropagation = true, preventDefault = true) => (e: React.SyntheticEvent) => {
+const preventEvent = (
+  stopPropagation = true,
+  preventDefault = true,
+) => (e: React.SyntheticEvent): void => {
   if (stopPropagation) {
     e.stopPropagation();
   }

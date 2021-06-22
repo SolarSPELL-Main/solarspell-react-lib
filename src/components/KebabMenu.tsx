@@ -8,14 +8,19 @@ import { preventEvent, preventEventFactory } from '../utils';
  * @param props Currently only consists of the child KebabMenuItems to display.
  * @returns A kebab icon with an associated menu.
  */
-function KebabMenu(props: React.PropsWithChildren<unknown>): React.ReactElement {
+function KebabMenu(
+  props: React.PropsWithChildren<unknown>
+): React.ReactElement {
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | SVGSVGElement>(null);
   const onClick = React.useCallback(preventEventFactory(e => {
     setOpen(true);
     setAnchorEl(e.currentTarget as SVGSVGElement);
   }), []);
-  const onClose = React.useCallback(preventEventFactory(() => setOpen(false)), []);
+  const onClose = React.useCallback(
+    preventEventFactory(() => setOpen(false)),
+    [],
+  );
 
   return (
     <>

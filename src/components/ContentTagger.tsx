@@ -1,5 +1,7 @@
 import React from 'react';
-import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
+import Autocomplete, {
+  createFilterOptions,
+} from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 
 import { BaseMetadata, BaseMetadataType } from '../types';
@@ -25,7 +27,9 @@ type ContentTaggerProps = {
  */
 function ContentTagger(props: ContentTaggerProps): React.ReactElement {
   const filter = createFilterOptions<BaseMetadata>();
-  const [selected, setSelected] = React.useState<BaseMetadata[]>(props.initialTags ?? []);
+  const [selected, setSelected] = React.useState<BaseMetadata[]>(
+    props.initialTags ?? []
+  );
 
   return (
     <Autocomplete
@@ -39,7 +43,11 @@ function ContentTagger(props: ContentTaggerProps): React.ReactElement {
       options={props.options}
       getOptionLabel={option => option.name}
       renderInput={(params) => (
-        <TextField {...params} placeholder={'Enter tag name...'} variant={'outlined'} />
+        <TextField
+          {...params}
+          placeholder={'Enter tag name...'}
+          variant={'outlined'}
+        />
       )}
       filterOptions={(options, params) => {
         const filtered = filter(options, params);

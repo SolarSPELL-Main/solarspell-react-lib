@@ -1,5 +1,12 @@
 import React from 'react';
-import { DataGrid, GridColDef, GridRowData, GridSelectionModelChangeParams, GridSlotsComponent, GridSlotsComponentsProps } from '@material-ui/data-grid';
+import {
+  DataGrid,
+  GridColDef,
+  GridRowData,
+  GridSelectionModelChangeParams,
+  GridSlotsComponent,
+  GridSlotsComponentsProps,
+} from '@material-ui/data-grid';
 
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
