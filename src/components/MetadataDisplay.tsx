@@ -23,13 +23,13 @@ function MetadataDisplay<
 >(props: MetadataDisplayProps<P,V>): React.ReactElement {
   return (
     <>
-        {props.metadataTypes.map(metadataType => {
-        const metadata = props.metadata[metadataType.id]
+      {props.metadataTypes.map(metadataType => {
+        const metadata = props.metadata[metadataType.id];
         return (
           <MetadataTable
             key={metadataType.id}
             metadataType={metadataType}
-            metadata={metadata == undefined ? [] : metadata}
+            metadata={metadata ?? []}
             {...props.tableProps}
           />
         );
