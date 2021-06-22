@@ -20,12 +20,13 @@ type MetadataDisplayProps<P extends MetadataTyped, V extends MetadataTagged> = {
 function MetadataDisplay<P extends MetadataTyped, V extends MetadataTagged>(props: MetadataDisplayProps<P,V>): React.ReactElement {
   return (
     <>
-      {props.metadataTypes.map(metadataType => {
+        {props.metadataTypes.map(metadataType => {
+        const metadata = props.metadata[metadataType.id]
         return (
           <MetadataTable
             key={metadataType.id}
             metadataType={metadataType}
-            metadata={props.metadata[metadataType.id]}
+            metadata={metadata == undefined ? [] : metadata}
             {...props.tableProps}
           />
         );
