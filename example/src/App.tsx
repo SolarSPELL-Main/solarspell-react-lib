@@ -3,7 +3,7 @@ import './App.css';
 import MockMetadataDisplay from './MockMetadataDisplay';
 import MockActionPanel from './MockActionPanel';
 import MockTagger from './MockTagger';
-import MockContentForm from './MockContentForm';
+import MockContentModal from './MockContentModal';
 
 function App(): React.ReactElement {
   return (
@@ -11,7 +11,7 @@ function App(): React.ReactElement {
       <MockMetadataDisplay />
       <MockActionPanel />
       <MockTagger />
-      <MockContentForm />
+      <MockContentModal />
     </>
   );
 }

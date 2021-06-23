@@ -12,14 +12,14 @@ type ItemDescriptor = {
   label: string
 }
 
-type ContentFormProps = {
+type ContentModalProps = {
   items: ItemDescriptor[]
   onSubmit: (values?: Record<string,any>) => void
   dialogStyle: DialogStyleProps
   open: boolean
 }
 
-function ContentForm(props: ContentFormProps): React.ReactElement {
+function ContentModal(props: ContentModalProps): React.ReactElement {
   const [state, setState] = React.useState<Record<string,any>>({});
 
   const onSubmit = React.useCallback((submitted: boolean) => {
@@ -29,6 +29,16 @@ function ContentForm(props: ContentFormProps): React.ReactElement {
       props.onSubmit();
     }
   }, [props.onSubmit, state]);
+
+  const setter = React.useCallback(
+    (name: string) => (val: any) => {
+      setState(oldState => ({
+        ...oldState,
+        [name]: val,
+      }));
+    },
+    [setState],
+  );
 
   const items: ItemDescriptor[] = [
     {
@@ -44,6 +54,32 @@ function ContentForm(props: ContentFormProps): React.ReactElement {
       },
       label: 'title',
     },
+    {
+      component: TextField,
+      propFactory: (setter) => {
+        return {
+          fullWidth: true,
+          label: 'Description',
+          onChange: (event: React.SyntheticEvent<HTMLInputElement>) => {
+            setter(event.currentTarget.value);
+          },
+        };
+      },
+      label: 'description',
+    },
+    {
+      component: TextField,
+      propFactory: (setter) => {
+        return {
+          fullWidth: true,
+          label: 'Year of Publication',
+          onChange: (event: React.SyntheticEvent<HTMLInputElement>) => {
+            setter(event.currentTarget.value);
+          },
+        };
+      },
+      label: 'year',
+    },
   ];
 
   return (
@@ -54,19 +90,9 @@ function ContentForm(props: ContentFormProps): React.ReactElement {
     >
       <Grid container>
         {items.concat(props.items).map((item, idx) => {
-          const setter = React.useCallback(
-            (val: any) => {
-              setState(oldState => ({
-                ...oldState,
-                [item.label]: val,
-              }));
-            },
-            [item.label, setState],
-          );
-
           return (
-            <Grid item key={idx}>
-              <item.component {...item.propFactory(setter)} />
+            <Grid item key={idx} xs={12} style={{ marginBottom: '10px' }} >
+              <item.component {...item.propFactory(setter(item.label))} />
             </Grid>
           );
         })}
@@ -75,4 +101,4 @@ function ContentForm(props: ContentFormProps): React.ReactElement {
   );
 }
 
-export default ContentForm;
+export default ContentModal;

@@ -7,7 +7,7 @@ import TextInputDialog from './components/TextInputDialog';
 import KebabMenu from './components/KebabMenu';
 import KebabMenuItem from './components/KebabMenuItem';
 import ContentTagger from './components/ContentTagger';
-import ContentForm from './components/ContentForm';
+import ContentModal from './components/ContentModal';
 import { BaseMetadata, BaseMetadataType, BaseContent } from './types';
 
 export {
@@ -21,7 +21,7 @@ export {
 
   /** Content */
   ContentTagger,
-  ContentForm,
+  ContentModal,
 
   /** Generics */
   ConfirmationDialog,

@@ -1,8 +1,8 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { ContentForm } from 'solarspell-react-lib';
+import { ContentModal } from 'solarspell-react-lib';
 
-function MockContentForm(): React.ReactElement {
+function MockContentModal(): React.ReactElement {
   const [open, setOpen] = React.useState(false);
   const onSubmit = React.useCallback((values?: Record<string, any>) => {
     console.log(values);
@@ -12,7 +12,7 @@ function MockContentForm(): React.ReactElement {
   return (
     <>
       <Button variant={'contained'} color={'primary'} onClick={() => setOpen(true)}>Add Content</Button>
-      <ContentForm
+      <ContentModal
         items={[]}
         dialogStyle={{
           title: 'Add New Item',
@@ -27,4 +27,4 @@ function MockContentForm(): React.ReactElement {
   );
 }
 
-export default MockContentForm;
+export default MockContentModal;
