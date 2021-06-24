@@ -108,4 +108,16 @@ function KebabMenuItem(props: KebabMenuItemProps): React.ReactElement {
   }
 }
 
-export default KebabMenuItem;
+// Ref arg seems to be unused for now
+// Ref forwarding necessary for use in MUI Menu
+const ForwardedKebabMenuItem = React.forwardRef(
+  (props: KebabMenuItemProps, _ref) => {
+    return (
+      <KebabMenuItem
+        {...props}
+      />
+    );
+  }
+);
+
+export default ForwardedKebabMenuItem;

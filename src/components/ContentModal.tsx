@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
+import { KeyboardDatePicker } from '@material-ui/pickers';
 import Grid from '@material-ui/core/Grid';
 import ConfirmationDialog from './ConfirmationDialog';
 
@@ -79,6 +80,22 @@ function ContentModal(props: ContentModalProps): React.ReactElement {
         };
       },
       label: 'year',
+    },
+    {
+      component: KeyboardDatePicker,
+      propFactory: (setter) => {
+        return {
+          disableToolbar: true,
+          variant: 'inline',
+          format: 'MM/dd/yyyy',
+          label: 'Reviewed Date',
+          onChange: (date: Date) => {
+            setter(date);
+          },
+          value: state['reviewDate'],
+        };
+      },
+      label: 'reviewDate',
     },
   ];
 
