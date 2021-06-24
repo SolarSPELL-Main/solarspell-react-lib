@@ -15,8 +15,10 @@ type BaseProps = {
 type ToggleProps = {
   type: 'toggle'
   tooltip?: string
-  toggle: (active: boolean, dispatch: 
-                          React.Dispatch<React.SetStateAction<boolean>>) => void
+  toggle: (
+    active: boolean,
+    dispatch: React.Dispatch<React.SetStateAction<boolean>>,
+  ) => void
   activeIcon: SvgIconComponent
   inactiveIcon: SvgIconComponent
   active?: boolean
@@ -47,8 +49,10 @@ function ActionPanelItem(props: ActionPanelItemProps): React.ReactElement {
     }
     case 'toggle': {
       const [active, setActive] = React.useState(props.active ?? false);
-      const toggle = React.useCallback(() => props.toggle(!active, setActive), 
-                                                        [active, props.toggle]);
+      const toggle = React.useCallback(
+        () => props.toggle(!active, setActive),
+        [active, props.toggle]
+      );
 
       return (
         <ActionPanelItem
@@ -60,16 +64,23 @@ function ActionPanelItem(props: ActionPanelItemProps): React.ReactElement {
       );
     }
     case 'confirm': {
-      const [confirmationDialogActive, setConfirmationDialogActive] = 
-                                                          React.useState(false);
-      const onAgree = React.useCallback((agreed: boolean) => {
-        if (agreed) {
-          props.onAction();
-        }
-        setConfirmationDialogActive(false);
-      }, [props.onAction]);
-      const openConfirmationDialog = React.useCallback(() => 
-                                        setConfirmationDialogActive(true), []);
+      const [
+        confirmationDialogActive,
+        setConfirmationDialogActive,
+      ] = React.useState(false);
+      const onAgree = React.useCallback(
+        (agreed: boolean) => {
+          if (agreed) {
+            props.onAction();
+          }
+          setConfirmationDialogActive(false);
+        },
+        [props.onAction]
+      );
+      const openConfirmationDialog = React.useCallback(
+        () => setConfirmationDialogActive(true),
+        [],
+      );
 
       return (
         <>
@@ -94,16 +105,20 @@ function ActionPanelItem(props: ActionPanelItemProps): React.ReactElement {
       );
     }
     case 'text_input': {
-      const [textInputDialogActive, setTextInputDialogActive] = 
-                                                          React.useState(false);
+      const [
+        textInputDialogActive,
+        setTextInputDialogActive,
+      ] = React.useState(false);
       const onSubmit = React.useCallback((val: string) => {
         if (val) {
           props.onAction(val);
         }
         setTextInputDialogActive(false);
       }, [props.onAction]);
-      const openTextInputDialog = React.useCallback(() => 
-                                            setTextInputDialogActive(true), []);
+      const openTextInputDialog = React.useCallback(
+        () => setTextInputDialogActive(true),
+        [],
+      );
 
       return (
         <>

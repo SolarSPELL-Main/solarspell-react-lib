@@ -27,10 +27,14 @@ function ConfirmationDialog({
   confirmText='Confirm',
   ...props
 }: React.PropsWithChildren<ConfirmationDialogProps>): React.ReactElement {
-  const agree = React.useCallback(preventEventFactory(() => props.onClose(true)), 
-                                                              [props.onClose]);
-  const disagree = React.useCallback(preventEventFactory(() => 
-                                        props.onClose(false)), [props.onClose]);
+  const agree = React.useCallback(
+    preventEventFactory(() => props.onClose(true)),
+    [props.onClose],
+  );
+  const disagree = React.useCallback(
+    preventEventFactory(() => props.onClose(false)),
+    [props.onClose],
+  );
 
   return (
     <Dialog

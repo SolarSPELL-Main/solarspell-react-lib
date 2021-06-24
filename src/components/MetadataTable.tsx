@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import {
   GridColDef,
@@ -14,8 +15,10 @@ import { MetadataTyped, MetadataTagged } from './types';
 import { BaseMetadata, BaseMetadataType } from '../types';
 
 // Optional components addable to the table
-type ComponentsDef<P extends MetadataTyped = any, V extends MetadataTagged = 
-                                                                        any> = {
+type ComponentsDef<
+  P extends MetadataTyped = any,
+  V extends MetadataTagged = any,
+> = {
   KebabMenu?: React.JSXElementConstructor<P>
   ActionPanel?: React.JSXElementConstructor<V>
 }
@@ -26,13 +29,19 @@ type ComponentsPropsDef = {
 }
 
 // Optional customizable properties of the table
-type MetadataTableOptionalProps<P extends MetadataTyped, V extends MetadataTagged> = {
+type MetadataTableOptionalProps<
+  P extends MetadataTyped,
+  V extends MetadataTagged,
+> = {
   components?: ComponentsDef<P,V>
   componentProps?: ComponentsPropsDef
   additionalColumns?: GridColDef[]
   selectable?: boolean
-  onSelectChange?: (metadata: BaseMetadata[], metadataType: BaseMetadataType, 
-                                  rows: GridSelectionModelChangeParams) => void
+  onSelectChange?: (
+    metadata: BaseMetadata[],
+    metadataType: BaseMetadataType,
+    rows: GridSelectionModelChangeParams,
+  ) => void
 }
 
 // Actual component props
@@ -44,25 +53,27 @@ type MetadataTableProps<P extends MetadataTyped, V extends MetadataTagged> = {
 const CustomGridColumnMenu = React.forwardRef<
   HTMLUListElement,
   GridColumnMenuProps
->(function GridColumnMenu(props: GridColumnMenuProps, ref) {
+>((props: GridColumnMenuProps, ref) => {
   const { hideMenu, currentColumn } = props;
 
   return (
     <GridColumnMenuContainer ref={ref} {...props}>
-      <SortGridMenuItems onClick={hideMenu} column={currentColumn!} />
-      <GridFilterMenuItem onClick={hideMenu} column={currentColumn!} />
+      <SortGridMenuItems onClick={hideMenu} column={currentColumn} />
+      <GridFilterMenuItem onClick={hideMenu} column={currentColumn} />
     </GridColumnMenuContainer>
   );
 });
 
 /**
- * This component creates a single table for a metadata type and its 
- * corresponding members. All members of the passed in metadata prop should 
- * belong to the metadataType prop. @param props The data and properties for the
- * table. @returns An expandable panel containing the metadata in a table.
+ * This component creates a single table for a metadata type and its members.
+ * All members of the passed in metadata prop should belong to metadataType.
+ * @param props The data and properties for the table.
+ * @returns An expandable panel containing the metadata in a table.
  */
-function MetadataTable<P extends MetadataTyped, V extends MetadataTagged>
-                          (props: MetadataTableProps<P,V>): React.ReactElement {
+function MetadataTable<
+  P extends MetadataTyped,
+  V extends MetadataTagged,
+>(props: MetadataTableProps<P,V>): React.ReactElement {
   const columns: GridColDef[] = [
     {
       field: 'name',
@@ -72,7 +83,7 @@ function MetadataTable<P extends MetadataTyped, V extends MetadataTagged>
       filterable: true,
       hide: false,
     },
-    ...props.additionalColumns ?? []
+    ...props.additionalColumns ?? [],
   ];
 
   // Add Actions column only if ActionPanel component specified
@@ -92,8 +103,11 @@ function MetadataTable<P extends MetadataTyped, V extends MetadataTagged>
         const metadata = params.row as BaseMetadata;
 
         return (
-          <ActionPanel {...ActionPanelProps} metadata={metadata} 
-                                            metadataType={props.metadataType} />
+          <ActionPanel
+            {...ActionPanelProps}
+            metadata={metadata}
+            metadataType={props.metadataType}
+          />
         );
       },
     });
@@ -112,7 +126,9 @@ function MetadataTable<P extends MetadataTyped, V extends MetadataTagged>
   }
 
   const onSelectChange_ = React.useCallback((rows) => {
-    props.onSelectChange!(props.metadata, props.metadataType, rows)
+    if (props.onSelectChange) {
+      props.onSelectChange(props.metadata, props.metadataType, rows);
+    }
   }, [props.onSelectChange, props.metadata, props.metadataType]);
 
   return (

@@ -1,7 +1,7 @@
-interface BaseMetadata<MetadataType extends BaseMetadataType = BaseMetadataType> {
+interface BaseMetadata<T extends BaseMetadataType = BaseMetadataType> {
     name: string
     id: number
-    metadataType: MetadataType
+    metadataType: T
 }
 
 interface BaseMetadataType {
@@ -9,7 +9,7 @@ interface BaseMetadataType {
     id: number
 }
 
-interface BaseContent<Metadata extends BaseMetadata = BaseMetadata> {
+interface BaseContent<M extends BaseMetadata = BaseMetadata> {
     title: string;
     id: number;
     description: string;
@@ -17,7 +17,7 @@ interface BaseContent<Metadata extends BaseMetadata = BaseMetadata> {
     datePublished: string;
     copyright: string;
     rightsStatement: string;
-    metadata: Metadata[];
+    metadata: M[];
 }
 
-export type { BaseMetadata, BaseMetadataType, BaseContent }
+export type { BaseMetadata, BaseMetadataType, BaseContent };

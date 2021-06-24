@@ -4,9 +4,32 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import {
+  unstable_createMuiStrictModeTheme as createMuiTheme,
+  ThemeProvider,
+} from '@material-ui/core/styles';
+
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+import {
+  MuiPickersUtilsProvider,
+} from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+
+// Disable Transitions for Strict Mode
+// Also use unstable func to create MUI theme specific for Strict Mode
+const theme = createMuiTheme({
+  transitions: { create: () => 'none' },
+});
+
 ReactDOM.render(
   <React.StrictMode>
+  <CssBaseline />
+  <ThemeProvider theme={theme}>
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
     <App />
+    </MuiPickersUtilsProvider>
+  </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
