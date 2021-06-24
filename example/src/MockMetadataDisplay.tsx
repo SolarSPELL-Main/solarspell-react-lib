@@ -1,5 +1,9 @@
 import React from 'react';
-import { MetadataDisplay, BaseMetadata, BaseMetadataType } from 'solarspell-react-lib';
+import {
+  MetadataDisplay,
+  BaseMetadata,
+  BaseMetadataType,
+} from 'solarspell-react-lib';
 import DLMSActionPanel from './DLMSActionPanel';
 import DLMSKebabMenu from './DLMSKebabMenu';
 
@@ -16,7 +20,9 @@ function MockMetadataTable(): React.ReactElement {
     const newMetadata: Record<number, BaseMetadata[]> = {
       [metadata.metadataType.id]: metadataOfType.filter(v => v.id !== metadata.id),
     };
-    newMetadata[metadata.metadataType.id].push(Object.assign({}, metadata, { name: newVal }));
+    newMetadata[metadata.metadataType.id].push(
+      Object.assign({}, metadata, { name: newVal })
+    );
     setMetadata(Object.assign({}, metadataState, newMetadata));
   }
 
