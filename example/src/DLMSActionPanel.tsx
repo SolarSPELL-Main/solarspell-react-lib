@@ -1,5 +1,6 @@
 import React from 'react';
-import { ActionPanel, ActionPanelItem, BaseMetadata, BaseMetadataType } from 'solarspell-react-lib';
+import { ActionPanel, ActionPanelItem, BaseMetadata, BaseMetadataType } from 
+                    'solarspell-react-lib';
 import { Edit, Delete } from '@material-ui/icons';
 
 type DLMSActionPanelProps = {
@@ -33,7 +34,8 @@ function DLMSActionPanel({
         tooltip={'Delete'}
         icon={Delete}
         onAction={onDelete_}
-        confirmationTitle={`Delete Metadata item ${metadata.name} of type ${metadataType.name}?`}
+        confirmationTitle={`Delete Metadata item ${metadata.name} of type 
+                ${metadataType.name}?`}
         confirmationDescription={'WARNING: Deleting a metadata will also delete each of that metadata on every content and is irreversible.'}
       />
     </ActionPanel>

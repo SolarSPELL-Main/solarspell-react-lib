@@ -25,7 +25,8 @@ type ContentTaggerProps = {
  */
 function ContentTagger(props: ContentTaggerProps): React.ReactElement {
   const filter = createFilterOptions<BaseMetadata>();
-  const [selected, setSelected] = React.useState<BaseMetadata[]>(props.initialTags ?? []);
+  const [selected, setSelected] = React.useState<BaseMetadata[]>
+                                                      (props.initialTags ?? []);
 
   return (
     <Autocomplete

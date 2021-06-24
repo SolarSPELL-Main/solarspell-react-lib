@@ -41,7 +41,8 @@ type ButtonProps<T> = {
   type: 'button'
 } & T
 
-export type CustomizableActionProps<T extends { onAction: () => void }> = ConfirmProps<T> | TextInputProps<T> | ButtonProps<T>
+export type CustomizableActionProps<T extends { onAction: () => void }> = 
+                            ConfirmProps<T> | TextInputProps<T> | ButtonProps<T>
 
 export type MetadataTyped = {
   metadataType: BaseMetadataType

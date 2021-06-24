@@ -1,5 +1,6 @@
 import React from 'react';
-import { KebabMenu, KebabMenuItem, BaseMetadataType } from 'solarspell-react-lib';
+import { KebabMenu, KebabMenuItem, BaseMetadataType } from 
+                                                      'solarspell-react-lib';
 
 type DLMSKebabMenuProps = {
   onAdd: (type: BaseMetadataType, val: string) => void
@@ -16,14 +17,17 @@ function DLMSKebabMenu({
   onDownload,
   metadataType,
 }: DLMSKebabMenuProps): React.ReactElement {
-  const onAdd_ = React.useCallback((val: string) => onAdd(metadataType, val), [onAdd, metadataType]);
-  const onEditType_ = React.useCallback((val: string) => onEditType(metadataType, val), [onEditType, metadataType]);
+  const onAdd_ = React.useCallback((val: string) => onAdd(metadataType, val), 
+                                                        [onAdd, metadataType]);
+  const onEditType_ = React.useCallback((val: string) => 
+                    onEditType(metadataType, val), [onEditType, metadataType]);
   const onDeleteType_ = React.useCallback((confirmation: string) => {
     if (confirmation === metadataType.name) {
       onDeleteType(metadataType);
     }
   }, [onDeleteType, metadataType]);
-  const onDownload_ = React.useCallback(() => onDownload(metadataType), [onDownload, metadataType]);
+  const onDownload_ = React.useCallback(() => onDownload(metadataType), 
+                                                    [onDownload, metadataType]);
 
   return (
     <KebabMenu>

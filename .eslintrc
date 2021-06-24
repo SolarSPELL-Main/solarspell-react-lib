@@ -23,6 +23,7 @@
       "curly": ["warn", "all"],
       "brace-style": ["warn"],
       "prefer-arrow-callback": ["warn"],
-      "lines-between-class-members": ["warn", "always", {"exceptAfterSingleLine": true}]
+      "lines-between-class-members": ["warn", "always", 
+                                                {"exceptAfterSingleLine": true}]
     }
 }

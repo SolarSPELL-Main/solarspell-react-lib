@@ -10,7 +10,8 @@ import ContentTagger from "./components/ContentTagger"
 import { BaseMetadata, BaseMetadataType, BaseContent } from "./types"
 
 export {
-    MetadataDisplay, MetadataTable, ActionPanel, ActionPanelItem, ConfirmationDialog, TextInputDialog, KebabMenu, KebabMenuItem,
+    MetadataDisplay, MetadataTable, ActionPanel, ActionPanelItem, 
+    ConfirmationDialog, TextInputDialog, KebabMenu, KebabMenuItem,
     ContentTagger,
 }
 
