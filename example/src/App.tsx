@@ -7,12 +7,12 @@ import MockContentModal from './MockContentModal';
 
 function App(): React.ReactElement {
   return (
-    <>
-      <MockMetadataDisplay />
-      <MockActionPanel />
-      <MockTagger />
-      <MockContentModal />
-    </>
+  <>
+    <MockMetadataDisplay />
+    <MockActionPanel />
+    <MockTagger />
+    <MockContentModal />
+  </>
   );
 }
 
