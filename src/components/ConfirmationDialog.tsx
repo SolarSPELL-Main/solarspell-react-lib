@@ -12,6 +12,8 @@ import { DialogStyleProps } from './types';
 type ConfirmationDialogProps = {
   open: boolean
   onClose: (agreed: boolean) => void
+  stopPropagation?: boolean
+  preventDefault?: boolean
 } & DialogStyleProps
 
 /**
@@ -25,6 +27,8 @@ function ConfirmationDialog({
   cancelText='Cancel',
   confirmColor='secondary',
   confirmText='Confirm',
+  stopPropagation=true,
+  preventDefault=true,
   ...props
 }: React.PropsWithChildren<ConfirmationDialogProps>): React.ReactElement {
   const agree = React.useCallback(
@@ -40,8 +44,8 @@ function ConfirmationDialog({
     <Dialog
       open={props.open}
       onClose={disagree}
-      onClick={preventEvent()}
-      onFocus={preventEvent()}
+      onClick={preventEvent(stopPropagation,preventDefault)}
+      onFocus={preventEvent(stopPropagation,preventDefault)}
       maxWidth={size}
       fullWidth
     >
