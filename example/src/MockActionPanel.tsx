@@ -8,22 +8,22 @@ function MockActionPanel(): React.ReactElement {
   return (
   <ActionPanel>
     <ActionPanelItem
-    type={'button'}
-    tooltip={'Print something to console'}
-    icon={PrintIcon}
-    onAction={() => console.log('Hello, world!')}
+      type={'button'}
+      tooltip={'Print something to console'}
+      icon={PrintIcon}
+      onAction={() => console.log('Hello, world!')}
     />
     <ActionPanelItem
-    type={'toggle'}
-    tooltip={'Sometimes print something to console'}
-    activeIcon={PrintIcon}
-    inactiveIcon={PrintDisabledIcon}
-    toggle={(active, dispatch) => {
-      dispatch(active);
-      if (active) {
-      console.log('Hola, mundo!');
-      }
-    }}
+      type={'toggle'}
+      tooltip={'Sometimes print something to console'}
+      activeIcon={PrintIcon}
+      inactiveIcon={PrintDisabledIcon}
+      toggle={(active, dispatch) => {
+        dispatch(active);
+        if (active) {
+        console.log('Hola, mundo!');
+        }
+      }}
     />
   </ActionPanel>
   );
