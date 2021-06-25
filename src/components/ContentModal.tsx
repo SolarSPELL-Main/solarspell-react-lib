@@ -53,6 +53,8 @@ function ContentModal<
   ] = React.useState<Partial<Record<keyof T,string>>>({});
 
   // Initializes state with initial values and initial state
+  // Initial state takes priority over initialValue properties
+  // Also returns a hook on unrender to reset state to empty
   React.useEffect(() => {
     setState(Object.assign(props.items.reduce<Partial<T>>(
       (accum, val) => ({
@@ -61,6 +63,8 @@ function ContentModal<
       }),
       {},
     ), props.initialState));
+
+    return () => setState({});
   }, [props.items, props.initialState, setState]);
 
   // Setter factory function
@@ -100,7 +104,6 @@ function ContentModal<
         }
       })) {
         props.onSubmit(state as T);
-        setState({});
       }
 
       setReasons(reasonDraft);

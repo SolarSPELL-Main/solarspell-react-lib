@@ -37,7 +37,7 @@ function MockContentModal(): React.ReactElement {
       items={[
         {
           component: TextField,
-          propFactory: (_s, reasons, setter) => {
+          propFactory: (state, reasons, setter) => {
             return {
               fullWidth: true,
               label: 'Title',
@@ -46,6 +46,7 @@ function MockContentModal(): React.ReactElement {
               },
               error: !!reasons['title'],
               helperText: reasons['title'],
+              value: state['title'],
             };
           },
           label: 'title',
@@ -60,13 +61,14 @@ function MockContentModal(): React.ReactElement {
         },
         {
           component: TextField,
-          propFactory: (_s, _r, setter) => {
+          propFactory: (state, _r, setter) => {
             return {
               fullWidth: true,
               label: 'Description',
               onChange: (event: React.SyntheticEvent<HTMLInputElement>) => {
                 setter(event.currentTarget.value);
               },
+              value: state['description'],
             };
           },
           label: 'description',
@@ -110,8 +112,12 @@ function MockContentModal(): React.ReactElement {
           initialValue: undefined,
         },
         {
+          label: 'fileName',
+          initialValue: '',
+        },
+        {
           component: TextField,
-          propFactory: (_s, reasons, setter) => {
+          propFactory: (state, reasons, setter) => {
             return {
               fullWidth: true,
               label: 'Year of Publication',
@@ -120,6 +126,7 @@ function MockContentModal(): React.ReactElement {
               },
               error: !!reasons['datePublished'],
               helperText: reasons['datePublished'],
+              value: state['datePublished'],
             };
           },
           label: 'datePublished',
@@ -151,13 +158,14 @@ function MockContentModal(): React.ReactElement {
         },
         {
           component: TextField,
-          propFactory: (_s, _r, setter) => {
+          propFactory: (state, _r, setter) => {
             return {
               fullWidth: true,
               label: 'Copyright Notes',
               onChange: (event: React.SyntheticEvent<HTMLInputElement>) => {
                 setter(event.currentTarget.value);
               },
+              value: state['copyright'],
             };
           },
           label: 'copyright',
@@ -165,13 +173,14 @@ function MockContentModal(): React.ReactElement {
         },
         {
           component: TextField,
-          propFactory: (_s, _r, setter) => {
+          propFactory: (state, _r, setter) => {
             return {
               fullWidth: true,
               label: 'Rights Statement',
               onChange: (event: React.SyntheticEvent<HTMLInputElement>) => {
                 setter(event.currentTarget.value);
               },
+              value: state['rightsStatement'],
             };
           },
           label: 'rightsStatement',
@@ -199,13 +208,14 @@ function MockContentModal(): React.ReactElement {
         },
         {
           component: TextField,
-          propFactory: (_s, _r, setter) => {
+          propFactory: (state, _r, setter) => {
             return {
               fullWidth: true,
               label: 'Additional Notes',
               onChange: (event: React.SyntheticEvent<HTMLInputElement>) => {
                 setter(event.currentTarget.value);
               },
+              value: state['notes'],
             };
           },
           label: 'notes',
