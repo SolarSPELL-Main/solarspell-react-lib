@@ -11,7 +11,7 @@ export const metadataTypes: BaseMetadataType[] = [
   },
 ];
   
-export const metadata: Record<string, BaseMetadata[]> = {
+export const metadata: Record<number, BaseMetadata[]> = {
   0: [
     {
       id: 0,
