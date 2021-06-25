@@ -35,7 +35,10 @@ function ContentModal<
   T extends Record<string,any>, // type for state
 >(props: ContentModalProps<T>): React.ReactElement {
   const [state, setState] = React.useState<Partial<T>>({});
-  const [reasons, setReasons] = React.useState<Partial<Record<keyof T,string>>>({});
+  const [
+    reasons,
+    setReasons,
+  ] = React.useState<Partial<Record<keyof T,string>>>({});
 
   // Default items for content
   const items: ItemDescriptor<T>[] = [
@@ -100,7 +103,10 @@ function ContentModal<
             const target = event.target as HTMLInputElement;
             setter(target.files?.[0]);
           },
-          text: state['file'] ? `Existing file: ${state['file'].name}` : 'No file chosen',
+          text: state['file'] ?
+            `Existing file: ${state['file'].name}`
+            :
+            'No file chosen',
         };
       },
       label: 'file',
@@ -270,7 +276,11 @@ function ContentModal<
         {items.concat(props.items).map((item, idx) => {
           return (
             <Grid item key={idx} xs={12} style={{ marginBottom: '10px' }} >
-              <item.component {...item.propFactory(stateSetter(item.label), state, reasons)} />
+              <item.component {...item.propFactory(
+                stateSetter(item.label),
+                state,
+                reasons,
+              )} />
             </Grid>
           );
         })}
