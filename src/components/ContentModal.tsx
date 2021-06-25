@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import Checkbox from '@material-ui/core/Checkbox';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import ConfirmationDialog from './ConfirmationDialog';
+import { fullEvery } from '../utils';
 
 import { DialogStyleProps } from './types';
 
@@ -26,6 +28,7 @@ type ContentModalProps<T> = {
   onSubmit: (values?: T) => void
   dialogStyle: DialogStyleProps
   open: boolean
+  initialState?: Partial<T>
 }
 
 function ContentModal<
@@ -74,18 +77,57 @@ function ContentModal<
       initialValue: '',
     },
     {
+      component: (props) => (
+        <>
+          <Button
+            variant={'contained'}
+            component={'label'}
+            onChange={props.onChange}
+          >
+            Upload File
+            <input
+              type={'file'}
+              accept={'*'}
+              hidden
+            />
+          </Button>
+          <Typography>{props.text}</Typography>
+        </>
+      ),
+      propFactory: (setter, state) => {
+        return {
+          onChange: (event: React.SyntheticEvent<HTMLInputElement>) => {
+            const target = event.target as HTMLInputElement;
+            setter(target.files?.[0]);
+          },
+          text: state['file'] ? `Existing file: ${state['file'].name}` : 'No file chosen',
+        };
+      },
+      label: 'file',
+      initialValue: '',
+    },
+    {
       component: TextField,
-      propFactory: (setter) => {
+      propFactory: (setter, _state, reasons) => {
         return {
           fullWidth: true,
           label: 'Year of Publication',
           onChange: (event: React.SyntheticEvent<HTMLInputElement>) => {
             setter(event.currentTarget.value);
           },
+          error: !!reasons['year'],
+          helperText: reasons['year'],
         };
       },
       label: 'year',
       initialValue: '',
+      validator: (state) => {
+        if (!state['year'] || isNaN(Number(state['year']))) {
+          return 'Invalid year';
+        } else {
+          return null;
+        }
+      },
     },
     {
       component: KeyboardDatePicker,
@@ -168,18 +210,20 @@ function ContentModal<
     },
   ];
 
+  // Initializes state with initial values and initial state
   React.useEffect(() => {
     const allItems = items.concat(props.items);
 
-    setState(allItems.reduce<Partial<T>>(
+    setState(Object.assign(allItems.reduce<Partial<T>>(
       (accum, val) => ({
         ...accum,
         [val.label]: val.initialValue,
       }),
       {},
-    ));
-  }, [props.items, setState]);
+    ), props.initialState));
+  }, [props.items, props.initialState, setState]);
 
+  // Setter factory function
   const stateSetter = React.useCallback(
     (name: keyof T) => (val: any) => {
       setState(oldState => ({
@@ -189,12 +233,14 @@ function ContentModal<
     },
     [setState],
   );
-
+  
+  // Performs validation on submission
   const onSubmit = React.useCallback((submitted: boolean) => {
     if (submitted) {
       const reasonDraft: typeof reasons = {};
 
-      if (items.every(item => {
+      // Check no reasons present
+      if (fullEvery(items, item => {
         if (item.validator) {
           const reason = item.validator(state);
           reasonDraft[item.label] = reason;
@@ -217,6 +263,7 @@ function ContentModal<
     <ConfirmationDialog
       onClose={onSubmit}
       open={props.open}
+      preventDefault={false}
       {...props.dialogStyle}
     >
       <Grid container>

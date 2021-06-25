@@ -9,6 +9,8 @@ type TextInputDialogProps = {
   open: boolean
   onClose: (input: string) => void
   label: string
+  stopPropagation?: boolean
+  preventDefault?: boolean
 } & DialogStyleProps
 
 /**
@@ -22,6 +24,8 @@ function TextInputDialog({
   cancelText='Cancel',
   confirmColor='primary',
   confirmText='Confirm',
+  stopPropagation=true,
+  preventDefault=true,
   ...props
 }: TextInputDialogProps): React.ReactElement {
   const [input, setInput] = React.useState('');
@@ -45,6 +49,8 @@ function TextInputDialog({
       confirmColor={confirmColor}
       confirmText={confirmText}
       onClose={onClose}
+      stopPropagation={stopPropagation}
+      preventDefault={preventDefault}
     >
       <TextField
         fullWidth

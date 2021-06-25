@@ -38,7 +38,21 @@ const preventEvent = (
   }
 };
 
+/**
+ * Forces evaluation of every item in an array.
+ * @param array The array to evaluate.
+ * @param callbackfn The evaluation function.
+ * @returns Whether every item satisfies the evaluation function.
+ */
+const fullEvery = <T>(
+  array: T[],
+  callbackfn: (val: T, index: number, array: T[]) => boolean,
+): boolean => {
+  return !array.map(callbackfn).includes(false);
+};
+
 export {
   preventEventFactory,
   preventEvent,
+  fullEvery,
 };
