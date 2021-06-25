@@ -6,11 +6,12 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import { ContentModal, BaseContent } from 'solarspell-react-lib';
 
+// Additional fields seen in DLMS for demo purposes
 type FullBaseContent = {
   duplicatable: boolean
   notes: string
   reviewDate: Date
-  file: File
+  file?: File
 } & BaseContent
 
 function MockContentModal(): React.ReactElement {
@@ -106,7 +107,7 @@ function MockContentModal(): React.ReactElement {
             };
           },
           label: 'file',
-          initialValue: '',
+          initialValue: undefined,
         },
         {
           component: TextField,

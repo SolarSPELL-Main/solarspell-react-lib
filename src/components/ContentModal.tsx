@@ -37,6 +37,12 @@ type ContentModalProps<T> = {
   initialState?: Partial<T>
 }
 
+/**
+ * The modal for adding/editing content.
+ * Takes care of state, validation, and callback.
+ * @param props The form content and callbacks.
+ * @returns A modal for content.
+ */
 function ContentModal<
   T extends BaseContent, // type for state
 >(props: ContentModalProps<T>): React.ReactElement {
