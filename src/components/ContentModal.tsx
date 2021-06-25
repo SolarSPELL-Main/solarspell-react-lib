@@ -67,25 +67,20 @@ function ContentModal<
     return () => setState({});
   }, [props.items, props.initialState, setState]);
 
-  // Setter factory function
-  const stateSetter = React.useCallback(
-    (name: keyof T) => (val: any) => {
+  // Setter factory functions
+  const genericSetter = React.useCallback(
+    (name: keyof T, val: any) => {
       setState(oldState => ({
         ...oldState,
-        [name]: val,
+        [name]: (val instanceof Function) ? val(oldState[name]) : val,
       }));
     },
     [setState],
   );
 
-  const genericSetter = React.useCallback(
-    (name: keyof T, val: any) => {
-      setState(oldState => ({
-        ...oldState,
-        [name]: val,
-      }));
-    },
-    [setState],
+  const stateSetter = React.useCallback(
+    (name: keyof T) => genericSetter.bind(null, name),
+    [setState, genericSetter],
   );
   
   // Performs validation on submission

@@ -4,7 +4,15 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 import { KeyboardDatePicker } from '@material-ui/pickers';
-import { ContentModal, BaseContent } from 'solarspell-react-lib';
+import {
+  ContentModal,
+  ContentMetadataDisplay,
+  BaseContent,
+  BaseMetadataType,
+  BaseMetadata,
+} from 'solarspell-react-lib';
+
+import { metadata, metadataTypes } from './MockData';
 
 // Additional fields seen in DLMS for demo purposes
 type FullBaseContent = {
@@ -205,6 +213,44 @@ function MockContentModal(): React.ReactElement {
           },
           label: 'duplicatable',
           initialValue: false,
+        },
+        {
+          component: ContentMetadataDisplay,
+          propFactory: (state, _r, setter) => {
+            // Have to do some conversion between Record and array
+            // since BaseContent operates with array and components
+            // operate with Records.
+            return {
+              metadataTypes: metadataTypes,
+              metadata: state['metadata']?.reduce<
+                Record<number,BaseMetadata[]>
+              >(
+                (accum, metadata) => {
+                  const id = metadata.metadataType.id;
+                  if (!(id in accum)) {
+                    accum[id] = [];
+                  }
+                  accum[id].push(metadata);
+                  return accum;
+                },
+                {},
+              ),
+              options: metadata,
+              actions: {
+                onSelect: (
+                  metadataType: BaseMetadataType,
+                  selected: BaseMetadata[],
+                ) => {
+                  setter((oldState: BaseMetadata[]) => [
+                    ...oldState.filter(v => v.metadataType !== metadataType),
+                    ...selected,
+                  ]);
+                },
+              },
+            };
+          },
+          label: 'metadata',
+          initialValue: [],
         },
         {
           component: TextField,
