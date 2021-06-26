@@ -7,30 +7,30 @@ import { fullEvery } from '../utils';
 import { DialogStyleProps } from './types';
 import { BaseContent } from '../types';
 
-type ItemDescriptor<T, K extends keyof T> = {
+type ItemDescriptor<T> = {
   component: React.JSXElementConstructor<any>
   propFactory: (
     state: Partial<T>, // current state
-    reasons: Partial<Record<K,string>>, // current error reasons
+    reasons: Partial<Record<keyof T,any>>, // current error reasons
     setter: (val: any) => void, // sets item's field in state to value
     genericSetter: (
-      label: K,
+      label: keyof T,
       val: any,
     ) => void, // set any field in state to value
   ) => any
-  label: K
-  initialValue: T[K]
+  label: keyof T
+  initialValue: any
   validator?: (state: Partial<T>) => any
 } | {
   component?: never
   propFactory?: never
-  label: K
-  initialValue: T[K]
+  label: keyof T
+  initialValue: any
   validator?: (state: Partial<T>) => any
 }
 
 type ContentModalProps<T> = {
-  items: ItemDescriptor<T, keyof T>[]
+  items: ItemDescriptor<T>[]
   onSubmit: (values?: T) => void // values is null when submit cancelled
   dialogStyle: DialogStyleProps
   open: boolean
@@ -46,17 +46,23 @@ type ContentModalProps<T> = {
 function ContentModal<
   T extends BaseContent, // type for state
 >(props: ContentModalProps<T>): React.ReactElement {
-  const [state, setState] = React.useState<Partial<T>>({});
+  const [
+    state,
+    setState,
+  ] = React.useState<Partial<T>>({});
   const [
     reasons,
     setReasons,
-  ] = React.useState<Partial<Record<keyof T,string>>>({});
+  ] = React.useState<Partial<Record<keyof T,any>>>({});
+
+  // Add dummy ID to generated content
+  const items = props.items.concat([{ label: 'id', initialValue: -1 }]);
 
   // Initializes state with initial values and initial state
   // Initial state takes priority over initialValue properties
   // Also returns a hook on unrender to reset state to empty
   React.useEffect(() => {
-    setState(Object.assign(props.items.reduce<Partial<T>>(
+    setState(Object.assign(items.reduce<Partial<T>>(
       (accum, val) => ({
         ...accum,
         [val.label]: val.initialValue,
@@ -89,7 +95,7 @@ function ContentModal<
       const reasonDraft: typeof reasons = {};
 
       // Check no reasons present
-      if (fullEvery(props.items, item => {
+      if (fullEvery(items, item => {
         if (item.validator) {
           const reason = item.validator(state);
           reasonDraft[item.label] = reason;
@@ -105,7 +111,7 @@ function ContentModal<
     } else {
       props.onSubmit();
     }
-  }, [props.onSubmit, setState, setReasons, state]);
+  }, [props.onSubmit, setState, setReasons, state, props.items]);
 
   return (
     <ConfirmationDialog
@@ -115,7 +121,7 @@ function ContentModal<
       {...props.dialogStyle}
     >
       <Grid container>
-        {props.items.map((item, idx) => {
+        {items.map((item, idx) => {
           return (
             <Grid item key={idx} xs={12} style={{ marginBottom: '10px' }} >
               {item.component && <item.component {...item.propFactory(
