@@ -1,7 +1,7 @@
 import React from 'react';
 import MetadataTable, { MetadataTableOptionalProps } from './MetadataTable';
 
-import { BaseMetadata, BaseMetadataType } from '../types';
+import { BaseMetadata, BaseMetadataType } from '../../types';
 
 type MetadataDisplayProps<
   T extends BaseMetadataType,

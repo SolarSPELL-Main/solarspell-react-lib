@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import ContentTagger, { ContentTaggerActionProps } from './ContentTagger';
 
-import { BaseMetadata, BaseMetadataType } from '../types';
+import { BaseMetadata, BaseMetadataType } from '../../types';
 
 type ContentMetadataProps<
   T extends BaseMetadataType,
