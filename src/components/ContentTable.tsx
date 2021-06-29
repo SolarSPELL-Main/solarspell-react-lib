@@ -55,6 +55,7 @@ const CustomGridColumnMenu = React.forwardRef<
 
 /**
  * This component creates a single table for content.
+ * The ActionPanel should take an additional content property.
  * @param props The data and properties for the table.
  * @returns A data grid displaying the content.
  */

@@ -66,6 +66,8 @@ const CustomGridColumnMenu = React.forwardRef<
 /**
  * This component creates a single table for a metadata type and its members.
  * All members of the passed in metadata prop should belong to metadataType.
+ * For components, the KebabMenu should accept metadataType as a property,
+ * and the ActionPanel should accept metadata and metadataType as properties.
  * @param props The data and properties for the table.
  * @returns An expandable panel containing the metadata in a table.
  */

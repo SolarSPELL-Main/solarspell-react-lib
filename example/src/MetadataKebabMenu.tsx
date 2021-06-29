@@ -5,7 +5,7 @@ import {
   BaseMetadataType,
 } from 'solarspell-react-lib';
 
-type DLMSKebabMenuProps = {
+type MetadataKebabMenuProps = {
   onAdd: (type: BaseMetadataType, val: string) => void
   onEditType: (type: BaseMetadataType, val: string) => void
   onDeleteType: (type: BaseMetadataType) => void
@@ -13,13 +13,13 @@ type DLMSKebabMenuProps = {
   metadataType: BaseMetadataType
 }
 
-function DLMSKebabMenu({
+function MetadataKebabMenu({
   onAdd,
   onEditType,
   onDeleteType,
   onDownload,
   metadataType,
-}: DLMSKebabMenuProps): React.ReactElement {
+}: MetadataKebabMenuProps): React.ReactElement {
   const onAdd_ = React.useCallback(
     (val: string) => onAdd(metadataType, val), 
     [onAdd, metadataType],
@@ -79,4 +79,4 @@ function DLMSKebabMenu({
   );
 }
 
-export default DLMSKebabMenu;
+export default MetadataKebabMenu;
