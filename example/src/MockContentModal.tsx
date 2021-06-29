@@ -7,20 +7,11 @@ import { KeyboardDatePicker } from '@material-ui/pickers';
 import {
   ContentModal,
   ContentMetadataDisplay,
-  BaseContent,
   BaseMetadataType,
   BaseMetadata,
 } from 'solarspell-react-lib';
 
-import { metadata, metadataTypes } from './MockData';
-
-// Additional fields seen in DLMS for demo purposes
-type FullBaseContent = {
-  duplicatable: boolean
-  notes: string
-  reviewDate: Date
-  file?: File
-} & BaseContent
+import { metadata, metadataTypes, DLMSContent, content } from './MockData';
 
 function MockContentModal(): React.ReactElement {
   const [open, setOpen] = React.useState(false);
@@ -41,7 +32,8 @@ function MockContentModal(): React.ReactElement {
     >
       Add Content
     </Button>
-    <ContentModal<FullBaseContent>
+    <ContentModal<DLMSContent>
+      initialState={content[0]}
       items={[
         {
           component: TextField,
@@ -217,40 +209,25 @@ function MockContentModal(): React.ReactElement {
         {
           component: ContentMetadataDisplay,
           propFactory: (state, _r, setter) => {
-            // Have to do some conversion between Record and array
-            // since BaseContent operates with array and components
-            // operate with Records.
             return {
               metadataTypes: metadataTypes,
-              metadata: state['metadata']?.reduce<
-                Record<number,BaseMetadata[]>
-              >(
-                (accum, metadata) => {
-                  const id = metadata.metadataType.id;
-                  if (!(id in accum)) {
-                    accum[id] = [];
-                  }
-                  accum[id].push(metadata);
-                  return accum;
-                },
-                {},
-              ),
+              metadata: state['metadata'],
               options: metadata,
               actions: {
                 onSelect: (
                   metadataType: BaseMetadataType,
                   selected: BaseMetadata[],
                 ) => {
-                  setter((oldState: BaseMetadata[]) => [
-                    ...oldState.filter(v => v.metadataType !== metadataType),
-                    ...selected,
-                  ]);
+                  setter((oldState: typeof metadata) => ({
+                    ...oldState,
+                    [metadataType.id]: selected,
+                  }));
                 },
               },
             };
           },
           label: 'metadata',
-          initialValue: [],
+          initialValue: {},
         },
         {
           component: TextField,

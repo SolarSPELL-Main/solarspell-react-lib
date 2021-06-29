@@ -1,4 +1,11 @@
-import { BaseMetadata, BaseMetadataType } from 'solarspell-react-lib';
+import { BaseMetadata, BaseMetadataType, BaseContent } from 'solarspell-react-lib';
+
+export type DLMSContent = {
+  duplicatable: boolean
+  notes: string
+  reviewDate: Date
+  file?: File
+} & BaseContent
 
 export const metadataTypes: BaseMetadataType[] = [
   {
@@ -37,3 +44,23 @@ export const metadata: Record<number, BaseMetadata[]> = {
     },
   ],
 };
+
+const yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
+
+export const content: DLMSContent[] = [
+  {
+    duplicatable: true,
+    notes: 'Pretty good',
+    reviewDate: yesterday,
+    title: 'Content A',
+    id: 0,
+    description: 'Lorem ipsum, and additional latin gibberish',
+    fileName: '',
+    file: undefined,
+    datePublished: '2025',
+    copyright: 'Apache 2.0',
+    rightsStatement: 'I hereby grant legal rights of this content to whoever',
+    metadata: metadata,
+  },
+];
