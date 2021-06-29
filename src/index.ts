@@ -9,6 +9,7 @@ import KebabMenuItem from './components/KebabMenuItem';
 import ContentTagger from './components/ContentTagger';
 import ContentMetadataDisplay from './components/ContentMetadataDisplay';
 import ContentModal from './components/ContentModal';
+import ContentTable from './components/ContentTable';
 import { BaseMetadata, BaseMetadataType, BaseContent } from './types';
 
 export {
@@ -24,6 +25,7 @@ export {
   ContentTagger,
   ContentMetadataDisplay,
   ContentModal,
+  ContentTable,
 
   /** Generics */
   ConfirmationDialog,

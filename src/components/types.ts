@@ -1,5 +1,4 @@
-import { PropTypes } from '@material-ui/core';
-import { BaseMetadata, BaseMetadataType } from '../types';
+import type { PropTypes } from '@material-ui/core';
 
 export type DialogWidth = false | 'md' | 'xs' | 'sm' | 'lg' | 'xl' | undefined
 
@@ -44,12 +43,3 @@ type ButtonProps<T> = {
 export type CustomizableActionProps<T extends {
   onAction: () => void
 }> = ConfirmProps<T> | TextInputProps<T> | ButtonProps<T>
-
-export type MetadataTyped = {
-  metadataType: BaseMetadataType
-}
-
-export type MetadataTagged = {
-  metadataType: BaseMetadataType
-  metadata: BaseMetadata
-}
