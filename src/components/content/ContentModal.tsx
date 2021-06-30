@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import ConfirmationDialog from './ConfirmationDialog';
-import { fullEvery } from '../utils';
+import ConfirmationDialog from '../ConfirmationDialog';
+import { fullEvery } from '../../utils';
 
-import { DialogStyleProps } from './types';
-import { BaseContent } from '../types';
+import { DialogStyleProps } from '../types';
+import { BaseContent } from '../../types';
 
 type ItemDescriptor<T> = {
   component: React.JSXElementConstructor<any>

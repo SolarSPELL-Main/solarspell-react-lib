@@ -1,13 +1,15 @@
 import React from 'react';
 import MetadataTable, { MetadataTableOptionalProps } from './MetadataTable';
 
-import { MetadataTyped, MetadataTagged } from './types';
-import { BaseMetadata, BaseMetadataType } from '../types';
+import { BaseMetadata, BaseMetadataType } from '../../types';
 
-type MetadataDisplayProps<P extends MetadataTyped, V extends MetadataTagged> = {
-  metadataTypes: BaseMetadataType[]
-  metadata: Record<number, BaseMetadata[]>
-  tableProps?: MetadataTableOptionalProps<P,V>
+type MetadataDisplayProps<
+  T extends BaseMetadataType,
+  M extends BaseMetadata,
+> = {
+  metadataTypes: T[]
+  metadata: Record<number, M[]>
+  tableProps?: MetadataTableOptionalProps<T,M>
 }
 
 /**
@@ -18,9 +20,9 @@ type MetadataDisplayProps<P extends MetadataTyped, V extends MetadataTagged> = {
  * @returns A series of expandable panels containing the metadata in tables.
  */
 function MetadataDisplay<
-  P extends MetadataTyped,
-  V extends MetadataTagged,
->(props: MetadataDisplayProps<P,V>): React.ReactElement {
+  T extends BaseMetadataType,
+  M extends BaseMetadata,
+>(props: MetadataDisplayProps<T,M>): React.ReactElement {
   return (
     <>
       {props.metadataTypes.map(metadataType => {

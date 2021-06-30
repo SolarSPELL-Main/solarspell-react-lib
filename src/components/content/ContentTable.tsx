@@ -7,20 +7,14 @@ import {
   GridColumnMenuContainer,
   SortGridMenuItems,
   GridFilterMenuItem,
+  DataGrid,
 } from '@material-ui/data-grid';
 
-import DataTable from './DataTable';
-
-import { MetadataTyped, MetadataTagged } from './types';
-import { BaseMetadata, BaseMetadataType } from '../types';
+import { BaseContent } from '../../types';
 
 // Optional components addable to the table
-type ComponentsDef<
-  P extends MetadataTyped = any,
-  V extends MetadataTagged = any,
-> = {
-  KebabMenu?: React.JSXElementConstructor<P>
-  ActionPanel?: React.JSXElementConstructor<V>
+type ComponentsDef = {
+  ActionPanel?: React.JSXElementConstructor<any>
 }
 
 // Corresponding properties to pass to optional components
@@ -29,26 +23,21 @@ type ComponentsPropsDef = {
 }
 
 // Optional customizable properties of the table
-type MetadataTableOptionalProps<
-  P extends MetadataTyped,
-  V extends MetadataTagged,
-> = {
-  components?: ComponentsDef<P,V>
+type ContentTableOptionalProps<C> = {
+  components?: ComponentsDef
   componentProps?: ComponentsPropsDef
   additionalColumns?: GridColDef[]
   selectable?: boolean
   onSelectChange?: (
-    metadata: BaseMetadata[],
-    metadataType: BaseMetadataType,
+    content: C[],
     rows: GridSelectionModelChangeParams,
   ) => void
 }
 
 // Actual component props
-type MetadataTableProps<P extends MetadataTyped, V extends MetadataTagged> = {
-  metadataType: BaseMetadataType
-  metadata: BaseMetadata[]
-} & MetadataTableOptionalProps<P,V>
+type ContentTableProps<C> = {
+  content: C[]
+} & ContentTableOptionalProps<C>
 
 const CustomGridColumnMenu = React.forwardRef<
   HTMLUListElement,
@@ -65,22 +54,45 @@ const CustomGridColumnMenu = React.forwardRef<
 });
 
 /**
- * This component creates a single table for a metadata type and its members.
- * All members of the passed in metadata prop should belong to metadataType.
+ * This component creates a single table for content.
+ * The ActionPanel should take an additional content property.
  * @param props The data and properties for the table.
- * @returns An expandable panel containing the metadata in a table.
+ * @returns A data grid displaying the content.
  */
-function MetadataTable<
-  P extends MetadataTyped,
-  V extends MetadataTagged,
->(props: MetadataTableProps<P,V>): React.ReactElement {
+function ContentTable<
+  C extends BaseContent,
+>(props: ContentTableProps<C>): React.ReactElement {
   const columns: GridColDef[] = [
     {
-      field: 'name',
-      headerName: 'Metadata Name',
+      field: 'title',
+      headerName: 'Title',
       flex: 1,
-      disableColumnMenu: false,
-      filterable: true,
+      disableColumnMenu: true,
+      filterable: false,
+      hide: false,
+    },
+    {
+      field: 'description',
+      headerName: 'Description',
+      flex: 1,
+      disableColumnMenu: true,
+      filterable: false,
+      hide: false,
+    },
+    {
+      field: 'datePublished',
+      headerName: 'Year of Publication',
+      flex: 1,
+      disableColumnMenu: true,
+      filterable: false,
+      hide: false,
+    },
+    {
+      field: 'fileName',
+      headerName: 'File Name',
+      flex: 1,
+      disableColumnMenu: true,
+      filterable: false,
       hide: false,
     },
     ...props.additionalColumns ?? [],
@@ -100,45 +112,32 @@ function MetadataTable<
       sortable: false,
       filterable: false,
       renderCell: (params) => {
-        const metadata = params.row as BaseMetadata;
+        const content = params.row as C;
 
         return (
           <ActionPanel
             {...ActionPanelProps}
-            metadata={metadata}
-            metadataType={props.metadataType}
+            content={content}
           />
         );
       },
     });
   }
 
-  // Create headerMenu JSX element only if KebabMenu assigned
-  let headerMenu: React.ReactElement | undefined;
-
-  if (props.components?.KebabMenu) {
-    headerMenu = (
-      <props.components.KebabMenu
-        {...props.componentProps?.KebabMenu}
-        metadataType={props.metadataType}
-      />
-    );
-  }
-
   const onSelectChange_ = React.useCallback((rows) => {
     if (props.onSelectChange) {
-      props.onSelectChange(props.metadata, props.metadataType, rows);
+      props.onSelectChange(props.content, rows);
     }
-  }, [props.onSelectChange, props.metadata, props.metadataType]);
+  }, [props.onSelectChange, props.content]);
 
   return (
-    <DataTable
-      header={props.metadataType.name}
-      headerMenu={headerMenu}
+    <DataGrid
       columns={columns}
-      rows={props.metadata}
-      selectable={props.selectable}
-      onSelectChange={props.onSelectChange ? onSelectChange_ : undefined}
+      rows={props.content}
+      autoHeight
+      disableSelectionOnClick
+      checkboxSelection={props.selectable}
+      onSelectionModelChange={onSelectChange_}
       components={{
         ColumnMenu: CustomGridColumnMenu,
       }}
@@ -146,5 +145,5 @@ function MetadataTable<
   );
 }
 
-export type { MetadataTableOptionalProps };
-export default MetadataTable;
+export type { ContentTableOptionalProps };
+export default ContentTable;

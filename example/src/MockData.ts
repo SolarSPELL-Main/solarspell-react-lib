@@ -5,6 +5,7 @@ export type DLMSContent = {
   notes: string
   reviewDate: Date
   file?: File
+  active: boolean
 } & BaseContent
 
 export const metadataTypes: BaseMetadataType[] = [
@@ -62,5 +63,36 @@ export const content: DLMSContent[] = [
     copyright: 'Apache 2.0',
     rightsStatement: 'I hereby grant legal rights of this content to whoever',
     metadata: metadata,
+    active: true,
+  },
+  {
+    duplicatable: true,
+    notes: 'Pretty good',
+    reviewDate: yesterday,
+    title: 'Content B',
+    id: 1,
+    description: 'Lorem ipsum, and additional latin gibberish',
+    fileName: '',
+    file: undefined,
+    datePublished: '2025',
+    copyright: 'Apache 2.0',
+    rightsStatement: 'I hereby grant legal rights of this content to whoever',
+    metadata: metadata,
+    active: true,
+  },
+  {
+    duplicatable: true,
+    notes: 'Pretty good',
+    reviewDate: yesterday,
+    title: 'Content C',
+    id: 2,
+    description: 'Lorem ipsum, and additional latin gibberish',
+    fileName: '',
+    file: undefined,
+    datePublished: '2025',
+    copyright: 'Apache 2.0',
+    rightsStatement: 'I hereby grant legal rights of this content to whoever',
+    metadata: metadata,
+    active: false,
   },
 ];

@@ -7,19 +7,19 @@ import {
 } from 'solarspell-react-lib';
 import { Edit, Delete } from '@material-ui/icons';
 
-type DLMSActionPanelProps = {
+type MetadataActionPanelProps = {
   onEdit: (item: BaseMetadata, val: string) => void
   onDelete: (item: BaseMetadata) => void
   metadata: BaseMetadata
   metadataType: BaseMetadataType
 }
 
-function DLMSActionPanel({
+function MetadataActionPanel({
   onEdit,
   onDelete,
   metadata,
   metadataType,
-}: DLMSActionPanelProps): React.ReactElement {
+}: MetadataActionPanelProps): React.ReactElement {
   const onAction = React.useCallback(
     (val: string) => onEdit(metadata, val),
     [onEdit, metadata],
@@ -51,4 +51,4 @@ function DLMSActionPanel({
   );
 }
 
-export default DLMSActionPanel;
+export default MetadataActionPanel;

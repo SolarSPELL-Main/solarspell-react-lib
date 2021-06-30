@@ -4,7 +4,7 @@ import Autocomplete, {
 } from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 
-import { BaseMetadata, BaseMetadataType } from '../types';
+import { BaseMetadata, BaseMetadataType } from '../../types';
 
 type CreatableProps<
   T extends BaseMetadataType,

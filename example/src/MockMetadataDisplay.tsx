@@ -4,8 +4,8 @@ import {
   BaseMetadata,
   BaseMetadataType,
 } from 'solarspell-react-lib';
-import DLMSActionPanel from './DLMSActionPanel';
-import DLMSKebabMenu from './DLMSKebabMenu';
+import MetadataActionPanel from './MetadataActionPanel';
+import MetadataKebabMenu from './MetadataKebabMenu';
 
 import { metadata, metadataTypes } from './MockData';
 
@@ -65,8 +65,8 @@ function MockMetadataTable(): React.ReactElement {
         metadata={metadataState}
         tableProps={{
           components: {
-            KebabMenu: DLMSKebabMenu,
-            ActionPanel: DLMSActionPanel,
+            KebabMenu: MetadataKebabMenu,
+            ActionPanel: MetadataActionPanel,
           },
           componentProps: {
             KebabMenu: {

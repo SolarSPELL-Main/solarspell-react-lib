@@ -11,29 +11,22 @@ import {
   BaseMetadata,
 } from 'solarspell-react-lib';
 
-import { metadata, metadataTypes, DLMSContent, content } from './MockData';
+import { metadata, metadataTypes, DLMSContent } from './MockData';
 
-function MockContentModal(): React.ReactElement {
-  const [open, setOpen] = React.useState(false);
-  const onSubmit = React.useCallback(
-    (values?: Record<string, any>) => {
-      console.log(values);
-      setOpen(false);
-    },
-    [],
-  );
+type MockEditContentModalProps = {
+  open: boolean
+  content: DLMSContent
+  onSubmit: (vals?: Partial<DLMSContent>) => void
+}
 
+function MockEditContentModal({
+  open,
+  content,
+  onSubmit,
+}: MockEditContentModalProps): React.ReactElement {
   return (
-  <>
-    <Button
-    variant={'contained'}
-    color={'primary'}
-    onClick={() => setOpen(true)}
-    >
-      Add Content
-    </Button>
     <ContentModal<DLMSContent>
-      initialState={content[0]}
+      initialState={content}
       items={[
         {
           component: TextField,
@@ -246,16 +239,15 @@ function MockContentModal(): React.ReactElement {
         },
       ]}
       dialogStyle={{
-        title: 'Add New Item',
+        title: `Edit ${content.title}`,
         cancelColor: 'secondary',
         confirmColor: 'primary',
-        confirmText: 'Add',
+        confirmText: 'Save',
       }}
       onSubmit={onSubmit}
       open={open}
     />
-  </>
   );
 }
 
-export default MockContentModal;
+export default MockEditContentModal;
