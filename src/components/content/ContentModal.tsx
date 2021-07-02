@@ -70,7 +70,10 @@ function ContentModal<
       {},
     ), props.initialState));
 
-    return () => setState({});
+    return () => {
+      setState({});
+      setReasons({});
+    };
   }, [props.items, props.initialState, setState]);
 
   // Setter factory functions
