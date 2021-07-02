@@ -31,7 +31,7 @@ type ItemDescriptor<T> = {
 
 type ContentModalProps<T> = {
   items: ItemDescriptor<T>[]
-  onSubmit: (values?: T) => void // values is null when submit cancelled
+  onSubmit: (values?: Partial<T>) => void // null when submit cancelled
   dialogStyle: DialogStyleProps
   open: boolean
   initialState?: Partial<T>
@@ -107,7 +107,7 @@ function ContentModal<
           return true;
         }
       })) {
-        props.onSubmit(state as T);
+        props.onSubmit(state);
       }
 
       setReasons(reasonDraft);
