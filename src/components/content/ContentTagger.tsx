@@ -102,7 +102,8 @@ function ContentTagger<
       handleHomeEndKeys
       selectOnFocus
       value={props.selected}
-      options={props.options}
+      options={[...props.options, ...props.selected ?? []]}
+      getOptionSelected={(option, val) => option.id === val.id}
       getOptionLabel={option => option.name}
       renderInput={(params) => (
         <TextField
