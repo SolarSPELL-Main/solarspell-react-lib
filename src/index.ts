@@ -16,6 +16,7 @@ import {
   ContentMetadataDisplay,
   ContentModal,
   ContentTable,
+  ContentSearch,
 } from './components/content';
 import { BaseMetadata, BaseMetadataType, BaseContent } from './types';
 
@@ -29,6 +30,7 @@ export {
   ContentMetadataDisplay,
   ContentModal,
   ContentTable,
+  ContentSearch,
 
   /** Generics */
   ConfirmationDialog,

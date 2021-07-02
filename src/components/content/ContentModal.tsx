@@ -40,7 +40,7 @@ type ContentModalProps<T> = {
 }
 
 /**
- * The modal for adding/editing content.
+ * The modal for adding/editing content (can be extended for general).
  * Takes care of state, validation, and callback.
  * @param props The form content and callbacks.
  * @returns A modal for content.
