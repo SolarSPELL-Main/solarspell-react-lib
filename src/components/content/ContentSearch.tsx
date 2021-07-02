@@ -25,6 +25,7 @@ type NumericField = {
 
 type DateField = {
   type: 'date'
+  stringifier?: (val: Date) => string
 }
 
 type StringField = {
@@ -169,7 +170,10 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                     onChange={value => setter(
                       (oldState: any) => ({
                         ...oldState,
-                        from: value,
+                        from: field.stringifier ?
+                          field.stringifier(value)
+                          :
+                          value,
                       })
                     )}
                   />
@@ -185,7 +189,10 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                     onChange={value => setter(
                       (oldState: any) => ({
                         ...oldState,
-                        to: value,
+                        to: field.stringifier ?
+                          field.stringifier(value)
+                          :
+                          value,
                       })
                     )}
                   />
