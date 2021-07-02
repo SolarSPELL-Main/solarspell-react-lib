@@ -6,6 +6,7 @@ import TextInputDialog from './components/TextInputDialog';
 import KebabMenu from './components/KebabMenu';
 import KebabMenuItem from './components/KebabMenuItem';
 import DataTable from './components/DataTable';
+import ExpandPanel from './components/ExpandPanel';
 import {
   MetadataDisplay,
   MetadataTable,
@@ -15,6 +16,7 @@ import {
   ContentMetadataDisplay,
   ContentModal,
   ContentTable,
+  ContentSearch,
 } from './components/content';
 import { BaseMetadata, BaseMetadataType, BaseContent } from './types';
 
@@ -28,6 +30,7 @@ export {
   ContentMetadataDisplay,
   ContentModal,
   ContentTable,
+  ContentSearch,
 
   /** Generics */
   ConfirmationDialog,
@@ -37,6 +40,7 @@ export {
   KebabMenu,
   KebabMenuItem,
   DataTable,
+  ExpandPanel,
 };
 
 export type {

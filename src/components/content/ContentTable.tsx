@@ -4,14 +4,10 @@ import React from 'react';
 import {
   GridColDef,
   GridSelectionModelChangeParams,
-  GridColumnMenuProps,
-  GridColumnMenuContainer,
-  SortGridMenuItems,
-  GridFilterMenuItem,
-  DataGrid,
 } from '@material-ui/data-grid';
 
 //Importing from other files of the projects
+import DataTable from '../DataTable';
 import { BaseContent } from '../../types';
 
 // Optional components addable to the table
@@ -40,20 +36,6 @@ type ContentTableOptionalProps<C> = {
 type ContentTableProps<C> = {
   content: C[]
 } & ContentTableOptionalProps<C>
-
-const CustomGridColumnMenu = React.forwardRef<
-  HTMLUListElement,
-  GridColumnMenuProps
->((props: GridColumnMenuProps, ref) => {
-  const { hideMenu, currentColumn } = props;
-
-  return (
-    <GridColumnMenuContainer ref={ref} {...props}>
-      <SortGridMenuItems onClick={hideMenu} column={currentColumn} />
-      <GridFilterMenuItem onClick={hideMenu} column={currentColumn} />
-    </GridColumnMenuContainer>
-  );
-});
 
 /**
  * This component creates a single table for content.
@@ -133,16 +115,11 @@ function ContentTable<
   }, [props.onSelectChange, props.content]);
 
   return (
-    <DataGrid
+    <DataTable
       columns={columns}
       rows={props.content}
-      autoHeight
-      disableSelectionOnClick
-      checkboxSelection={props.selectable}
-      onSelectionModelChange={onSelectChange_}
-      components={{
-        ColumnMenu: CustomGridColumnMenu,
-      }}
+      selectable={props.selectable}
+      onSelectChange={onSelectChange_}
     />
   );
 }

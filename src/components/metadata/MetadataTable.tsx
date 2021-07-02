@@ -12,6 +12,7 @@ import {
 
 //Importing functions from other files of the projects
 import DataTable from '../DataTable';
+import ExpandPanel from '../ExpandPanel';
 import { BaseMetadata, BaseMetadataType } from '../../types';
 
 // Optional components addable to the table
@@ -50,6 +51,7 @@ M extends BaseMetadata,
   metadata: M[]
 } & MetadataTableOptionalProps<T,M>
 
+// Removes unnecessary options from ColumnMenu
 const CustomGridColumnMenu = React.forwardRef<
   HTMLUListElement,
   GridColumnMenuProps
@@ -134,17 +136,20 @@ function MetadataTable<
   }, [props.onSelectChange, props.metadata, props.metadataType]);
 
   return (
-    <DataTable
+    <ExpandPanel
       header={props.metadataType.name}
       headerMenu={headerMenu}
-      columns={columns}
-      rows={props.metadata}
-      selectable={props.selectable}
-      onSelectChange={props.onSelectChange ? onSelectChange_ : undefined}
-      components={{
-        ColumnMenu: CustomGridColumnMenu,
-      }}
-    />
+    >
+      <DataTable
+        columns={columns}
+        rows={props.metadata}
+        selectable={props.selectable}
+        onSelectChange={props.onSelectChange ? onSelectChange_ : undefined}
+        components={{
+          ColumnMenu: CustomGridColumnMenu,
+        }}
+      />
+    </ExpandPanel>
   );
 }
 
