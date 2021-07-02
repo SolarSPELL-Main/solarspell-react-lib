@@ -15,7 +15,7 @@ type FieldDescriptor = {
   width: GridSize
 } & Field
 
-type Field = NumericField | DateField | StringField | EnumField
+type Field = NumericField | DateField | StringField | EnumField | CustomField
 
 type NumericField = {
   type: 'numeric'
@@ -38,6 +38,12 @@ type EnumField = {
     title: string
   }[]
   initialValue: string
+}
+
+type CustomField = {
+  type: 'custom'
+  component: React.JSXElementConstructor<any>
+  propFactory: (setter: (val: any) => void, state: Record<string,any>) => any
 }
 
 type ContentSearchProps = {
@@ -203,6 +209,13 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                       )
                     )}
                   </Select>
+                </Grid>
+              );
+              break;
+            case 'custom':
+              element = (
+                <Grid item xs={field.width}>
+                  <field.component {...field.propFactory(setter, state)} />
                 </Grid>
               );
               break;

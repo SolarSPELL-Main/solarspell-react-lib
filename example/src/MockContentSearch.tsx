@@ -1,5 +1,12 @@
 import React from 'react';
-import { ContentSearch } from 'solarspell-react-lib';
+import {
+  ContentSearch,
+  ContentMetadataDisplay,
+  BaseMetadataType,
+  BaseMetadata,
+} from 'solarspell-react-lib';
+
+import { metadata, metadataTypes } from './MockData';
 
 function MockContentSearch(): React.ReactElement {
   return (
@@ -85,6 +92,29 @@ function MockContentSearch(): React.ReactElement {
             },
           ],
           initialValue: 'all',
+        },
+        {
+          label: 'metadata',
+          title: 'Metadata',
+          type: 'custom',
+          width: 12,
+          component: ContentMetadataDisplay,
+          propFactory: (setter, state) => ({
+            metadataTypes: metadataTypes,
+            metadata: state['metadata'] ?? {},
+            options: metadata,
+            actions: {
+              onSelect: (
+                metadataType: BaseMetadataType,
+                tags: BaseMetadata[],
+              ) => setter(
+                (oldState: any) => ({
+                  ...oldState,
+                  [metadataType.id]: tags,
+                })
+              )
+            },
+          }),
         },
       ]}
       onQueryChange={vals => console.log(vals)}
