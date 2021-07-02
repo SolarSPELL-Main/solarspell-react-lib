@@ -1,6 +1,8 @@
+//Importing libraries, APIs from outside the project
 import React from 'react';
-import MetadataTable, { MetadataTableOptionalProps } from './MetadataTable';
 
+//Importing functions from other files of the projects
+import MetadataTable, { MetadataTableOptionalProps } from './MetadataTable';
 import { BaseMetadata, BaseMetadataType } from '../../types';
 
 type MetadataDisplayProps<

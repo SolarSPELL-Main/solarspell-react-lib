@@ -1,3 +1,4 @@
+//Importing libraries, APIs from outside the project
 import React from 'react';
 import {
   DataGrid,
@@ -7,7 +8,6 @@ import {
   GridSlotsComponent,
   GridSlotsComponentsProps,
 } from '@material-ui/data-grid';
-
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';

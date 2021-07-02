@@ -1,9 +1,11 @@
+//Importing libraries, APIs from outside the project
 import React from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
+
+//Importing functions from other files of the projects
 import ConfirmationDialog from './ConfirmationDialog';
 import TextInputDialog from './TextInputDialog';
 import { preventEventFactory } from '../utils';
-
 import { CustomizableActionProps } from './types';
 
 type BaseProps = {

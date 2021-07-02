@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+//Importing libraries, APIs from outside the project
 import React from 'react';
 import {
   GridColDef,
@@ -9,8 +10,8 @@ import {
   GridFilterMenuItem,
 } from '@material-ui/data-grid';
 
+//Importing functions from other files of the projects
 import DataTable from '../DataTable';
-
 import { BaseMetadata, BaseMetadataType } from '../../types';
 
 // Optional components addable to the table

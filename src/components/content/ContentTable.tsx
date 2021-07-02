@@ -1,3 +1,4 @@
+//Importing from outside the project
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import {
@@ -10,6 +11,7 @@ import {
   DataGrid,
 } from '@material-ui/data-grid';
 
+//Importing from other files of the projects
 import { BaseContent } from '../../types';
 
 // Optional components addable to the table

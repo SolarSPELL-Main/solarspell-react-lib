@@ -1,9 +1,11 @@
+//Importing libraries, APIs from outside the project
 import React from 'react';
 import Tooltip from '@material-ui/core/Tooltip/';
+import { SvgIconComponent } from '@material-ui/icons';
+
+//Importing functions from other files of the projects
 import ConfirmationDialog from './ConfirmationDialog';
 import TextInputDialog from './TextInputDialog';
-
-import { SvgIconComponent } from '@material-ui/icons';
 import { CustomizableActionProps } from './types';
 
 type BaseProps = {

@@ -1,8 +1,10 @@
+//Importing libraries, APIs from outside the project
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
+
+//Importing functions from other files of the projects
 import ConfirmationDialog from './ConfirmationDialog';
 import { preventEvent } from '../utils';
-
 import { DialogStyleProps } from './types';
 
 type TextInputDialogProps = {

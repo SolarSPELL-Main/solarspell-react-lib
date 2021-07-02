@@ -1,7 +1,9 @@
+//Importing from outside the project
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import ContentTagger, { ContentTaggerActionProps } from './ContentTagger';
 
+//Importing from other files of the projects
+import ContentTagger, { ContentTaggerActionProps } from './ContentTagger';
 import { BaseMetadata, BaseMetadataType } from '../../types';
 
 type ContentMetadataProps<

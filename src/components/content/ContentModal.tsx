@@ -1,9 +1,11 @@
+//Importing from outside the project
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
+
+//Importing from other files of the projects
 import ConfirmationDialog from '../ConfirmationDialog';
 import { fullEvery } from '../../utils';
-
 import { DialogStyleProps } from '../types';
 import { BaseContent } from '../../types';
 

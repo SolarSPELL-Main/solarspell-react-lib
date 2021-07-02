@@ -1,9 +1,11 @@
+//Importing from outside the project
 import React from 'react';
 import Autocomplete, {
   createFilterOptions,
 } from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 
+//Importing from other files of the projects
 import { BaseMetadata, BaseMetadataType } from '../../types';
 
 type CreatableProps<
