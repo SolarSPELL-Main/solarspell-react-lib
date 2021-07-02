@@ -6,6 +6,7 @@ import TextInputDialog from './components/TextInputDialog';
 import KebabMenu from './components/KebabMenu';
 import KebabMenuItem from './components/KebabMenuItem';
 import DataTable from './components/DataTable';
+import ExpandPanel from './components/ExpandPanel';
 import {
   MetadataDisplay,
   MetadataTable,
@@ -37,6 +38,7 @@ export {
   KebabMenu,
   KebabMenuItem,
   DataTable,
+  ExpandPanel,
 };
 
 export type {
