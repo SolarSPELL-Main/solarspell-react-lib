@@ -26,6 +26,7 @@ type NumericField = {
 type DateField = {
   type: 'date'
   stringifier?: (val: Date) => string
+  parser?: (val: string) => Date
 }
 
 type StringField = {
@@ -166,7 +167,11 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                     }
                     variant={'inline'}
                     format={'MM/dd/yyyy'}
-                    value={current?.from ?? null}
+                    value={current?.from ?
+                      field.parser ? field.parser(current.from) : current.from
+                      :
+                      null
+                    }
                     onChange={value => setter(
                       (oldState: any) => ({
                         ...oldState,
@@ -185,7 +190,11 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                     }
                     variant={'inline'}
                     format={'MM/dd/yyyy'}
-                    value={current?.to ?? null}
+                    value={current?.to ?
+                      field.parser ? field.parser(current.to) : current.to
+                      :
+                      null
+                    }
                     onChange={value => setter(
                       (oldState: any) => ({
                         ...oldState,
