@@ -14,7 +14,7 @@ interface BaseContent<M extends BaseMetadata = BaseMetadata> {
     id: number;
     description: string;
     fileName: string;
-    datePublished: string;
+    datePublished?: string;
     copyright?: string;
     rightsStatement?: string;
     metadata: Record<number, M[]>;
