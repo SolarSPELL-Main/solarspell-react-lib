@@ -59,10 +59,10 @@ jobs:
           ${{ runner.os }}-
     - name: Build library
       run: |
-        npm ci
+        npm install
         npm run build
     - name: Build example
       run: |
         cd example
-        npm ci
+        npm install
         npm run build
