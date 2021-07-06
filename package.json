@@ -14,8 +14,8 @@
     "build": "npm run-script clean && tsc --build tsconfig.json",
     "clean": "rimraf dist",
     "watch": "tsc --watch",
-    "postinstall": "npm run-script build",
-    "lint": "eslint src/**"
+    "lint": "eslint src/**",
+    "postinstall": "npm run-script build"
   },
   "repository": {
     "type": "git",
