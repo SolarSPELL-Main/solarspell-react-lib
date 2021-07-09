@@ -15,7 +15,7 @@ import { BaseContent, BaseMetadataType } from '../../types';
 type ItemDescriptor<T> = {
   title: string
   field: keyof T
-  displayer?: (val: any) => any
+  formatter?: (val: any) => any
   defaultValue?: string
 }
 
@@ -57,8 +57,8 @@ function ContentViewer<
             <Box mb={1} key={idx}>
               <Typography variant={'h6'} >{item.title}</Typography>
               <Typography>{content[item.field] != null ?
-                item.displayer ?
-                  item.displayer(content[item.field])
+                item.formatter ?
+                  item.formatter(content[item.field])
                   :
                   content[item.field]
                 :

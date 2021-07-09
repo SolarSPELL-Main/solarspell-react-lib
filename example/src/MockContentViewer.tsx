@@ -36,7 +36,7 @@ function MockContentViewer(): React.ReactElement {
           {
             title: 'Reviewed On',
             field: 'reviewDate',
-            displayer: (d: Date) => format(d, 'yyyy-MM-dd'),
+            formatter: (d: Date) => format(d, 'yyyy-MM-dd'),
           },
           {
             title: 'Copyright Notes',
@@ -53,7 +53,7 @@ function MockContentViewer(): React.ReactElement {
           {
             title: 'Duplicatable',
             field: 'duplicatable',
-            displayer: (b: boolean) => b ? 'Yes' : 'No',
+            formatter: (b: boolean) => b ? 'Yes' : 'No',
           },
         ]}
       />
