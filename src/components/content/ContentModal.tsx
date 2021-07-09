@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 //Importing from other files of the projects
 import ConfirmationDialog from '../ConfirmationDialog';
 import { fullEvery } from '../../utils';
-import { DialogStyleProps } from '../types';
+import { DialogConfirmationStyleProps } from '../types';
 import { BaseContent } from '../../types';
 
 type ItemDescriptor<T> = {
@@ -34,7 +34,7 @@ type ItemDescriptor<T> = {
 type ContentModalProps<T> = {
   items: ItemDescriptor<T>[]
   onSubmit: (values?: Partial<T>) => void // null when submit cancelled
-  dialogStyle: DialogStyleProps
+  dialogStyle: DialogConfirmationStyleProps
   open: boolean
   initialState?: Partial<T>
 }

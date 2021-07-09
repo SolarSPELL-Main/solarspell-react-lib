@@ -1,8 +1,9 @@
 //Importing from other files of the projects
-import ActionPanel from './components/ActionPanel';
-import ActionPanelItem from './components/ActionPanelItem';
+import GenericDialog from './components/GenericDialog';
 import ConfirmationDialog from './components/ConfirmationDialog';
 import TextInputDialog from './components/TextInputDialog';
+import ActionPanel from './components/ActionPanel';
+import ActionPanelItem from './components/ActionPanelItem';
 import KebabMenu from './components/KebabMenu';
 import KebabMenuItem from './components/KebabMenuItem';
 import DataTable from './components/DataTable';
@@ -33,6 +34,7 @@ export {
   ContentSearch,
 
   /** Generics */
+  GenericDialog,
   ConfirmationDialog,
   TextInputDialog,
   ActionPanel,

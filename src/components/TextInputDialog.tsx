@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 //Importing functions from other files of the projects
 import ConfirmationDialog from './ConfirmationDialog';
 import { preventEvent } from '../utils';
-import { DialogStyleProps } from './types';
+import { DialogConfirmationStyleProps } from './types';
 
 type TextInputDialogProps = {
   open: boolean
@@ -13,7 +13,7 @@ type TextInputDialogProps = {
   label: string
   stopPropagation?: boolean
   preventDefault?: boolean
-} & DialogStyleProps
+} & DialogConfirmationStyleProps
 
 /**
  * Creates a dialog with a text input box that will call a callback.
