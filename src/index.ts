@@ -19,6 +19,7 @@ import {
   ContentModal,
   ContentTable,
   ContentSearch,
+  ContentViewer,
 } from './components/content';
 import { BaseMetadata, BaseMetadataType, BaseContent } from './types';
 
@@ -33,6 +34,7 @@ export {
   ContentModal,
   ContentTable,
   ContentSearch,
+  ContentViewer,
 
   /** Generics */
   GenericDialog,

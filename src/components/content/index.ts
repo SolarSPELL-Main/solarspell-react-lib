@@ -4,6 +4,7 @@ import ContentModal from './ContentModal';
 import ContentTable from './ContentTable';
 import ContentTagger from './ContentTagger';
 import ContentSearch from './ContentSearch';
+import ContentViewer from './ContentViewer';
 
 export {
   ContentMetadataDisplay,
@@ -11,4 +12,5 @@ export {
   ContentTable,
   ContentTagger,
   ContentSearch,
+  ContentViewer,
 };
