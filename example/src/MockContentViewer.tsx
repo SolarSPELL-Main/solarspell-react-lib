@@ -56,6 +56,20 @@ function MockContentViewer(): React.ReactElement {
             formatter: (b: boolean) => b ? 'Yes' : 'No',
           },
         ]}
+        fileDisplay={{
+          field: 'file',
+          formatter: (_: any) => (
+            <object
+              style={{
+                minHeight: '600px',
+              }}
+              width={'600'}
+              data={new URL('https://images-na.ssl-images-amazon.com/images/I/51zLZbEVSTL._AC_SL1200_.jpg').href}
+            >
+              File
+            </object>
+          ),
+        }}
       />
     </>
   );

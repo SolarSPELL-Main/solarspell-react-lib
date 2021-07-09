@@ -26,6 +26,10 @@ type ContentViewerProps<T,M> = {
   dialogStyle?: DialogButtonStyleProps
   open: boolean
   onClose: () => void
+  fileDisplay: {
+    field: keyof T
+    formatter: (val: any) => any
+  }
 }
 
 /**
@@ -43,6 +47,7 @@ function ContentViewer<
   onClose,
   content,
   metadataTypes,
+  fileDisplay,
 }: ContentViewerProps<T,M>): React.ReactElement {
   return (
     <ButtonDialog
@@ -92,9 +97,7 @@ function ContentViewer<
           })}
         </Grid>
         <Grid item xs={8} >
-          {open && <object
-
-          />}
+          {open && fileDisplay.formatter(content[fileDisplay.field])}
         </Grid>
       </Grid>
     </ButtonDialog>
