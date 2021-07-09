@@ -1,8 +1,10 @@
 //Importing from other files of the projects
-import ActionPanel from './components/ActionPanel';
-import ActionPanelItem from './components/ActionPanelItem';
+import GenericDialog from './components/GenericDialog';
+import ButtonDialog from './components/ButtonDialog';
 import ConfirmationDialog from './components/ConfirmationDialog';
 import TextInputDialog from './components/TextInputDialog';
+import ActionPanel from './components/ActionPanel';
+import ActionPanelItem from './components/ActionPanelItem';
 import KebabMenu from './components/KebabMenu';
 import KebabMenuItem from './components/KebabMenuItem';
 import DataTable from './components/DataTable';
@@ -17,6 +19,7 @@ import {
   ContentModal,
   ContentTable,
   ContentSearch,
+  ContentViewer,
 } from './components/content';
 import { BaseMetadata, BaseMetadataType, BaseContent } from './types';
 
@@ -31,8 +34,11 @@ export {
   ContentModal,
   ContentTable,
   ContentSearch,
+  ContentViewer,
 
   /** Generics */
+  GenericDialog,
+  ButtonDialog,
   ConfirmationDialog,
   TextInputDialog,
   ActionPanel,

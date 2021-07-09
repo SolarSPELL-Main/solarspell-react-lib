@@ -12,7 +12,7 @@ interface BaseMetadataType {
 interface BaseContent<M extends BaseMetadata = BaseMetadata> {
     title: string;
     id: number;
-    description: string;
+    description?: string;
     fileName: string;
     datePublished?: string;
     copyright?: string;

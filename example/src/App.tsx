@@ -6,6 +6,7 @@ import MockTagger from './MockTagger';
 import MockAddContentModal from './MockAddContentModal';
 import MockContentTable from './MockContentTable';
 import MockContentSearch from './MockContentSearch';
+import MockContentViewer from './MockContentViewer';
 
 function App(): React.ReactElement {
   return (
@@ -16,6 +17,7 @@ function App(): React.ReactElement {
       <MockAddContentModal />
       <MockContentTable />
       <MockContentSearch />
+      <MockContentViewer />
     </>
   );
 }
