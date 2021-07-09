@@ -1,5 +1,6 @@
 //Importing from other files of the projects
 import GenericDialog from './components/GenericDialog';
+import ButtonDialog from './components/ButtonDialog';
 import ConfirmationDialog from './components/ConfirmationDialog';
 import TextInputDialog from './components/TextInputDialog';
 import ActionPanel from './components/ActionPanel';
@@ -35,6 +36,7 @@ export {
 
   /** Generics */
   GenericDialog,
+  ButtonDialog,
   ConfirmationDialog,
   TextInputDialog,
   ActionPanel,

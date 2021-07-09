@@ -8,10 +8,10 @@ export type GenericDialogStyleProps = {
   size?: DialogWidth
 }
 
-export type DialogStyleProps = {
+export type DialogButtonStyleProps = {
   buttonText?: string
   buttonColor?: PropTypes.Color
-}
+} & GenericDialogStyleProps
 
 export type DialogConfirmationStyleProps = {
   confirmText?: string
