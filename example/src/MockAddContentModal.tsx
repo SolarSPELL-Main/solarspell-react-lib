@@ -34,7 +34,7 @@ function MockAddContentModal(): React.ReactElement {
     </Button>
     <ContentModal<DLMSContent>
       initialState={content[0]}
-      items={[
+      fields={[
         {
           component: TextField,
           propFactory: (state, reasons, setter) => {

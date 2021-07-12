@@ -27,7 +27,7 @@ function MockEditContentModal({
   return (
     <ContentModal<DLMSContent>
       initialState={content}
-      items={[
+      fields={[
         {
           component: TextField,
           propFactory: (state, reasons, setter) => {
