@@ -16,17 +16,17 @@ type ItemDescriptor<T> = {
     reasons: Partial<Record<keyof T,any>>, // current error reasons
     setter: (val: any) => void, // sets item's field in state to value
     genericSetter: (
-      label: keyof T,
+      field: keyof T,
       val: any,
     ) => void, // set any field in state to value
   ) => any
-  label: keyof T
+  field: keyof T
   initialValue: any
   validator?: (state: Partial<T>) => any
 } | {
   component?: never
   propFactory?: never
-  label: keyof T
+  field: keyof T
   initialValue: any
   validator?: (state: Partial<T>) => any
 }
@@ -58,7 +58,7 @@ function ContentModal<
   ] = React.useState<Partial<Record<keyof T,any>>>({});
 
   // Add dummy ID to generated content
-  const items = props.items.concat([{ label: 'id', initialValue: -1 }]);
+  const items = props.items.concat([{ field: 'id', initialValue: -1 }]);
 
   // Initializes state with initial values and initial state
   // Initial state takes priority over initialValue properties
@@ -67,7 +67,7 @@ function ContentModal<
     setState(Object.assign(items.reduce<Partial<T>>(
       (accum, val) => ({
         ...accum,
-        [val.label]: val.initialValue,
+        [val.field]: val.initialValue,
       }),
       {},
     ), props.initialState));
@@ -103,7 +103,7 @@ function ContentModal<
       if (fullEvery(items, item => {
         if (item.validator) {
           const reason = item.validator(state);
-          reasonDraft[item.label] = reason;
+          reasonDraft[item.field] = reason;
           return !reason;
         } else {
           return true;
@@ -132,7 +132,7 @@ function ContentModal<
               {item.component && <item.component {...item.propFactory(
                 state,
                 reasons,
-                stateSetter(item.label),
+                stateSetter(item.field),
                 genericSetter,
               )} />}
             </Grid>

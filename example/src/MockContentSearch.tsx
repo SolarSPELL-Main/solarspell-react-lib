@@ -14,32 +14,32 @@ function MockContentSearch(): React.ReactElement {
     <ContentSearch
       fields={[
         {
-          label: 'title',
+          field: 'title',
           title: 'Title',
           type: 'string',
           width: 4,
         },
         {
-          label: 'fileName',
+          field: 'fileName',
           title: 'Filename',
           type: 'string',
           width: 4,
         },
         {
-          label: 'copyright',
+          field: 'copyright',
           title: 'Copyright Notes',
           type: 'string',
           width: 4,
         },
         {
-          label: 'years',
+          field: 'years',
           title: 'Years',
           type: 'numeric',
           width: 2,
           min: 0,
         },
         {
-          label: 'filesize',
+          field: 'filesize',
           title: 'Filesize',
           type: 'numeric',
           unit: 'MB',
@@ -47,7 +47,7 @@ function MockContentSearch(): React.ReactElement {
           min: 0,
         },
         {
-          label: 'reviewed',
+          field: 'reviewed',
           title: 'Reviewed',
           type: 'date',
           width: 2,
@@ -55,7 +55,7 @@ function MockContentSearch(): React.ReactElement {
           parser: (val: string) => parseISO(val),
         },
         {
-          label: 'active',
+          field: 'active',
           title: 'Active',
           type: 'enum',
           width: 2,
@@ -76,7 +76,7 @@ function MockContentSearch(): React.ReactElement {
           initialValue: 'all',
         },
         {
-          label: 'duplicatable',
+          field: 'duplicatable',
           title: 'Duplicatable',
           type: 'enum',
           width: 2,
@@ -97,7 +97,7 @@ function MockContentSearch(): React.ReactElement {
           initialValue: 'all',
         },
         {
-          label: 'metadata',
+          field: 'metadata',
           title: 'Metadata',
           type: 'custom',
           width: 12,

@@ -49,7 +49,7 @@ function MockAddContentModal(): React.ReactElement {
               value: state['title'],
             };
           },
-          label: 'title',
+          field: 'title',
           initialValue: '',
           validator: (state) => {
             if (!state['title']) {
@@ -71,7 +71,7 @@ function MockAddContentModal(): React.ReactElement {
               value: state['description'],
             };
           },
-          label: 'description',
+          field: 'description',
           initialValue: '',
         },
         {
@@ -108,11 +108,11 @@ function MockAddContentModal(): React.ReactElement {
                 'No file chosen',
             };
           },
-          label: 'file',
+          field: 'file',
           initialValue: undefined,
         },
         {
-          label: 'fileName',
+          field: 'fileName',
           initialValue: '',
         },
         {
@@ -129,7 +129,7 @@ function MockAddContentModal(): React.ReactElement {
               value: state['datePublished'],
             };
           },
-          label: 'datePublished',
+          field: 'datePublished',
           initialValue: '',
           validator: (state) => {
             if (!state['datePublished'] || isNaN(Number(state['datePublished']))) {
@@ -153,7 +153,7 @@ function MockAddContentModal(): React.ReactElement {
               value: state['reviewDate'],
             };
           },
-          label: 'reviewDate',
+          field: 'reviewDate',
           initialValue: new Date(),
         },
         {
@@ -168,7 +168,7 @@ function MockAddContentModal(): React.ReactElement {
               value: state['copyright'],
             };
           },
-          label: 'copyright',
+          field: 'copyright',
           initialValue: '',
         },
         {
@@ -183,7 +183,7 @@ function MockAddContentModal(): React.ReactElement {
               value: state['rightsStatement'],
             };
           },
-          label: 'rightsStatement',
+          field: 'rightsStatement',
           initialValue: '',
         },
         {
@@ -203,7 +203,7 @@ function MockAddContentModal(): React.ReactElement {
               },
             };
           },
-          label: 'duplicatable',
+          field: 'duplicatable',
           initialValue: false,
         },
         {
@@ -226,7 +226,7 @@ function MockAddContentModal(): React.ReactElement {
               },
             };
           },
-          label: 'metadata',
+          field: 'metadata',
           initialValue: {},
         },
         {
@@ -241,7 +241,7 @@ function MockAddContentModal(): React.ReactElement {
               value: state['notes'],
             };
           },
-          label: 'notes',
+          field: 'notes',
           initialValue: '',
         },
       ]}

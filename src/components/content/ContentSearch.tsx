@@ -9,7 +9,7 @@ import { KeyboardDatePicker } from '@material-ui/pickers';
 import ExpandPanel from '../ExpandPanel';
 
 type FieldDescriptor = {
-  label: string
+  field: string
   title: string
   unit?: string
   width: GridSize
@@ -63,10 +63,10 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
 
   // Factory for setters
   const setterFactory = React.useCallback(
-    (label: string) => (val: any) => setState(
+    (field: string) => (val: any) => setState(
       oldState => ({
         ...oldState,
-        [label]: (val instanceof Function) ? val(oldState[label]) : val,
+        [field]: (val instanceof Function) ? val(oldState[field]) : val,
       }),
     ),
     [setState],
@@ -81,8 +81,8 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
     <ExpandPanel header={'Search'}>
       <Grid container spacing={2}>
         {props.fields.map(field => {
-          const current = state[field.label];
-          const setter = setterFactory(field.label);
+          const current = state[field.field];
+          const setter = setterFactory(field.field);
           let element: React.ReactElement;
           
           // Construct search field according to field descriptor
@@ -237,7 +237,7 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
               break;
           }
 
-          return <React.Fragment key={field.label}>{element}</React.Fragment>;
+          return <React.Fragment key={field.field}>{element}</React.Fragment>;
         })}
       </Grid>
     </ExpandPanel>
