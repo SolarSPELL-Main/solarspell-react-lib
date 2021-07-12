@@ -9,6 +9,7 @@ import KebabMenu from './components/KebabMenu';
 import KebabMenuItem from './components/KebabMenuItem';
 import DataTable from './components/DataTable';
 import ExpandPanel from './components/ExpandPanel';
+import Form from './components/Form';
 import {
   MetadataDisplay,
   MetadataTable,
@@ -47,6 +48,7 @@ export {
   KebabMenuItem,
   DataTable,
   ExpandPanel,
+  Form,
 };
 
 export type {

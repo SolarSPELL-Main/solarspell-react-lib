@@ -27,7 +27,7 @@ function MockEditContentModal({
   return (
     <ContentModal<DLMSContent>
       initialState={content}
-      items={[
+      fields={[
         {
           component: TextField,
           propFactory: (state, reasons, setter) => {
@@ -42,7 +42,7 @@ function MockEditContentModal({
               value: state['title'],
             };
           },
-          label: 'title',
+          field: 'title',
           initialValue: '',
           validator: (state) => {
             if (!state['title']) {
@@ -64,7 +64,7 @@ function MockEditContentModal({
               value: state['description'],
             };
           },
-          label: 'description',
+          field: 'description',
           initialValue: '',
         },
         {
@@ -101,11 +101,11 @@ function MockEditContentModal({
                 'No file chosen',
             };
           },
-          label: 'file',
+          field: 'file',
           initialValue: undefined,
         },
         {
-          label: 'fileName',
+          field: 'fileName',
           initialValue: '',
         },
         {
@@ -122,7 +122,7 @@ function MockEditContentModal({
               value: state['datePublished'],
             };
           },
-          label: 'datePublished',
+          field: 'datePublished',
           initialValue: '',
           validator: (state) => {
             if (!state['datePublished'] || isNaN(Number(state['datePublished']))) {
@@ -146,7 +146,7 @@ function MockEditContentModal({
               value: state['reviewDate'],
             };
           },
-          label: 'reviewDate',
+          field: 'reviewDate',
           initialValue: new Date(),
         },
         {
@@ -161,7 +161,7 @@ function MockEditContentModal({
               value: state['copyright'],
             };
           },
-          label: 'copyright',
+          field: 'copyright',
           initialValue: '',
         },
         {
@@ -176,7 +176,7 @@ function MockEditContentModal({
               value: state['rightsStatement'],
             };
           },
-          label: 'rightsStatement',
+          field: 'rightsStatement',
           initialValue: '',
         },
         {
@@ -196,7 +196,7 @@ function MockEditContentModal({
               },
             };
           },
-          label: 'duplicatable',
+          field: 'duplicatable',
           initialValue: false,
         },
         {
@@ -219,7 +219,7 @@ function MockEditContentModal({
               },
             };
           },
-          label: 'metadata',
+          field: 'metadata',
           initialValue: {},
         },
         {
@@ -234,7 +234,7 @@ function MockEditContentModal({
               value: state['notes'],
             };
           },
-          label: 'notes',
+          field: 'notes',
           initialValue: '',
         },
       ]}
