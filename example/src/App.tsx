@@ -15,9 +15,9 @@ function App(): React.ReactElement {
       <MockActionPanel />
       <MockTagger />
       <MockAddContentModal />
-      <MockContentTable />
       <MockContentSearch />
       <MockContentViewer />
+      <MockContentTable />
     </>
   );
 }

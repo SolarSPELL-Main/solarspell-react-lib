@@ -1,15 +1,17 @@
 import React from 'react';
-import { ContentTable } from 'solarspell-react-lib';
+import Button from '@material-ui/core/Button';
+import { GridColDef } from '@material-ui/data-grid';
+import { format } from 'date-fns';
+
+import { ContentTable, ContentColumnSelection } from 'solarspell-react-lib';
 
 import ContentActionPanel from './ContentActionPanel';
-import { content, DLMSContent } from './MockData';
+import { metadataTypes, content, DLMSContent } from './MockData';
 
-type MockContentTableProps = {
-
-}
-
-function MockContentTable(props: MockContentTableProps): React.ReactElement {
+function MockContentTable(): React.ReactElement {
   const [stateContent, setStateContent] = React.useState(content);
+  const [open, setOpen] = React.useState(false);
+  const [cols, setCols] = React.useState<GridColDef[]>([]);
 
   const onEdit_ = React.useCallback(
     (item: DLMSContent, vals: Partial<DLMSContent>) => {
@@ -32,19 +34,73 @@ function MockContentTable(props: MockContentTableProps): React.ReactElement {
   );
 
   return (
-    <ContentTable
-      content={stateContent}
-      selectable
-      components={{
-        ActionPanel: ContentActionPanel,
-      }}
-      componentProps={{
-        ActionPanel: {
-          onEdit: onEdit_,
-          onToggleActive: onToggleActive_,
-        },
-      }}
-    />
+    <>
+      <Button
+        variant={'contained'}
+        color={'primary'}
+        onClick={() => setOpen(true)}
+      >
+        Column Selection
+      </Button>
+      <ContentColumnSelection<DLMSContent>
+        open={open}
+        metadataTypes={metadataTypes}
+        onClose={c => {
+          setCols(c);
+          setOpen(false);
+        }}
+        fields={[
+          {
+            title: 'Duplicatable',
+            field: 'duplicatable',
+            column: (f, b) => ({
+              field: f.field,
+              headerName: f.title,
+              flex: 1,
+              disableColumnMenu: true,
+              filterable: false,
+              hide: b,
+              valueFormatter: (params) => {
+                return params.getValue(
+                  params.id, f.field,
+                ) ? 'Yes' : 'No';
+              },
+            }),
+          },
+          {
+            title: 'Review Data',
+            field: 'reviewDate',
+            column: (f, b) => ({
+              field: f.field,
+              headerName: f.title,
+              flex: 1,
+              disableColumnMenu: true,
+              filterable: false,
+              hide: b,
+              valueFormatter: (params) => {
+                return format(params.getValue(
+                  params.id, f.field,
+                ) as Date, 'yyyy-MM-dd');
+              },
+            }),
+          },
+        ]}
+      />
+      <ContentTable
+        content={stateContent}
+        selectable
+        components={{
+          ActionPanel: ContentActionPanel,
+        }}
+        componentProps={{
+          ActionPanel: {
+            onEdit: onEdit_,
+            onToggleActive: onToggleActive_,
+          },
+        }}
+        additionalColumns={cols}
+      />
+    </>
   )
 }
 

@@ -32,7 +32,7 @@ function GenericDialog({
       onClose={props.onClose}
       maxWidth={size}
     >
-      <DialogTitle>{props.title}</DialogTitle>
+      {props.title && <DialogTitle>{props.title}</DialogTitle>}
       {(props.description || props.children) && <DialogContent>
         <DialogContentText>{props.description}</DialogContentText>
         {props.children}

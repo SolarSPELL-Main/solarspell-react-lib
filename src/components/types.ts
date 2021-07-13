@@ -3,7 +3,7 @@ import type { PropTypes } from '@material-ui/core';
 export type DialogWidth = false | 'md' | 'xs' | 'sm' | 'lg' | 'xl' | undefined
 
 export type GenericDialogStyleProps = {
-  title: string
+  title?: string
   description?: string
   size?: DialogWidth
 }

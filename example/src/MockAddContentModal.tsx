@@ -26,9 +26,9 @@ function MockAddContentModal(): React.ReactElement {
   return (
   <>
     <Button
-    variant={'contained'}
-    color={'primary'}
-    onClick={() => setOpen(true)}
+      variant={'contained'}
+      color={'primary'}
+      onClick={() => setOpen(true)}
     >
       Add Content
     </Button>
