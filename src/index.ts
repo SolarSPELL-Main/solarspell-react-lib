@@ -10,6 +10,7 @@ import KebabMenuItem from './components/KebabMenuItem';
 import DataTable from './components/DataTable';
 import ExpandPanel from './components/ExpandPanel';
 import Form from './components/Form';
+import Selection from './components/Selection';
 import {
   MetadataDisplay,
   MetadataTable,
@@ -21,6 +22,7 @@ import {
   ContentTable,
   ContentSearch,
   ContentViewer,
+  ContentColumnSelection,
 } from './components/content';
 import { BaseMetadata, BaseMetadataType, BaseContent } from './types';
 
@@ -36,6 +38,7 @@ export {
   ContentTable,
   ContentSearch,
   ContentViewer,
+  ContentColumnSelection,
 
   /** Generics */
   GenericDialog,
@@ -49,6 +52,7 @@ export {
   DataTable,
   ExpandPanel,
   Form,
+  Selection,
 };
 
 export type {

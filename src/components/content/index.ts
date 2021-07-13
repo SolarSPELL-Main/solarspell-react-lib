@@ -5,6 +5,7 @@ import ContentTable from './ContentTable';
 import ContentTagger from './ContentTagger';
 import ContentSearch from './ContentSearch';
 import ContentViewer from './ContentViewer';
+import ContentColumnSelection from './ContentColumnSelection';
 
 export {
   ContentMetadataDisplay,
@@ -13,4 +14,5 @@ export {
   ContentTagger,
   ContentSearch,
   ContentViewer,
+  ContentColumnSelection,
 };
