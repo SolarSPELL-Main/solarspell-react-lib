@@ -9,7 +9,7 @@ import KebabMenu from './components/KebabMenu';
 import KebabMenuItem from './components/KebabMenuItem';
 import DataTable from './components/DataTable';
 import ExpandPanel from './components/ExpandPanel';
-import Form from './components/Form';
+import Form, { FormFieldDescriptor } from './components/Form';
 import Selection from './components/Selection';
 import {
   MetadataDisplay,
@@ -57,4 +57,5 @@ export {
 
 export type {
   BaseMetadata, BaseMetadataType, BaseContent,
+  FormFieldDescriptor,
 };
