@@ -125,7 +125,10 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                       setter(
                         (oldState: any) => ({
                           ...oldState,
-                          from: parseInt(event.target.value),
+                          from: event.target.value ?
+                            parseInt(event.target.value)
+                            :
+                            null,
                         })
                       );
                     }}
@@ -150,7 +153,10 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                       setter(
                         (oldState: any) => ({
                           ...oldState,
-                          to: parseInt(event.target.value),
+                          to: event.target.value ?
+                            parseInt(event.target.value)
+                            :
+                            null,
                         })
                       );
                     }}
