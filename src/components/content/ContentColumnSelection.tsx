@@ -53,7 +53,7 @@ function ContentColumnSelection<
             const metadata = (
               params.row.metadata as Record<number,M[]>
             )[metadataType.id];
-            return metadata.map(m => m.name).join(', ');
+            return metadata?.map(m => m.name).join(', ') ?? '';
           },
         }),
       })
