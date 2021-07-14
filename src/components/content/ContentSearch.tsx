@@ -182,19 +182,19 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                     // So we require this kind of dual-state that keeps
                     // track of the possibly-invalid state and the
                     // actual valid state.
-                    value={current?.rawFrom ?? (current?.from ?
-                      field.parser(current.from)
-                      :
-                      null)
-                    }
-                    onChange={(date: Date) => setter(
+                    value={null}
+                    inputValue={current?.rawFrom ?? ''}
+                    onChange={(date: Date, val?: string|null) => setter(
                       (oldState: any) => ({
                         ...oldState,
-                        rawFrom: date,
-                        from: isValidDate(date) ?
-                          field.stringifier(date)
+                        rawFrom: val,
+                        from: val ?
+                          isValidDate(date) ?
+                            field.stringifier(date)
+                            :
+                            oldState?.from
                           :
-                          oldState?.from,
+                          null,
                       })
                     )}
                   />
@@ -206,19 +206,19 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                     }
                     variant={'inline'}
                     format={'MM/dd/yyyy'}
-                    value={current?.rawTo ?? (current?.to ?
-                      field.parser(current.to)
-                      :
-                      null)
-                    }
-                    onChange={(date: Date) => setter(
+                    value={null}
+                    inputValue={current?.rawTo ?? ''}
+                    onChange={(date: Date, val?: string|null) => setter(
                       (oldState: any) => ({
                         ...oldState,
-                        rawTo: date,
-                        to: isValidDate(date) ?
-                          field.stringifier(date)
+                        rawTo: val,
+                        to: val ?
+                          isValidDate(date) ?
+                            field.stringifier(date)
+                            :
+                            oldState?.to
                           :
-                          oldState?.to,
+                          null,
                       })
                     )}
                   />

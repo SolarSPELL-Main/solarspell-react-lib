@@ -72,20 +72,20 @@ function ContentSearch(props) {
                                         // So we require this kind of dual-state that keeps
                                         // track of the possibly-invalid state and the
                                         // actual valid state.
-                                        value: (_g = current === null || current === void 0 ? void 0 : current.rawFrom) !== null && _g !== void 0 ? _g : ((current === null || current === void 0 ? void 0 : current.from) ?
-                                            field.parser(current.from)
-                                            :
-                                                null), onChange: (date) => setter((oldState) => (Object.assign(Object.assign({}, oldState), { rawFrom: date, from: isValidDate(date) ?
-                                                field.stringifier(date)
+                                        value: null, inputValue: (_g = current === null || current === void 0 ? void 0 : current.rawFrom) !== null && _g !== void 0 ? _g : '', onChange: (date, val) => setter((oldState) => (Object.assign(Object.assign({}, oldState), { rawFrom: val, from: val ?
+                                                isValidDate(date) ?
+                                                    field.stringifier(date)
+                                                    :
+                                                        oldState === null || oldState === void 0 ? void 0 : oldState.from
                                                 :
-                                                    oldState === null || oldState === void 0 ? void 0 : oldState.from }))) }, void 0) }), void 0), _jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(KeyboardDatePicker, { label: `${field.title} To` +
-                                            (field.unit ? ` (${field.unit})` : ''), variant: 'inline', format: 'MM/dd/yyyy', value: (_h = current === null || current === void 0 ? void 0 : current.rawTo) !== null && _h !== void 0 ? _h : ((current === null || current === void 0 ? void 0 : current.to) ?
-                                            field.parser(current.to)
-                                            :
-                                                null), onChange: (date) => setter((oldState) => (Object.assign(Object.assign({}, oldState), { rawTo: date, to: isValidDate(date) ?
-                                                field.stringifier(date)
+                                                    null }))) }, void 0) }), void 0), _jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(KeyboardDatePicker, { label: `${field.title} To` +
+                                            (field.unit ? ` (${field.unit})` : ''), variant: 'inline', format: 'MM/dd/yyyy', value: null, inputValue: (_h = current === null || current === void 0 ? void 0 : current.rawTo) !== null && _h !== void 0 ? _h : '', onChange: (date, val) => setter((oldState) => (Object.assign(Object.assign({}, oldState), { rawTo: val, to: val ?
+                                                isValidDate(date) ?
+                                                    field.stringifier(date)
+                                                    :
+                                                        oldState === null || oldState === void 0 ? void 0 : oldState.to
                                                 :
-                                                    oldState === null || oldState === void 0 ? void 0 : oldState.to }))) }, void 0) }), void 0)] }, void 0));
+                                                    null }))) }, void 0) }), void 0)] }, void 0));
                         break;
                     case 'enum':
                         element = (_jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(Select, Object.assign({ style: { alignSelf: 'bottom' }, label: field.title, value: current !== null && current !== void 0 ? current : field.initialValue, onChange: event => setter(event.target.value) }, { children: field.options.map(opt => (_jsx(MenuItem, Object.assign({ value: opt.value }, { children: opt.title }), opt.value))) }), void 0) }), void 0));
