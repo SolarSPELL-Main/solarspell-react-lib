@@ -25,8 +25,8 @@ type NumericField = {
 
 type DateField = {
   type: 'date'
-  stringifier?: (val: Date) => string
-  parser?: (val: string) => Date
+  stringifier: (val: Date) => string
+  parser: (val: string) => Date
 }
 
 type StringField = {
@@ -76,6 +76,8 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
   React.useEffect(() => {
     props.onQueryChange(state);
   }, [state, props.onQueryChange]);
+
+  const isValidDate = (date: Date) => date && !isNaN(date.getTime());
 
   return (
     <ExpandPanel header={'Search'}>
@@ -174,17 +176,18 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                     variant={'inline'}
                     format={'MM/dd/yyyy'}
                     value={current?.from ?
-                      field.parser ? field.parser(current.from) : current.from
+                      field.parser(current.from)
                       :
                       null
                     }
-                    onChange={value => setter(
+                    onChange={(date: Date, str?: string|null) => setter(
                       (oldState: any) => ({
                         ...oldState,
-                        from: field.stringifier ?
-                          field.stringifier(value)
+                        rawFrom: str,
+                        from: isValidDate(date) ?
+                          field.stringifier(date)
                           :
-                          value,
+                          oldState?.from,
                       })
                     )}
                   />
@@ -197,17 +200,18 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                     variant={'inline'}
                     format={'MM/dd/yyyy'}
                     value={current?.to ?
-                      field.parser ? field.parser(current.to) : current.to
+                      field.parser(current.to)
                       :
                       null
                     }
-                    onChange={value => setter(
+                    onChange={(date: Date, str?: string|null) => setter(
                       (oldState: any) => ({
                         ...oldState,
-                        to: field.stringifier ?
-                          field.stringifier(value)
+                        rawTo: str,
+                        to: isValidDate(date) ?
+                          field.stringifier(date)
                           :
-                          value,
+                          oldState?.to,
                       })
                     )}
                   />
