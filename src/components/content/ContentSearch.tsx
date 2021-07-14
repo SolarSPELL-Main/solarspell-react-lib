@@ -175,15 +175,22 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                     }
                     variant={'inline'}
                     format={'MM/dd/yyyy'}
-                    value={current?.from ?
+                    // Why all this complicated hubaloo?
+                    // Because we want the user to be able to type in
+                    // any date they want, but we also want the actual
+                    // state submitted to be valid.
+                    // So we require this kind of dual-state that keeps
+                    // track of the possibly-invalid state and the
+                    // actual valid state.
+                    value={current?.rawFrom ?? (current?.from ?
                       field.parser(current.from)
                       :
-                      null
+                      null)
                     }
-                    onChange={(date: Date, str?: string|null) => setter(
+                    onChange={(date: Date) => setter(
                       (oldState: any) => ({
                         ...oldState,
-                        rawFrom: str,
+                        rawFrom: date,
                         from: isValidDate(date) ?
                           field.stringifier(date)
                           :
@@ -199,15 +206,15 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                     }
                     variant={'inline'}
                     format={'MM/dd/yyyy'}
-                    value={current?.to ?
+                    value={current?.rawTo ?? (current?.to ?
                       field.parser(current.to)
                       :
-                      null
+                      null)
                     }
-                    onChange={(date: Date, str?: string|null) => setter(
+                    onChange={(date: Date) => setter(
                       (oldState: any) => ({
                         ...oldState,
-                        rawTo: str,
+                        rawTo: date,
                         to: isValidDate(date) ?
                           field.stringifier(date)
                           :

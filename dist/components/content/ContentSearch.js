@@ -22,7 +22,7 @@ function ContentSearch(props) {
     }, [state, props.onQueryChange]);
     const isValidDate = (date) => date && !isNaN(date.getTime());
     return (_jsx(ExpandPanel, Object.assign({ header: 'Search' }, { children: _jsx(Grid, Object.assign({ container: true, spacing: 2 }, { children: props.fields.map(field => {
-                var _a, _b, _c, _d, _e, _f;
+                var _a, _b, _c, _d, _e, _f, _g, _h;
                 const current = state[field.field];
                 const setter = setterFactory(field.field);
                 let element;
@@ -64,17 +64,25 @@ function ContentSearch(props) {
                         break;
                     case 'date':
                         element = (_jsxs(_Fragment, { children: [_jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(KeyboardDatePicker, { label: `${field.title} From` +
-                                            (field.unit ? ` (${field.unit})` : ''), variant: 'inline', format: 'MM/dd/yyyy', value: (current === null || current === void 0 ? void 0 : current.from) ?
+                                            (field.unit ? ` (${field.unit})` : ''), variant: 'inline', format: 'MM/dd/yyyy', 
+                                        // Why all this complicated hubaloo?
+                                        // Because we want the user to be able to type in
+                                        // any date they want, but we also want the actual
+                                        // state submitted to be valid.
+                                        // So we require this kind of dual-state that keeps
+                                        // track of the possibly-invalid state and the
+                                        // actual valid state.
+                                        value: (_g = current === null || current === void 0 ? void 0 : current.rawFrom) !== null && _g !== void 0 ? _g : ((current === null || current === void 0 ? void 0 : current.from) ?
                                             field.parser(current.from)
                                             :
-                                                null, onChange: (date, str) => setter((oldState) => (Object.assign(Object.assign({}, oldState), { rawFrom: str, from: isValidDate(date) ?
+                                                null), onChange: (date) => setter((oldState) => (Object.assign(Object.assign({}, oldState), { rawFrom: date, from: isValidDate(date) ?
                                                 field.stringifier(date)
                                                 :
                                                     oldState === null || oldState === void 0 ? void 0 : oldState.from }))) }, void 0) }), void 0), _jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(KeyboardDatePicker, { label: `${field.title} To` +
-                                            (field.unit ? ` (${field.unit})` : ''), variant: 'inline', format: 'MM/dd/yyyy', value: (current === null || current === void 0 ? void 0 : current.to) ?
+                                            (field.unit ? ` (${field.unit})` : ''), variant: 'inline', format: 'MM/dd/yyyy', value: (_h = current === null || current === void 0 ? void 0 : current.rawTo) !== null && _h !== void 0 ? _h : ((current === null || current === void 0 ? void 0 : current.to) ?
                                             field.parser(current.to)
                                             :
-                                                null, onChange: (date, str) => setter((oldState) => (Object.assign(Object.assign({}, oldState), { rawTo: str, to: isValidDate(date) ?
+                                                null), onChange: (date) => setter((oldState) => (Object.assign(Object.assign({}, oldState), { rawTo: date, to: isValidDate(date) ?
                                                 field.stringifier(date)
                                                 :
                                                     oldState === null || oldState === void 0 ? void 0 : oldState.to }))) }, void 0) }), void 0)] }, void 0));
