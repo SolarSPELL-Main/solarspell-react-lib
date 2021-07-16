@@ -23,7 +23,7 @@ function TextInputDialog(_a) {
         }
         setInput('');
     }, [input, props.onClose]);
-    return (_jsx(ConfirmationDialog, Object.assign({ open: props.open, title: props.title, description: props.description, size: size, cancelColor: cancelColor, cancelText: cancelText, confirmColor: confirmColor, confirmText: confirmText, onClose: onClose, stopPropagation: stopPropagation, preventDefault: preventDefault }, { children: _jsx(TextField, { fullWidth: true, autoFocus: true, margin: 'dense', label: props.label, value: input, onChange: e => {
+    return (_jsx(ConfirmationDialog, Object.assign({ open: props.open, title: props.title, description: props.description, size: size, cancelColor: cancelColor, cancelText: cancelText, confirmColor: confirmColor, confirmText: confirmText, onClose: onClose, stopPropagation: stopPropagation, preventDefault: preventDefault, cancelAdditionalProps: props.cancelAdditionalProps, confirmAdditionalProps: props.confirmAdditionalProps }, { children: _jsx(TextField, { fullWidth: true, autoFocus: true, margin: 'dense', label: props.label, value: input, onChange: e => {
                 setInput(e.target.value);
             }, onKeyDown: preventEvent(true, false) }, void 0) }), void 0));
 }

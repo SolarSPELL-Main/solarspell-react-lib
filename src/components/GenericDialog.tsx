@@ -13,7 +13,6 @@ type GenericDialogProps = {
   open: boolean
   onClose: (e: React.SyntheticEvent) => void
   actions: React.ReactElement
-  additionalProps: Partial<React.ComponentProps<typeof Dialog>>
 } & GenericDialogStyleProps
 
 /**

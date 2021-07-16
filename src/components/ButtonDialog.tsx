@@ -32,7 +32,11 @@ function ButtonDialog({
       onClose={props.onClose}
       actions={(
         <>
-          <Button onClick={props.onClose} color={buttonColor}>
+          <Button
+            onClick={props.onClose}
+            color={buttonColor}
+            {...props.buttonAdditionalProps}
+          >
             {buttonText}
           </Button>
         </>
