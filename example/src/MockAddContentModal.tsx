@@ -61,12 +61,13 @@ function MockAddContentModal(): React.ReactElement {
         },
         {
           component: TextField,
-          propFactory: (state, reasons, setter) => {
+          propFactory: (state, reasons, setter, _g, genericReasonSetter) => {
             return {
               fullWidth: true,
               label: 'Description',
               onChange: (event: React.SyntheticEvent<HTMLInputElement>) => {
                 setter(event.currentTarget.value);
+                genericReasonSetter('description', 'You typed');
               },
               value: state['description'],
               error: !!reasons['description'],
