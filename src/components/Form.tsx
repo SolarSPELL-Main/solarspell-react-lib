@@ -92,22 +92,26 @@ function Form<T>(props: FormProps<T>): React.ReactElement {
   
   // Performs validation on submission
   const onSubmit = React.useCallback(() => {
-    const reasonDraft: typeof reasons = {};
+    // To enable async validation, assume all results are promises
+    const promises = props.fields.map(item => item.validator ?
+      item.validator(state)
+      :
+      null
+    );
 
-    // Check no reasons present
-    if (fullEvery(props.fields, item => {
-      if (item.validator) {
-        const reason = item.validator(state);
-        reasonDraft[item.field] = reason;
-        return !reason;
-      } else {
-        return true;
+    Promise.all(promises).then(res => {
+      const reasonDraft: typeof reasons = {};
+
+      // Check no reasons present
+      if (fullEvery(res, (item, idx) => {
+        reasonDraft[props.fields[idx].field] = item;
+        return !item;
+      })) {
+        props.onSubmit(state);
       }
-    })) {
-      props.onSubmit(state);
-    }
 
-    setReasons(reasonDraft);
+      setReasons(reasonDraft);
+    });
   }, [props.onSubmit, setState, setReasons, state, props.fields]);
 
   const formBody = (
