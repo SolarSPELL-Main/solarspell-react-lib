@@ -61,7 +61,7 @@ function MockAddContentModal(): React.ReactElement {
         },
         {
           component: TextField,
-          propFactory: (state, _r, setter) => {
+          propFactory: (state, reasons, setter) => {
             return {
               fullWidth: true,
               label: 'Description',
@@ -69,10 +69,18 @@ function MockAddContentModal(): React.ReactElement {
                 setter(event.currentTarget.value);
               },
               value: state['description'],
+              error: !!reasons['description'],
+              helperText: reasons['description'],
             };
           },
           field: 'description',
           initialValue: '',
+          validator: () => {
+            return new Promise(resolve => {
+              console.log('Started 3 sec async validator');
+              setTimeout(() => resolve('NOPE'), 3000);
+            })
+          },
         },
         {
           component: (props) => (

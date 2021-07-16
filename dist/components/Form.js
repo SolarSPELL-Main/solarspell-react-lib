@@ -33,21 +33,22 @@ function Form(props) {
     const stateSetter = React.useCallback((name) => genericSetter.bind(null, name), [setState, genericSetter]);
     // Performs validation on submission
     const onSubmit = React.useCallback(() => {
-        const reasonDraft = {};
-        // Check no reasons present
-        if (fullEvery(props.fields, item => {
-            if (item.validator) {
-                const reason = item.validator(state);
-                reasonDraft[item.field] = reason;
-                return !reason;
+        // To enable async validation, assume all results are promises
+        const promises = props.fields.map(item => item.validator ?
+            item.validator(state)
+            :
+                null);
+        Promise.all(promises).then(res => {
+            const reasonDraft = {};
+            // Check no reasons present
+            if (fullEvery(res, (item, idx) => {
+                reasonDraft[props.fields[idx].field] = item;
+                return !item;
+            })) {
+                props.onSubmit(state);
             }
-            else {
-                return true;
-            }
-        })) {
-            props.onSubmit(state);
-        }
-        setReasons(reasonDraft);
+            setReasons(reasonDraft);
+        });
     }, [props.onSubmit, setState, setReasons, state, props.fields]);
     const formBody = (_jsx(Grid, Object.assign({ container: true }, { children: props.fields.map((item, idx) => {
             return (_jsx(Grid, Object.assign({ item: true, xs: 12, style: { marginBottom: '10px' } }, { children: item.component && _jsx(item.component, Object.assign({}, item.propFactory(state, reasons, stateSetter(item.field), genericSetter)), void 0) }), idx));
