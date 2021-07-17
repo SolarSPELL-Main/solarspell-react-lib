@@ -4,7 +4,6 @@ import React from 'react';
 
 //Importing from other files of the projects
 import Form, { FormFieldDescriptor } from '../Form';
-import ConfirmationDialog from '../ConfirmationDialog';
 import { DialogConfirmationStyleProps } from '../types';
 import { BaseContent } from '../../types';
 
@@ -27,35 +26,12 @@ function ContentModal<
 >(props: ContentModalProps<T>): React.ReactElement {
   return (
     <Form<T>
+      {...props}
       fields={props.fields.concat(
         // Add default value for content ID
         [{ field: 'id', initialValue: -1 }],
       )}
-      onSubmit={props.onSubmit}
-      initialState={props.initialState}
-      renderer={innerProps => {
-        const onSubmit = React.useCallback(
-          (submitted: boolean) => {
-            if (submitted) {
-              innerProps.onSubmit();
-            } else {
-              props.onSubmit();
-            }
-          },
-          [props.onSubmit, innerProps.onSubmit],
-        );
-
-        return (
-          <ConfirmationDialog
-            onClose={onSubmit}
-            open={props.open}
-            preventDefault={false}
-            {...props.dialogStyle}
-          >
-            {innerProps.body}
-          </ConfirmationDialog>
-        );
-      }}
+      type={'dialog'}
     />
   );
 }

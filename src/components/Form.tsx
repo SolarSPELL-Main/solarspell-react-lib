@@ -5,7 +5,9 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
 //Importing from other files of the projects
+import ConfirmationDialog from './ConfirmationDialog';
 import { fullEvery } from '../utils';
+import type { DialogConfirmationStyleProps } from './types';
 
 type FormFieldDescriptor<T> = {
   component: React.JSXElementConstructor<any>
@@ -29,20 +31,26 @@ type FormFieldDescriptor<T> = {
   validator?: (state: Partial<T>) => any
 }
 
+type FormOptionalProps<T> = {
+  type: 'dialog'
+  onSubmit: (values?: Partial<T>) => void // null when submit cancelled
+  dialogStyle: DialogConfirmationStyleProps
+  open: boolean
+} | {
+  type?: never
+  onSubmit: (values: Partial<T>) => void
+}
+
 type FormProps<T> = {
   fields: FormFieldDescriptor<T>[]
-  onSubmit: (values: Partial<T>) => void
   initialState?: Partial<T>
-  renderer?: React.JSXElementConstructor<{
-    onSubmit: () => void
-    body: React.ReactElement
-  }>
-}
+} & FormOptionalProps<T>
 
 /**
  * A generic form for submitting data.
  * Takes care of state, validation, and callback.
  * Displays fields in a descending order in a column.
+ * Can be displayed in a dialog instead of in page body.
  * @param props The form content and callbacks.
  * @returns A form.
  */
@@ -56,23 +64,7 @@ function Form<T>(props: FormProps<T>): React.ReactElement {
     setReasons,
   ] = React.useState<Partial<Record<keyof T,any>>>({});
 
-  // Initializes state with initial values and initial state
-  // Initial state takes priority over initialValue properties
-  // Also returns a hook on unrender to reset state to empty
-  React.useEffect(() => {
-    setState(Object.assign(props.fields.reduce<Partial<T>>(
-      (accum, val) => ({
-        ...accum,
-        [val.field]: val.initialValue,
-      }),
-      {},
-    ), props.initialState));
-
-    return () => {
-      setState({});
-      setReasons({});
-    };
-  }, [props.fields, props.initialState, setState]);
+  const [submitting, setSubmitting] = React.useState(false);
 
   // Setter factory functions
   const genericSetter = React.useCallback(
@@ -92,26 +84,34 @@ function Form<T>(props: FormProps<T>): React.ReactElement {
   
   // Performs validation on submission
   const onSubmit = React.useCallback(() => {
-    // To enable async validation, assume all results are promises
-    const promises = props.fields.map(item => item.validator ?
-      item.validator(state)
-      :
-      null
-    );
+    if (!submitting) {
+      // To enable async validation, assume all results are promises
+      setSubmitting(true);
 
-    Promise.all(promises).then(res => {
-      const reasonDraft: typeof reasons = {};
+      const promises = props.fields.map(item => item.validator ?
+        item.validator(state)
+        :
+        null
+      );
 
-      // Check no reasons present
-      if (fullEvery(res, (item, idx) => {
-        reasonDraft[props.fields[idx].field] = item;
-        return !item;
-      })) {
-        props.onSubmit(state);
-      }
+      Promise.all(promises).then(res => {
+        const reasonDraft: typeof reasons = {};
 
-      setReasons(reasonDraft);
-    });
+        // Check no reasons present
+        const valid = fullEvery(res, (item, idx) => {
+          reasonDraft[props.fields[idx].field] = item;
+          return !item;
+        });
+
+        // State updates should come before external callbacks
+        setSubmitting(false);
+        setReasons(reasonDraft);
+
+        if (valid) {
+          props.onSubmit(state);
+        }
+      });
+    }
   }, [props.onSubmit, setState, setReasons, state, props.fields]);
 
   const formBody = (
@@ -131,18 +131,58 @@ function Form<T>(props: FormProps<T>): React.ReactElement {
     </Grid>
   );
 
-  return (
-    props.renderer ?
-      <props.renderer
-        body={formBody}
-        onSubmit={onSubmit}
-      />
-      :
-      <>
-        {formBody}
-        <Button onClick={onSubmit}>Submit</Button>
-      </>
-  );
+  let finalRender = <></>;
+  let deps = [];
+
+  switch (props.type) {
+    case 'dialog':
+      deps = [props.open, props.initialState];
+      finalRender = (
+        <ConfirmationDialog
+          onClose={(submitted: boolean) => {
+            // Form was submitted
+            if (submitted) {
+              // Submit with state
+              onSubmit();
+            // Form was closed
+            } else {
+              // Submit with nothing
+              props.onSubmit();
+            }
+          }}
+          open={props.open}
+          preventDefault={false}
+          {...props.dialogStyle}
+        >
+          {formBody}
+        </ConfirmationDialog>
+      );
+      break;
+    default:
+      deps = [props.initialState];
+      finalRender = (
+        <>
+          {formBody}
+          <Button onClick={onSubmit}>Submit</Button>
+        </>
+      );
+      break;
+  }
+
+  // Initializes state with initial values and initial state
+  // initialState takes priority over initialValue properties
+  React.useEffect(() => {
+    setState(Object.assign(props.fields.reduce<Partial<T>>(
+      (accum, val) => ({
+        ...accum,
+        [val.field]: val.initialValue,
+      }),
+      {},
+    ), props.initialState));
+    setReasons({});
+  }, deps);
+
+  return finalRender;
 }
 
 export type { FormFieldDescriptor };
