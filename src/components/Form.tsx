@@ -19,6 +19,10 @@ type FormFieldDescriptor<T> = {
       field: keyof T,
       val: any,
     ) => void, // set any field in state to value
+    genericReasonSetter: (
+      field: keyof T,
+      val: any,
+    ) => void, // set any field in reasons to value
   ) => any
   field: keyof T
   initialValue: any
@@ -77,6 +81,16 @@ function Form<T>(props: FormProps<T>): React.ReactElement {
     [setState],
   );
 
+  const genericReasonSetter = React.useCallback(
+    (name: keyof T, val: any) => {
+      setReasons(oldState => ({
+        ...oldState,
+        [name]: (val instanceof Function) ? val(oldState[name]) : val,
+      }));
+    },
+    [setReasons],
+  );
+
   const stateSetter = React.useCallback(
     (name: keyof T) => genericSetter.bind(null, name),
     [setState, genericSetter],
@@ -124,6 +138,7 @@ function Form<T>(props: FormProps<T>): React.ReactElement {
               reasons,
               stateSetter(item.field),
               genericSetter,
+              genericReasonSetter,
             )} />}
           </Grid>
         );

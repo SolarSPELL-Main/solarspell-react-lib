@@ -5,7 +5,8 @@ declare type FormFieldDescriptor<T> = {
     propFactory: (state: Partial<T>, // current state
     reasons: Partial<Record<keyof T, any>>, // current error reasons
     setter: (val: any) => void, // sets item's field in state to value
-    genericSetter: (field: keyof T, val: any) => void) => any;
+    genericSetter: (field: keyof T, val: any) => void, // set any field in state to value
+    genericReasonSetter: (field: keyof T, val: any) => void) => any;
     field: keyof T;
     initialValue: any;
     validator?: (state: Partial<T>) => any;

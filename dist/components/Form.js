@@ -23,6 +23,9 @@ function Form(props) {
     const genericSetter = React.useCallback((name, val) => {
         setState(oldState => (Object.assign(Object.assign({}, oldState), { [name]: (val instanceof Function) ? val(oldState[name]) : val })));
     }, [setState]);
+    const genericReasonSetter = React.useCallback((name, val) => {
+        setReasons(oldState => (Object.assign(Object.assign({}, oldState), { [name]: (val instanceof Function) ? val(oldState[name]) : val })));
+    }, [setReasons]);
     const stateSetter = React.useCallback((name) => genericSetter.bind(null, name), [setState, genericSetter]);
     // Performs validation on submission
     const onSubmit = React.useCallback(() => {
@@ -50,7 +53,7 @@ function Form(props) {
         }
     }, [props.onSubmit, setState, setReasons, state, props.fields]);
     const formBody = (_jsx(Grid, Object.assign({ container: true }, { children: props.fields.map((item, idx) => {
-            return (_jsx(Grid, Object.assign({ item: true, xs: 12, style: { marginBottom: '10px' } }, { children: item.component && _jsx(item.component, Object.assign({}, item.propFactory(state, reasons, stateSetter(item.field), genericSetter)), void 0) }), idx));
+            return (_jsx(Grid, Object.assign({ item: true, xs: 12, style: { marginBottom: '10px' } }, { children: item.component && _jsx(item.component, Object.assign({}, item.propFactory(state, reasons, stateSetter(item.field), genericSetter, genericReasonSetter)), void 0) }), idx));
         }) }), void 0));
     let finalRender = _jsx(_Fragment, {}, void 0);
     let deps = [];
