@@ -184,7 +184,14 @@ function Form<T>(props: FormProps<T>): React.ReactElement {
       finalRender = (
         <>
           {formBody}
-          <Button onClick={onSubmit}>Submit</Button>
+          <Button
+            onClick={onSubmit}
+            endIcon={submitting && <CircularProgress
+              size={'1em'}
+            />}
+          >
+            Submit
+          </Button>
         </>
       );
       break;
