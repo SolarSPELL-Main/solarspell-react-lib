@@ -47,10 +47,18 @@ function ConfirmationDialog({
       onClose={disagree}
       actions={(
         <>
-          <Button onClick={disagree} color={cancelColor}>
+          <Button
+            onClick={disagree}
+            color={cancelColor}
+            {...props.cancelAdditionalProps}
+          >
             {cancelText}
           </Button>
-          <Button onClick={agree} color={confirmColor}>
+          <Button
+            onClick={agree}
+            color={confirmColor}
+            {...props.confirmAdditionalProps}
+          >
             {confirmText}
           </Button>
         </>

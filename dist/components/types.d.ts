@@ -1,19 +1,28 @@
+import type { ComponentProps } from 'react';
+import type Button from '@material-ui/core/Button';
+import type Dialog from '@material-ui/core/Dialog';
 import type { PropTypes } from '@material-ui/core';
 export declare type DialogWidth = false | 'md' | 'xs' | 'sm' | 'lg' | 'xl' | undefined;
+declare type PartialButton = Partial<ComponentProps<typeof Button>>;
+declare type PartialDialog = Partial<React.ComponentProps<typeof Dialog>>;
 export declare type GenericDialogStyleProps = {
     title?: string;
     description?: string;
     size?: DialogWidth;
+    additionalProps?: PartialDialog;
 };
 export declare type DialogButtonStyleProps = {
     buttonText?: string;
     buttonColor?: PropTypes.Color;
+    buttonAdditionalProps?: PartialButton;
 } & GenericDialogStyleProps;
 export declare type DialogConfirmationStyleProps = {
     confirmText?: string;
     confirmColor?: PropTypes.Color;
+    confirmAdditionalProps?: PartialButton;
     cancelText?: string;
     cancelColor?: PropTypes.Color;
+    cancelAdditionalProps?: PartialButton;
 } & GenericDialogStyleProps;
 declare type ConfirmProps<T> = {
     type: 'confirm';

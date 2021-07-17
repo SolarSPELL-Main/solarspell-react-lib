@@ -53,6 +53,8 @@ function TextInputDialog({
       onClose={onClose}
       stopPropagation={stopPropagation}
       preventDefault={preventDefault}
+      cancelAdditionalProps={props.cancelAdditionalProps}
+      confirmAdditionalProps={props.confirmAdditionalProps}
     >
       <TextField
         fullWidth
