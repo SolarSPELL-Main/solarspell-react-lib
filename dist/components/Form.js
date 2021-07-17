@@ -4,6 +4,7 @@ import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-run
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 //Importing from other files of the projects
 import ConfirmationDialog from './ConfirmationDialog';
 import { fullEvery } from '../utils';
@@ -71,7 +72,9 @@ function Form(props) {
                         // Submit with nothing
                         props.onSubmit();
                     }
-                }, open: props.open, preventDefault: false }, props.dialogStyle, { children: formBody }), void 0));
+                }, open: props.open, preventDefault: false, confirmAdditionalProps: {
+                    endIcon: submitting && _jsx(CircularProgress, { size: '1em' }, void 0),
+                } }, props.dialogStyle, { children: formBody }), void 0));
             break;
         default:
             deps = [props.initialState];

@@ -3,6 +3,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 //Importing from other files of the projects
 import ConfirmationDialog from './ConfirmationDialog';
@@ -167,6 +168,11 @@ function Form<T>(props: FormProps<T>): React.ReactElement {
           }}
           open={props.open}
           preventDefault={false}
+          confirmAdditionalProps={{
+            endIcon: submitting && <CircularProgress
+              size={'1em'}
+            />,
+          }}
           {...props.dialogStyle}
         >
           {formBody}
