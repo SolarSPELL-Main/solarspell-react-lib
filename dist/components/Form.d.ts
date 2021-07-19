@@ -10,6 +10,7 @@ declare type FormFieldDescriptor<T> = {
     field: keyof T;
     initialValue: any;
     validator?: (state: Partial<T>) => any;
+    mb?: string | number;
 } | {
     component?: never;
     propFactory?: never;

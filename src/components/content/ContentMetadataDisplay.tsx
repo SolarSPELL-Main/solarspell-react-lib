@@ -16,6 +16,7 @@ type ContentMetadataProps<
   actions: ContentTaggerActionProps<T,M>
   width?: GridSize
   spacing?: GridSpacing
+  mb?: string|number
 }
 
 /**
@@ -36,7 +37,7 @@ function ContentMetadata<
             item
             key={metadataType.id}
             xs={props.width ?? 12}
-            style={{ marginBottom: '10px' }}
+            style={{ marginBottom: props.mb ?? '10px' }}
           >
             <ContentTagger
               {...props.actions}

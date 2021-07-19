@@ -28,6 +28,7 @@ type FormFieldDescriptor<T> = {
   field: keyof T
   initialValue: any
   validator?: (state: Partial<T>) => any
+  mb?: string|number
 } | {
   component?: never
   propFactory?: never
@@ -133,7 +134,12 @@ function Form<T>(props: FormProps<T>): React.ReactElement {
     <Grid container>
       {props.fields.map((item, idx) => {
         return item.component ? (
-          <Grid item key={idx} xs={12} style={{ marginBottom: '10px' }} >
+          <Grid
+            item
+            key={idx}
+            xs={12}
+            style={{ marginBottom: item.mb ?? '10px' }}
+          >
             <item.component {...item.propFactory(
               state,
               reasons,

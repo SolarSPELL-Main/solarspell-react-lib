@@ -10,8 +10,8 @@ import ContentTagger from './ContentTagger';
  */
 function ContentMetadata(props) {
     return (_jsx(Grid, Object.assign({ container: true, spacing: props.spacing }, { children: props.metadataTypes.map(metadataType => {
-            var _a, _b, _c;
-            return (_jsx(Grid, Object.assign({ item: true, xs: (_a = props.width) !== null && _a !== void 0 ? _a : 12, style: { marginBottom: '10px' } }, { children: _jsx(ContentTagger, Object.assign({}, props.actions, { metadataType: metadataType, selected: (_b = props.metadata[metadataType.id]) !== null && _b !== void 0 ? _b : [], options: (_c = props.options[metadataType.id]) !== null && _c !== void 0 ? _c : [], label: metadataType.name }), void 0) }), metadataType.id));
+            var _a, _b, _c, _d;
+            return (_jsx(Grid, Object.assign({ item: true, xs: (_a = props.width) !== null && _a !== void 0 ? _a : 12, style: { marginBottom: (_b = props.mb) !== null && _b !== void 0 ? _b : '10px' } }, { children: _jsx(ContentTagger, Object.assign({}, props.actions, { metadataType: metadataType, selected: (_c = props.metadata[metadataType.id]) !== null && _c !== void 0 ? _c : [], options: (_d = props.options[metadataType.id]) !== null && _d !== void 0 ? _d : [], label: metadataType.name }), void 0) }), metadataType.id));
         }) }), void 0));
 }
 export default ContentMetadata;
