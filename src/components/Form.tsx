@@ -133,20 +133,30 @@ function Form<T>(props: FormProps<T>): React.ReactElement {
   const formBody = (
     <Grid container>
       {props.fields.map((item, idx) => {
-        return item.component ? (
+        if (!item.component) {
+          return null;
+        }
+
+        const body = (
+          <item.component {...item.propFactory(
+            state,
+            reasons,
+            stateSetter(item.field),
+            genericSetter,
+            genericReasonSetter,
+          )} />
+        );
+        
+        // Check if anything is actually rendered by the component
+        // If not, skip the Grid item component
+        return body ? (
           <Grid
             item
             key={idx}
             xs={12}
             style={{ marginBottom: item.mb ?? '10px' }}
           >
-            <item.component {...item.propFactory(
-              state,
-              reasons,
-              stateSetter(item.field),
-              genericSetter,
-              genericReasonSetter,
-            )} />
+            {body}
           </Grid>
         ) : null;
       })}
