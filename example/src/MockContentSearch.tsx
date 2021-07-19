@@ -117,6 +117,8 @@ function MockContentSearch(): React.ReactElement {
                 })
               )
             },
+            width: 6,
+            spacing: 2,
           }),
         },
       ]}

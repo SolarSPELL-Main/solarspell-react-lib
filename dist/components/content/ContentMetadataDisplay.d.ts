@@ -1,4 +1,5 @@
 import React from 'react';
+import { GridSize, GridSpacing } from '@material-ui/core/Grid';
 import { ContentTaggerActionProps } from './ContentTagger';
 import { BaseMetadata, BaseMetadataType } from '../../types';
 declare type ContentMetadataProps<T extends BaseMetadataType, M extends BaseMetadata<T>> = {
@@ -6,6 +7,8 @@ declare type ContentMetadataProps<T extends BaseMetadataType, M extends BaseMeta
     metadata: Record<number, M[]>;
     options: Record<number, M[]>;
     actions: ContentTaggerActionProps<T, M>;
+    width?: GridSize;
+    spacing?: GridSpacing;
 };
 /**
  * This component displays all the metadata of content.

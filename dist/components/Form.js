@@ -54,7 +54,7 @@ function Form(props) {
         }
     }, [props.onSubmit, setState, setReasons, state, props.fields]);
     const formBody = (_jsx(Grid, Object.assign({ container: true }, { children: props.fields.map((item, idx) => {
-            return (_jsx(Grid, Object.assign({ item: true, xs: 12, style: { marginBottom: '10px' } }, { children: item.component && _jsx(item.component, Object.assign({}, item.propFactory(state, reasons, stateSetter(item.field), genericSetter, genericReasonSetter)), void 0) }), idx));
+            return item.component ? (_jsx(Grid, Object.assign({ item: true, xs: 12, style: { marginBottom: '10px' } }, { children: _jsx(item.component, Object.assign({}, item.propFactory(state, reasons, stateSetter(item.field), genericSetter, genericReasonSetter)), void 0) }), idx)) : null;
         }) }), void 0));
     let finalRender = _jsx(_Fragment, {}, void 0);
     let deps = [];
