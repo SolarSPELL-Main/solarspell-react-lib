@@ -17,6 +17,7 @@ declare type FormFieldDescriptor<T> = {
     field: keyof T;
     initialValue: any;
     validator?: (state: Partial<T>) => any;
+    mb?: never;
 };
 declare type FormOptionalProps<T> = {
     type: 'dialog';
