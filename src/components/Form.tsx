@@ -35,6 +35,7 @@ type FormFieldDescriptor<T> = {
   field: keyof T
   initialValue: any
   validator?: (state: Partial<T>) => any
+  mb?: never
 }
 
 type FormOptionalProps<T> = {
@@ -136,29 +137,23 @@ function Form<T>(props: FormProps<T>): React.ReactElement {
         if (!item.component) {
           return null;
         }
-
-        const body = (
-          <item.component {...item.propFactory(
-            state,
-            reasons,
-            stateSetter(item.field),
-            genericSetter,
-            genericReasonSetter,
-          )} />
-        );
         
-        // Check if anything is actually rendered by the component
-        // If not, skip the Grid item component
-        return body ? (
+        return (
           <Grid
             item
             key={idx}
             xs={12}
             style={{ marginBottom: item.mb ?? '10px' }}
           >
-            {body}
+            {<item.component {...item.propFactory(
+              state,
+              reasons,
+              stateSetter(item.field),
+              genericSetter,
+              genericReasonSetter,
+            )} />}
           </Grid>
-        ) : null;
+        );
       })}
     </Grid>
   );
