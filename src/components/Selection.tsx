@@ -6,6 +6,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 
 import ButtonDialog from './ButtonDialog';
 import { DialogButtonStyleProps } from './types';
+import Grid from '@material-ui/core/Grid';
 
 type SelectionFieldDescriptor<T> = {
   title: string
@@ -51,16 +52,20 @@ function Selection<T>(props: SelectionProps<T>): React.ReactElement {
       {...props.dialogStyle}
     >
       <FormGroup>
-        {props.fields.map((field, idx) => (
-          <FormControlLabel
-            key={idx}
-            control={<Checkbox
-              checked={state[field.field] ?? false}
-              onChange={setterFactory(field.field)}
-            />}
-            label={field.title}
-          />
-        ))}
+        <Grid container>
+          {props.fields.map((field, idx) => (
+            <Grid item xs={6}>
+              <FormControlLabel
+                key={idx}
+                control={<Checkbox
+                  checked={state[field.field] ?? false}
+                  onChange={setterFactory(field.field)}
+                />}
+                label={field.title}
+              />
+            </Grid>
+          ))}
+        </Grid>
       </FormGroup>
     </ButtonDialog>
   );
