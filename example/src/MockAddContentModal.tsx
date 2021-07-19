@@ -214,6 +214,7 @@ function MockAddContentModal(): React.ReactElement {
           },
           field: 'duplicatable',
           initialValue: false,
+          mb: 0,
         },
         {
           component: ContentMetadataDisplay,

@@ -9,6 +9,7 @@ declare type ContentMetadataProps<T extends BaseMetadataType, M extends BaseMeta
     actions: ContentTaggerActionProps<T, M>;
     width?: GridSize;
     spacing?: GridSpacing;
+    mb?: string | number;
 };
 /**
  * This component displays all the metadata of content.
