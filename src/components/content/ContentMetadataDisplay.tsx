@@ -1,6 +1,6 @@
 //Importing from outside the project
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
+import Grid, { GridSize, GridSpacing } from '@material-ui/core/Grid';
 
 //Importing from other files of the projects
 import ContentTagger, { ContentTaggerActionProps } from './ContentTagger';
@@ -14,6 +14,8 @@ type ContentMetadataProps<
   metadata: Record<number,M[]>
   options: Record<number,M[]>
   actions: ContentTaggerActionProps<T,M>
+  width?: GridSize
+  spacing?: GridSpacing
 }
 
 /**
@@ -27,13 +29,13 @@ function ContentMetadata<
   M extends BaseMetadata<T>,
 >(props: ContentMetadataProps<T,M>): React.ReactElement {
   return (
-    <>
+    <Grid container spacing={props.spacing} >
       {props.metadataTypes.map(metadataType => {
         return (
           <Grid
             item
             key={metadataType.id}
-            xs={12}
+            xs={props.width ?? 12}
             style={{ marginBottom: '10px' }}
           >
             <ContentTagger
@@ -46,7 +48,7 @@ function ContentMetadata<
           </Grid>
         );
       })}
-    </>
+    </Grid>
   );
 }
 

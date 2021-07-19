@@ -132,17 +132,17 @@ function Form<T>(props: FormProps<T>): React.ReactElement {
   const formBody = (
     <Grid container>
       {props.fields.map((item, idx) => {
-        return (
+        return item.component ? (
           <Grid item key={idx} xs={12} style={{ marginBottom: '10px' }} >
-            {item.component && <item.component {...item.propFactory(
+            <item.component {...item.propFactory(
               state,
               reasons,
               stateSetter(item.field),
               genericSetter,
               genericReasonSetter,
-            )} />}
+            )} />
           </Grid>
-        );
+        ) : null;
       })}
     </Grid>
   );
