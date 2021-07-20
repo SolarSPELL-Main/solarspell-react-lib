@@ -54,9 +54,12 @@ function Selection<T>(props: SelectionProps<T>): React.ReactElement {
       <FormGroup>
         <Grid container>
           {props.fields.map((field, idx) => (
-            <Grid item xs={6}>
+            <Grid
+              item
+              xs={6}
+              key={idx}
+            >
               <FormControlLabel
-                key={idx}
                 control={<Checkbox
                   checked={state[field.field] ?? false}
                   onChange={setterFactory(field.field)}
