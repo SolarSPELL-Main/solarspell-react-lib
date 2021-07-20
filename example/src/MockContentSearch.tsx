@@ -5,7 +5,7 @@ import {
   BaseMetadataType,
   BaseMetadata,
 } from 'solarspell-react-lib';
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 
 import { metadata, metadataTypes } from './MockData';
 
@@ -52,7 +52,6 @@ function MockContentSearch(): React.ReactElement {
           type: 'date',
           width: 2,
           stringifier: (val: Date) => format(val, 'yyyy-MM-dd'),
-          parser: (val: string) => parseISO(val),
         },
         {
           field: 'active',

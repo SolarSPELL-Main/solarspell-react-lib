@@ -15,7 +15,6 @@ declare type NumericField = {
 declare type DateField = {
     type: 'date';
     stringifier: (val: Date) => string;
-    parser: (val: string) => Date;
 };
 declare type StringField = {
     type: 'string';
