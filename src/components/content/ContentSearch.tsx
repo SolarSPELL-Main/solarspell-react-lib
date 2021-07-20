@@ -26,7 +26,6 @@ type NumericField = {
 type DateField = {
   type: 'date'
   stringifier: (val: Date) => string
-  parser: (val: string) => Date
 }
 
 type StringField = {

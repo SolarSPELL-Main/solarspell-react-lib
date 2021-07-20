@@ -1,5 +1,6 @@
 import React from 'react';
 import { GridColDef, GridSelectionModelChangeParams } from '@material-ui/data-grid';
+import { OtherDataGridProps } from '../DataTable';
 import { BaseContent } from '../../types';
 declare type ComponentsDef = {
     ActionPanel?: React.JSXElementConstructor<any>;
@@ -13,6 +14,7 @@ declare type ContentTableOptionalProps<C> = {
     additionalColumns?: GridColDef[];
     selectable?: boolean;
     onSelectChange?: (content: C[], rows: GridSelectionModelChangeParams) => void;
+    additionalProps?: OtherDataGridProps;
 };
 declare type ContentTableProps<C> = {
     content: C[];

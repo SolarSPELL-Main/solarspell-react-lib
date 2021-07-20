@@ -6,6 +6,6 @@ import { DataGrid, } from '@material-ui/data-grid';
  * @returns A DataGrid to display all data.
  */
 function DataTable(props) {
-    return (_jsx(DataGrid, { columns: props.columns, rows: props.rows, checkboxSelection: props.selectable, onSelectionModelChange: props.onSelectChange, components: props.components, componentsProps: props.componentsProps, autoHeight: true, disableSelectionOnClick: true }, void 0));
+    return (_jsx(DataGrid, Object.assign({ autoHeight: true, disableSelectionOnClick: true, columns: props.columns, rows: props.rows, checkboxSelection: props.selectable, onSelectionModelChange: props.onSelectChange, components: props.components, componentsProps: props.componentsProps }, props.additionalProps), void 0));
 }
 export default DataTable;
