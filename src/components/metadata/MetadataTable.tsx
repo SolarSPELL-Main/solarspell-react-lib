@@ -11,7 +11,7 @@ import {
 } from '@material-ui/data-grid';
 
 //Importing functions from other files of the projects
-import DataTable from '../DataTable';
+import DataTable, { OtherDataGridProps } from '../DataTable';
 import ExpandPanel from '../ExpandPanel';
 import { BaseMetadata, BaseMetadataType } from '../../types';
 
@@ -40,6 +40,7 @@ type MetadataTableOptionalProps<
     metadataType: T,
     rows: GridSelectionModelChangeParams,
   ) => void
+  additionalProps?: OtherDataGridProps
 }
 
 // Actual component props
@@ -148,6 +149,7 @@ function MetadataTable<
         components={{
           ColumnMenu: CustomGridColumnMenu,
         }}
+        additionalProps={props.additionalProps}
       />
     </ExpandPanel>
   );

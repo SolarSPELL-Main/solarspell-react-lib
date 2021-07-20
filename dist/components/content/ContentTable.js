@@ -70,6 +70,6 @@ function ContentTable(props) {
             props.onSelectChange(props.content, rows);
         }
     }, [props.onSelectChange, props.content]);
-    return (_jsx(DataTable, { columns: columns, rows: props.content, selectable: props.selectable, onSelectChange: onSelectChange_ }, void 0));
+    return (_jsx(DataTable, { columns: columns, rows: props.content, selectable: props.selectable, onSelectChange: onSelectChange_, additionalProps: props.additionalProps }, void 0));
 }
 export default ContentTable;
