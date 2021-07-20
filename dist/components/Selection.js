@@ -17,7 +17,7 @@ function Selection(props) {
     const onClose = React.useCallback(() => props.onClose(state), [props.onClose, state]);
     return (_jsx(ButtonDialog, Object.assign({ open: props.open, onClose: onClose, buttonColor: 'primary', size: 'sm' }, props.dialogStyle, { children: _jsx(FormGroup, { children: _jsx(Grid, Object.assign({ container: true }, { children: props.fields.map((field, idx) => {
                     var _a;
-                    return (_jsx(Grid, Object.assign({ item: true, xs: 6 }, { children: _jsx(FormControlLabel, { control: _jsx(Checkbox, { checked: (_a = state[field.field]) !== null && _a !== void 0 ? _a : false, onChange: setterFactory(field.field) }, void 0), label: field.title }, idx) }), void 0));
+                    return (_jsx(Grid, Object.assign({ item: true, xs: 6 }, { children: _jsx(FormControlLabel, { control: _jsx(Checkbox, { checked: (_a = state[field.field]) !== null && _a !== void 0 ? _a : false, onChange: setterFactory(field.field) }, void 0), label: field.title }, void 0) }), idx));
                 }) }), void 0) }, void 0) }), void 0));
 }
 export default Selection;
