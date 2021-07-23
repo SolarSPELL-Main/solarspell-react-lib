@@ -112,12 +112,6 @@ function ContentTagger<
         const keySet = new Set(oldState.map(v => v.id));
         const newState = oldState.concat(toAdd).filter(v => !keySet.has(v.id));
 
-        const onSelect = props.onSelect;
-
-        if (onSelect) {
-          onSelect(props.metadataType, newState);
-        }
-
         return newState;
       });
     }
