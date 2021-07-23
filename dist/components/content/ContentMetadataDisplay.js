@@ -39,7 +39,9 @@ function ContentMetadata(props) {
                 Object.keys(toAdd).forEach(key => {
                     var _a;
                     const metadataType = props.metadataTypes.find(m => m.id === key);
-                    onSelect(metadataType, (_a = metadata[key]) !== null && _a !== void 0 ? _a : []);
+                    if (metadataType) {
+                        onSelect(metadataType, (_a = metadata[key]) !== null && _a !== void 0 ? _a : []);
+                    }
                 });
             }
             return newState;
