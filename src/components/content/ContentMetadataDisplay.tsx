@@ -44,6 +44,7 @@ function ContentMetadata<
               {...props.actions}
               metadataType={metadataType}
               selected={props.metadata[metadataType.id] ?? []}
+              toAdd={props.toAdd?.[metadataType.id]}
               options={props.options[metadataType.id] ?? []}
               label={metadataType.name}
             />
