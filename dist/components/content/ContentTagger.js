@@ -11,7 +11,7 @@ import TextField from '@material-ui/core/TextField';
  * @returns A tagger component.
  */
 function ContentTagger(props) {
-    var _a;
+    const [selected, setSelected] = React.useState(props.selected);
     const filter = createFilterOptions();
     const onInputChange = React.useCallback((_event, val) => {
         if (props.onInputChange) {
@@ -36,7 +36,27 @@ function ContentTagger(props) {
             onSelect(selected);
         }
     }, [onSelect, props.metadataType]);
-    return (_jsx(Autocomplete, { multiple: true, filterSelectedOptions: true, clearOnBlur: true, clearOnEscape: true, handleHomeEndKeys: true, selectOnFocus: true, value: props.selected, options: [...props.options, ...(_a = props.selected) !== null && _a !== void 0 ? _a : []], getOptionSelected: (option, val) => option.id === val.id, getOptionLabel: option => option.name, renderInput: (params) => (_jsx(TextField, Object.assign({}, params, { placeholder: 'Enter tag name...', variant: 'standard', label: props.label }), void 0)), filterOptions: (options, params) => {
+    React.useEffect(() => {
+        setSelected(props.selected);
+    }, [props.selected]);
+    React.useEffect(() => {
+        const toAdd = props.toAdd;
+        if (toAdd && toAdd.length > 0) {
+            setSelected(oldState => {
+                if (!oldState) {
+                    return toAdd;
+                }
+                const keySet = new Set(oldState.map(v => v.id));
+                const newState = oldState.concat(toAdd).filter(v => !keySet.has(v.id));
+                const onSelect = props.onSelect;
+                if (onSelect) {
+                    onSelect(props.metadataType, newState);
+                }
+                return newState;
+            });
+        }
+    }, [props.toAdd]);
+    return (_jsx(Autocomplete, { multiple: true, filterSelectedOptions: true, clearOnBlur: true, clearOnEscape: true, handleHomeEndKeys: true, selectOnFocus: true, value: selected, options: [...props.options, ...selected !== null && selected !== void 0 ? selected : []], getOptionSelected: (option, val) => option.id === val.id, getOptionLabel: option => option.name, renderInput: (params) => (_jsx(TextField, Object.assign({}, params, { placeholder: 'Enter tag name...', variant: 'standard', label: props.label }), void 0)), filterOptions: (options, params) => {
             const filtered = filter(options, params);
             // Suggest the creation of a new value if metadata not present
             if (props.creatable &&

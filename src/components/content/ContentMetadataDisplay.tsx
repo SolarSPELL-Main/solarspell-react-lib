@@ -30,61 +30,6 @@ function ContentMetadata<
   T extends BaseMetadataType,
   M extends BaseMetadata<T>,
 >(props: ContentMetadataProps<T,M>): React.ReactElement {
-  const [metadata, setMetadata] = React.useState(props.metadata);
-
-  React.useEffect(() => {
-    setMetadata(props.metadata);
-  }, [props.metadata]);
-
-  React.useEffect(() => {
-    const toAdd = props.toAdd;
-
-    if (!toAdd) {
-      return;
-    }
-
-    setMetadata(oldState => {
-      const keySet = new Set(Object.values(oldState).reduce((accum, val) => {
-        return accum.concat(val.map(m => m.id));
-      }, [] as number[]));
-
-      const newState = Object.entries(oldState).reduce((accum, [key, val]) => {
-        const newMetadata = (toAdd[key as unknown as number] ?? []).filter(
-          metadata => !keySet.has(metadata.id),
-        );
-        return {
-          ...accum,
-          [key]: val.concat(newMetadata),
-        };
-      }, {} as Record<number, M[]>);
-
-      Object.entries(toAdd).forEach(([key, val]) => {
-        if (!(key in newState)) {
-          newState[key as unknown as number] = val;
-        }
-      });
-
-      const onSelect = props.actions.onSelect;
-    
-      if (onSelect) {
-        Object.keys(toAdd).forEach(key => {
-          const metadataType = props.metadataTypes.find(
-            m => m.id === (key as unknown as number)
-          );
-
-          if (metadataType) {
-            onSelect(
-              metadataType,
-              metadata[key as unknown as number] ?? [],
-            );
-          }
-        });
-      }
-
-      return newState;
-    });
-  }, [props.toAdd]);
-
   return (
     <Grid container spacing={props.spacing} >
       {props.metadataTypes.map(metadataType => {
@@ -98,7 +43,7 @@ function ContentMetadata<
             <ContentTagger
               {...props.actions}
               metadataType={metadataType}
-              selected={metadata[metadataType.id] ?? []}
+              selected={props.metadata[metadataType.id] ?? []}
               options={props.options[metadataType.id] ?? []}
               label={metadataType.name}
             />

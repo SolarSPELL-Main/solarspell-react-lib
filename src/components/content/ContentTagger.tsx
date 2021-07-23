@@ -52,6 +52,8 @@ type ContentTaggerProps<
   options: M[]
   // Initial selected tags
   selected?: M[]
+  // Additional tags to add (added as an alternative to async creation)
+  toAdd?: M[]
 } & ContentTaggerActionProps<T,M>
 
 /**
@@ -65,6 +67,7 @@ function ContentTagger<
   T extends BaseMetadataType,
   M extends BaseMetadata<T>,
 >(props: ContentTaggerProps<T,M>): React.ReactElement {
+  const [selected, setSelected] = React.useState(props.selected);
   const filter = createFilterOptions<M>();
 
   const onInputChange = React.useCallback((_event, val: string) => {
@@ -93,6 +96,34 @@ function ContentTagger<
     }
   }, [onSelect, props.metadataType]);
 
+  React.useEffect(() => {
+    setSelected(props.selected);
+  }, [props.selected]);
+
+  React.useEffect(() => {
+    const toAdd = props.toAdd;
+
+    if (toAdd && toAdd.length > 0) {
+      setSelected(oldState => {
+        if (!oldState) {
+          return toAdd;
+        }
+
+        const keySet = new Set(oldState.map(v => v.id));
+        const newState = oldState.concat(toAdd).filter(v => !keySet.has(v.id));
+
+        const onSelect = props.onSelect;
+
+        if (onSelect) {
+          onSelect(props.metadataType, newState);
+        }
+
+        return newState;
+      });
+    }
+
+  }, [props.toAdd]);
+
   return (
     <Autocomplete
       multiple
@@ -101,8 +132,8 @@ function ContentTagger<
       clearOnEscape
       handleHomeEndKeys
       selectOnFocus
-      value={props.selected}
-      options={[...props.options, ...props.selected ?? []]}
+      value={selected}
+      options={[...props.options, ...selected ?? []]}
       getOptionSelected={(option, val) => option.id === val.id}
       getOptionLabel={option => option.name}
       renderInput={(params) => (
