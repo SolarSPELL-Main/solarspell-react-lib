@@ -21,9 +21,13 @@ function ContentMetadata(props) {
             if (!toAdd) {
                 return oldState;
             }
+            const keySet = new Set(Object.values(oldState).reduce((accum, val) => {
+                return accum.concat(val.map(m => m.id));
+            }, []));
             const newState = Object.entries(oldState).reduce((accum, [key, val]) => {
                 var _a;
-                return Object.assign(Object.assign({}, accum), { [key]: val.concat((_a = toAdd[key]) !== null && _a !== void 0 ? _a : []) });
+                const newMetadata = ((_a = toAdd[key]) !== null && _a !== void 0 ? _a : []).filter(metadata => !keySet.has(metadata.id));
+                return Object.assign(Object.assign({}, accum), { [key]: val.concat(newMetadata) });
             }, {});
             Object.entries(toAdd).forEach(([key, val]) => {
                 if (!(key in newState)) {

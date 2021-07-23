@@ -44,10 +44,17 @@ function ContentMetadata<
         return oldState;
       }
 
+      const keySet = new Set(Object.values(oldState).reduce((accum, val) => {
+        return accum.concat(val.map(m => m.id));
+      }, [] as number[]));
+
       const newState = Object.entries(oldState).reduce((accum, [key, val]) => {
+        const newMetadata = (toAdd[key as unknown as number] ?? []).filter(
+          metadata => !keySet.has(metadata.id),
+        );
         return {
           ...accum,
-          [key]: val.concat(toAdd[key as unknown as number] ?? []),
+          [key]: val.concat(newMetadata),
         };
       }, {} as Record<number, M[]>);
 
