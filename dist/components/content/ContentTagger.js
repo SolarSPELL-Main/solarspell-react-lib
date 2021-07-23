@@ -40,7 +40,9 @@ function ContentTagger(props) {
         setSelected(props.selected);
     }, [props.selected]);
     React.useEffect(() => {
-        const toAdd = props.toAdd;
+        var _a;
+        const keySet = new Set(selected === null || selected === void 0 ? void 0 : selected.map(v => v.id));
+        const toAdd = (_a = props.toAdd) === null || _a === void 0 ? void 0 : _a.filter(v => !keySet.has(v.id));
         const onSelect = props.onSelect;
         if (toAdd && toAdd.length > 0) {
             setSelected(oldState => {
@@ -50,8 +52,7 @@ function ContentTagger(props) {
                     }
                     return toAdd;
                 }
-                const keySet = new Set(oldState.map(v => v.id));
-                const newState = oldState.concat(toAdd).filter(v => !keySet.has(v.id));
+                const newState = oldState.concat(toAdd);
                 if (onSelect) {
                     onSelect(props.metadataType, newState);
                 }

@@ -101,7 +101,8 @@ function ContentTagger<
   }, [props.selected]);
 
   React.useEffect(() => {
-    const toAdd = props.toAdd;
+    const keySet = new Set(selected?.map(v => v.id));
+    const toAdd = props.toAdd?.filter(v => !keySet.has(v.id));
     const onSelect = props.onSelect;
 
     if (toAdd && toAdd.length > 0) {
@@ -114,8 +115,7 @@ function ContentTagger<
           return toAdd;
         }
 
-        const keySet = new Set(oldState.map(v => v.id));
-        const newState = oldState.concat(toAdd).filter(v => !keySet.has(v.id));
+        const newState = oldState.concat(toAdd);
 
         if (onSelect) {
           onSelect(props.metadataType, newState);
