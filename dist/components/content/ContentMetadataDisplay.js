@@ -16,11 +16,11 @@ function ContentMetadata(props) {
         setMetadata(props.metadata);
     }, [props.metadata]);
     React.useEffect(() => {
+        const toAdd = props.toAdd;
+        if (!toAdd) {
+            return;
+        }
         setMetadata(oldState => {
-            const toAdd = props.toAdd;
-            if (!toAdd) {
-                return oldState;
-            }
             const keySet = new Set(Object.values(oldState).reduce((accum, val) => {
                 return accum.concat(val.map(m => m.id));
             }, []));
@@ -36,6 +36,13 @@ function ContentMetadata(props) {
             });
             return newState;
         });
+        const onSelect = props.actions.onSelect;
+        if (onSelect) {
+            Object.keys(toAdd).forEach(key => {
+                const metadataType = props.metadataTypes.find(m => m.id === key);
+                onSelect(metadataType, metadata[key]);
+            });
+        }
     }, [props.toAdd]);
     return (_jsx(Grid, Object.assign({ container: true, spacing: props.spacing }, { children: props.metadataTypes.map(metadataType => {
             var _a, _b, _c, _d;

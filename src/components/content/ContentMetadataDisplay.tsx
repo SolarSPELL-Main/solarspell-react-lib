@@ -37,13 +37,13 @@ function ContentMetadata<
   }, [props.metadata]);
 
   React.useEffect(() => {
+    const toAdd = props.toAdd;
+
+    if (!toAdd) {
+      return;
+    }
+
     setMetadata(oldState => {
-      const toAdd = props.toAdd;
-
-      if (!toAdd) {
-        return oldState;
-      }
-
       const keySet = new Set(Object.values(oldState).reduce((accum, val) => {
         return accum.concat(val.map(m => m.id));
       }, [] as number[]));
@@ -66,6 +66,20 @@ function ContentMetadata<
 
       return newState;
     });
+
+    const onSelect = props.actions.onSelect;
+    
+    if (onSelect) {
+      Object.keys(toAdd).forEach(key => {
+        const metadataType = props.metadataTypes.find(
+          m => m.id === (key as unknown as number)
+        ) as T;
+        onSelect(
+          metadataType,
+          metadata[key as unknown as number]
+        );
+      });
+    }
   }, [props.toAdd]);
 
   return (
