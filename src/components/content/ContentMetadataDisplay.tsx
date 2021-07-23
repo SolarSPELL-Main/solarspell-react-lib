@@ -64,22 +64,22 @@ function ContentMetadata<
         }
       });
 
+      const onSelect = props.actions.onSelect;
+    
+      if (onSelect) {
+        Object.keys(toAdd).forEach(key => {
+          const metadataType = props.metadataTypes.find(
+            m => m.id === (key as unknown as number)
+          ) as T;
+          onSelect(
+            metadataType,
+            metadata[key as unknown as number] ?? [],
+          );
+        });
+      }
+
       return newState;
     });
-
-    const onSelect = props.actions.onSelect;
-    
-    if (onSelect) {
-      Object.keys(toAdd).forEach(key => {
-        const metadataType = props.metadataTypes.find(
-          m => m.id === (key as unknown as number)
-        ) as T;
-        onSelect(
-          metadataType,
-          metadata[key as unknown as number]
-        );
-      });
-    }
   }, [props.toAdd]);
 
   return (

@@ -34,15 +34,16 @@ function ContentMetadata(props) {
                     newState[key] = val;
                 }
             });
+            const onSelect = props.actions.onSelect;
+            if (onSelect) {
+                Object.keys(toAdd).forEach(key => {
+                    var _a;
+                    const metadataType = props.metadataTypes.find(m => m.id === key);
+                    onSelect(metadataType, (_a = metadata[key]) !== null && _a !== void 0 ? _a : []);
+                });
+            }
             return newState;
         });
-        const onSelect = props.actions.onSelect;
-        if (onSelect) {
-            Object.keys(toAdd).forEach(key => {
-                const metadataType = props.metadataTypes.find(m => m.id === key);
-                onSelect(metadataType, metadata[key]);
-            });
-        }
     }, [props.toAdd]);
     return (_jsx(Grid, Object.assign({ container: true, spacing: props.spacing }, { children: props.metadataTypes.map(metadataType => {
             var _a, _b, _c, _d;
