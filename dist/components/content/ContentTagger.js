@@ -36,6 +36,10 @@ function ContentTagger(props) {
             onSelect(selected);
         }
     }, [onSelect, props.metadataType]);
+    React.useEffect(() => {
+        var _a;
+        onSelect((_a = props.selected) !== null && _a !== void 0 ? _a : []);
+    }, [props.selected]);
     return (_jsx(Autocomplete, { multiple: true, filterSelectedOptions: true, clearOnBlur: true, clearOnEscape: true, handleHomeEndKeys: true, selectOnFocus: true, value: props.selected, options: [...props.options, ...(_a = props.selected) !== null && _a !== void 0 ? _a : []], getOptionSelected: (option, val) => option.id === val.id, getOptionLabel: option => option.name, renderInput: (params) => (_jsx(TextField, Object.assign({}, params, { placeholder: 'Enter tag name...', variant: 'standard', label: props.label }), void 0)), filterOptions: (options, params) => {
             const filtered = filter(options, params);
             // Suggest the creation of a new value if metadata not present

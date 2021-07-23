@@ -93,6 +93,10 @@ function ContentTagger<
     }
   }, [onSelect, props.metadataType]);
 
+  React.useEffect(() => {
+    onSelect(props.selected ?? []);
+  }, [props.selected]);
+
   return (
     <Autocomplete
       multiple
