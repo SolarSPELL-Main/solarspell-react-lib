@@ -12,7 +12,7 @@ type ContentMetadataProps<
 > = {
   metadataTypes: T[]
   metadata: Record<number,M[]>
-  toAdd: Record<number, M[]>
+  toAdd?: Record<number, M[]>
   options: Record<number,M[]>
   actions: ContentTaggerActionProps<T,M>
   width?: GridSize
@@ -38,14 +38,20 @@ function ContentMetadata<
 
   React.useEffect(() => {
     setMetadata(oldState => {
+      const toAdd = props.toAdd;
+
+      if (!toAdd) {
+        return oldState;
+      }
+
       const newState = Object.entries(oldState).reduce((accum, [key, val]) => {
         return {
           ...accum,
-          [key]: val.concat(props.toAdd[key as unknown as number] ?? []),
+          [key]: val.concat(toAdd[key as unknown as number] ?? []),
         };
       }, {} as Record<number, M[]>);
 
-      Object.entries(props.toAdd).forEach(([key, val]) => {
+      Object.entries(toAdd).forEach(([key, val]) => {
         if (!(key in newState)) {
           newState[key as unknown as number] = val;
         }

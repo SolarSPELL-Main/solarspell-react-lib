@@ -17,11 +17,15 @@ function ContentMetadata(props) {
     }, [props.metadata]);
     React.useEffect(() => {
         setMetadata(oldState => {
+            const toAdd = props.toAdd;
+            if (!toAdd) {
+                return oldState;
+            }
             const newState = Object.entries(oldState).reduce((accum, [key, val]) => {
                 var _a;
-                return Object.assign(Object.assign({}, accum), { [key]: val.concat((_a = props.toAdd[key]) !== null && _a !== void 0 ? _a : []) });
+                return Object.assign(Object.assign({}, accum), { [key]: val.concat((_a = toAdd[key]) !== null && _a !== void 0 ? _a : []) });
             }, {});
-            Object.entries(props.toAdd).forEach(([key, val]) => {
+            Object.entries(toAdd).forEach(([key, val]) => {
                 if (!(key in newState)) {
                     newState[key] = val;
                 }
