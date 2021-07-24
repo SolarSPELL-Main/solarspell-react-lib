@@ -12,6 +12,7 @@ type ContentMetadataProps<
 > = {
   metadataTypes: T[]
   metadata: Record<number,M[]>
+  toAdd?: Record<number, M[]>
   options: Record<number,M[]>
   actions: ContentTaggerActionProps<T,M>
   width?: GridSize
@@ -43,6 +44,7 @@ function ContentMetadata<
               {...props.actions}
               metadataType={metadataType}
               selected={props.metadata[metadataType.id] ?? []}
+              toAdd={props.toAdd?.[metadataType.id]}
               options={props.options[metadataType.id] ?? []}
               label={metadataType.name}
             />
