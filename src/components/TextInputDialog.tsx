@@ -4,7 +4,6 @@ import TextField from '@material-ui/core/TextField';
 
 //Importing functions from other files of the projects
 import ConfirmationDialog from './ConfirmationDialog';
-import { preventEvent } from '../utils';
 import { DialogConfirmationStyleProps } from './types';
 
 type TextInputDialogProps = {
@@ -13,6 +12,8 @@ type TextInputDialogProps = {
   label: string
   stopPropagation?: boolean
   preventDefault?: boolean
+  defaultValue?: string
+  allowEnter?: boolean
 } & DialogConfirmationStyleProps
 
 /**
@@ -30,14 +31,22 @@ function TextInputDialog({
   preventDefault=true,
   ...props
 }: TextInputDialogProps): React.ReactElement {
-  const [input, setInput] = React.useState('');
+  const [input, setInput] = React.useState(props.defaultValue ?? '');
+
+  // On open, set input value to props default value
+  React.useEffect(() => {
+    if (props.open) {
+      setInput(props.defaultValue ?? '');
+    }
+  }, [props.open]);
+
   const onClose = React.useCallback((accepted: boolean) => {
     if (accepted) {
       props.onClose(input);
     } else {
       props.onClose('');
     }
-    setInput('');
+    setInput(props.defaultValue ?? '');
   }, [input, props.onClose]);
 
   return (
@@ -65,7 +74,13 @@ function TextInputDialog({
         onChange={e => {
           setInput(e.target.value);
         }}
-        onKeyDown={preventEvent(true, false)}
+        onKeyDown={e => {
+          if (props.allowEnter && e.key === 'Enter') {
+            onClose(true);
+          }
+
+          e.stopPropagation();
+        }}
       />
     </ConfirmationDialog>
   );

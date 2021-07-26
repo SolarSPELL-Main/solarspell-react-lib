@@ -103,6 +103,8 @@ function KebabMenuItem(props: KebabMenuItemProps): React.ReactElement {
             cancelText={props.cancelButtonText}
             cancelColor={props.cancelButtonColor}
             size={props.textInputSize}
+            allowEnter={props.allowEnter}
+            defaultValue={props.textInputDefaultValue}
           />
         </>
       );

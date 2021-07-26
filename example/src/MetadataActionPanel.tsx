@@ -38,6 +38,8 @@ function MetadataActionPanel({
       onAction={onAction}
       textInputTitle={`Edit Metadata ${metadata.name}`}
       textInputLabel={'Metadata Name'}
+      textInputDefaultValue={metadata.name}
+      allowEnter
     />
     <ActionPanelItem
       type={'confirm'}

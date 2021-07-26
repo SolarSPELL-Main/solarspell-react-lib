@@ -50,6 +50,7 @@ function MetadataKebabMenu({
         textInputTitle={`Create a new Metadata of type ${metadataType.name}`}
         textInputLabel={'Metadata Name'}
         submitButtonText={'Create'}
+        allowEnter
       />
       <KebabMenuItem
         type={'text_input'}
@@ -58,6 +59,8 @@ function MetadataKebabMenu({
         textInputTitle={`Edit Metadata Type ${metadataType.name}`}
         textInputLabel={'Metadata Type Name'}
         textInputSize={'xs'}
+        textInputDefaultValue={metadataType.name}
+        allowEnter
       />
       <KebabMenuItem
         type={'text_input'}
