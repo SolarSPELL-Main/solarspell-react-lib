@@ -21,6 +21,7 @@ function ContentColumnSelection(props) {
                 flex: 1,
                 disableColumnMenu: true,
                 filterable: false,
+                sortable: false,
                 hide: b,
                 valueFormatter: (params) => {
                     var _a;
