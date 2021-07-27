@@ -1,11 +1,9 @@
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
-//Importing from outside the project
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
-//Importing from other files of the projects
 import ConfirmationDialog from './ConfirmationDialog';
 import { fullEvery } from '../utils';
 /**
@@ -19,6 +17,7 @@ import { fullEvery } from '../utils';
 function Form(props) {
     const [state, setState,] = React.useState({});
     const [reasons, setReasons,] = React.useState({});
+    // Keeps track of this for async validation
     const [submitting, setSubmitting] = React.useState(false);
     // Setter factory functions
     const genericSetter = React.useCallback((name, val) => {
@@ -31,8 +30,8 @@ function Form(props) {
     // Performs validation on submission
     const onSubmit = React.useCallback(() => {
         if (!submitting) {
-            // To enable async validation, assume all results are promises
             setSubmitting(true);
+            // To enable async validation, assume all results are promises
             const promises = props.fields.map(item => item.validator ?
                 item.validator(state)
                 :
@@ -47,12 +46,14 @@ function Form(props) {
                 // State updates should come before external callbacks
                 setSubmitting(false);
                 setReasons(reasonDraft);
+                // On successful validation, submit
                 if (valid) {
                     props.onSubmit(state);
                 }
             });
         }
     }, [props.onSubmit, setState, setReasons, state, props.fields]);
+    // Contains all the form fields in a grid
     const formBody = (_jsx(Grid, Object.assign({ container: true }, { children: props.fields.map((item, idx) => {
             var _a;
             if (!item.component) {
@@ -64,6 +65,8 @@ function Form(props) {
     let deps = [];
     switch (props.type) {
         case 'dialog':
+            // Form state initialization should reset on open/close
+            // Hence props.open is included in deps
             deps = [props.open, props.initialState];
             finalRender = (_jsx(ConfirmationDialog, Object.assign({ onClose: (submitted) => {
                     // Form was submitted
@@ -81,9 +84,9 @@ function Form(props) {
                 } }, props.dialogStyle, { children: formBody }), void 0));
             break;
         default:
+            // Form state initialization should only depend on initialState prop
             deps = [props.initialState];
-            finalRender = (_jsxs(_Fragment, { children: [formBody,
-                    _jsx(Button, Object.assign({ onClick: onSubmit, endIcon: submitting && _jsx(CircularProgress, { size: '1em' }, void 0) }, { children: "Submit" }), void 0)] }, void 0));
+            finalRender = (_jsxs(_Fragment, { children: [formBody, _jsx(Button, Object.assign({ onClick: onSubmit, endIcon: submitting && _jsx(CircularProgress, { size: '1em' }, void 0) }, { children: "Submit" }), void 0)] }, void 0));
             break;
     }
     // Initializes state with initial values and initial state

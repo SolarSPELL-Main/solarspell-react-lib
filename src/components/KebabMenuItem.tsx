@@ -1,15 +1,15 @@
-//Importing libraries, APIs from outside the project
 import React from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 
-//Importing functions from other files of the projects
 import ConfirmationDialog from './ConfirmationDialog';
 import TextInputDialog from './TextInputDialog';
 import { preventEventFactory } from '../utils';
 import { CustomizableActionProps } from './types';
 
 type BaseProps = {
+  /** Text to display in MenuItem */
   label: string
+  /** Callback to fire on click */
   onAction: () => void
 }
 
@@ -114,6 +114,7 @@ function KebabMenuItem(props: KebabMenuItemProps): React.ReactElement {
 
 // Ref arg seems to be unused for now
 // Ref forwarding necessary for use in MUI Menu
+// Otherwise, throws an error
 const ForwardedKebabMenuItem = React.forwardRef(
   (props: KebabMenuItemProps, _ref) => {
     return (

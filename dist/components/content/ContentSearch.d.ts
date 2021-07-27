@@ -12,6 +12,14 @@ declare type FieldDescriptor = {
 } & Field;
 declare type Field = NumericField | DateField | StringField | EnumField | CustomField;
 declare type NumericField = {
+    /**
+     * Specifies that the field should be rendered by two
+     * TextFields, for from/to values respectively.
+     * State is formatted as: {
+     *  from: number
+     *  to: number
+     * }
+     */
     type: 'numeric';
     /** Minimum value for field */
     min?: number;
@@ -19,14 +27,34 @@ declare type NumericField = {
     max?: number;
 };
 declare type DateField = {
+    /**
+     * Specifies that the field should be rendered by two
+     * TextFields, for from/to values respectively.
+     * State is formatted as: {
+     *  from: string
+     *  rawFrom: string
+     *  to: string
+     *  rawTo: string
+     * }
+     */
     type: 'date';
     /** Conversion method from Date to string */
     stringifier: (val: Date) => string;
 };
 declare type StringField = {
+    /**
+     * Specifies that the field should be rendered by one
+     * TextField.
+     * State is formatted as: string
+     */
     type: 'string';
 };
 declare type EnumField = {
+    /**
+     * Specifies that the field should be rendered by a
+     * combo box (Select).
+     * State is formatted as: string
+     */
     type: 'enum';
     /** The enum represented by the field */
     options: {
@@ -39,6 +67,11 @@ declare type EnumField = {
     initialValue: string;
 };
 declare type CustomField = {
+    /**
+     * Specifies that the field should be rendered by a
+     * custom component.
+     * State is formatted however it is specified by the setter.
+     */
     type: 'custom';
     /** Custom component to render for the field */
     component: React.JSXElementConstructor<any>;

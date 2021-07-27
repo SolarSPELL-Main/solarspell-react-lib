@@ -1,9 +1,7 @@
-//Importing libraries, APIs from outside the project
 import React from 'react';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 
-//Importing functions from other files of the projects
 import { preventEvent, preventEventFactory } from '../utils';
 
 /**

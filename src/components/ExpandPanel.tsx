@@ -1,4 +1,3 @@
-//Importing libraries, APIs from outside the project
 import React from 'react';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -7,10 +6,13 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
 type ExpandPanelProps = {
+  /** Header to display on top left of the panel */
   header: string
+  /** Optional component to display at top right of the panel */
   headerMenu?: React.ReactElement
 }
 
+// Establishes consistent font size for the header
 const accordionHeaderStyle: React.CSSProperties = {
   fontWeight: 600,
 };

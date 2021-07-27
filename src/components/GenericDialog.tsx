@@ -1,4 +1,3 @@
-//Importing libraries, APIs from outside the project
 import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -6,12 +5,14 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-//Importing functions from other files of the projects
 import { GenericDialogStyleProps } from './types';
 
 type GenericDialogProps = {
+  /** Whether the dialog is open */
   open: boolean
+  /** Callback to fire on dialog close */
   onClose: (e: React.SyntheticEvent) => void
+  /** Controls to render in actions section of Dialog */
   actions: React.ReactElement
 } & GenericDialogStyleProps
 
