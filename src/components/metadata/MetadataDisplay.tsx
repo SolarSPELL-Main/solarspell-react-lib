@@ -1,7 +1,5 @@
-//Importing libraries, APIs from outside the project
 import React from 'react';
 
-//Importing functions from other files of the projects
 import MetadataTable, { MetadataTableOptionalProps } from './MetadataTable';
 import { BaseMetadata, BaseMetadataType } from '../../types';
 
@@ -9,8 +7,11 @@ type MetadataDisplayProps<
   T extends BaseMetadataType,
   M extends BaseMetadata,
 > = {
+  /** Metadata types to display in separate tables */
   metadataTypes: T[]
+  /** Dict mapping metadata type IDs to associated metadata of that type */
   metadata: Record<number, M[]>
+  /** Additional properties for the tables */
   tableProps?: MetadataTableOptionalProps<T,M>
 }
 

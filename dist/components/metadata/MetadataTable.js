@@ -1,16 +1,13 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 /* eslint-disable @typescript-eslint/no-explicit-any */
-//Importing libraries, APIs from outside the project
 import React from 'react';
 import { GridColumnMenuContainer, SortGridMenuItems, GridFilterMenuItem, } from '@material-ui/data-grid';
-//Importing functions from other files of the projects
 import DataTable from '../DataTable';
 import ExpandPanel from '../ExpandPanel';
 // Removes unnecessary options from ColumnMenu
 const CustomGridColumnMenu = React.forwardRef((props, ref) => {
     const { hideMenu, currentColumn } = props;
-    return (_jsxs(GridColumnMenuContainer, Object.assign({ ref: ref }, props, { children: [_jsx(SortGridMenuItems, { onClick: hideMenu, column: currentColumn }, void 0),
-            _jsx(GridFilterMenuItem, { onClick: hideMenu, column: currentColumn }, void 0)] }), void 0));
+    return (_jsxs(GridColumnMenuContainer, Object.assign({ ref: ref }, props, { children: [_jsx(SortGridMenuItems, { onClick: hideMenu, column: currentColumn }, void 0), _jsx(GridFilterMenuItem, { onClick: hideMenu, column: currentColumn }, void 0)] }), void 0));
 });
 /**
  * This component creates a single table for a metadata type and its members.
@@ -22,6 +19,7 @@ const CustomGridColumnMenu = React.forwardRef((props, ref) => {
  */
 function MetadataTable(props) {
     var _a, _b, _c, _d, _e;
+    // Default columns
     const columns = [
         {
             field: 'name',
@@ -34,7 +32,7 @@ function MetadataTable(props) {
         ...(_a = props.additionalColumns) !== null && _a !== void 0 ? _a : [],
     ];
     // Add Actions column only if ActionPanel component specified
-    // Prioritizes Actions column, Name column, followed by custom columns
+    // Prioritizes Actions column, default columns, followed by custom columns
     if ((_b = props.components) === null || _b === void 0 ? void 0 : _b.ActionPanel) {
         const ActionPanel = props.components.ActionPanel;
         const ActionPanelProps = (_c = props.componentProps) === null || _c === void 0 ? void 0 : _c.ActionPanel;

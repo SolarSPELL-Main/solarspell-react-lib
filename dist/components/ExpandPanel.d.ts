@@ -1,6 +1,8 @@
 import React from 'react';
 declare type ExpandPanelProps = {
+    /** Header to display on top left of the panel */
     header: string;
+    /** Optional component to display at top right of the panel */
     headerMenu?: React.ReactElement;
 };
 /**

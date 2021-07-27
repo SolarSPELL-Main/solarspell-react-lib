@@ -1,33 +1,50 @@
-//Importing libraries, APIs from outside the project
 import React from 'react';
 import Tooltip from '@material-ui/core/Tooltip/';
 import { SvgIconComponent } from '@material-ui/icons';
 
-//Importing functions from other files of the projects
 import ConfirmationDialog from './ConfirmationDialog';
 import TextInputDialog from './TextInputDialog';
 import { CustomizableActionProps } from './types';
 
 type BaseProps = {
+  /** Tooltip to display on hovering over the icon */
   tooltip?: string
+  /** Icon to associate with the action */
   icon: SvgIconComponent
+  /** Callback to fire on clicking the icon */
   onAction: () => void
 }
 
+// Special prop for allowing a toggleable action
 type ToggleProps = {
+  /** Specifies that the icon should be toggleable on/off */
   type: 'toggle'
+  /** Tooltip to display on hovering over the icon */
   tooltip?: string
+  /** 
+   * Callback to fire on toggling the icon.
+   * Note that the active argument is the future
+   * state of the component (inverted current state).
+   * Additionally, the dispatch is included as
+   * an argument to allow the option to actually
+   * toggle the component or not. It must be used
+   * in the callback for the state to change.
+   */
   toggle: (
     active: boolean,
     dispatch: React.Dispatch<React.SetStateAction<boolean>>,
   ) => void
+  /** Icon to display when active */
   activeIcon: SvgIconComponent
+  /** Icon to display when inactive */
   inactiveIcon: SvgIconComponent
+  /** Whether the component is initially active or not (default false) */
   active?: boolean
 }
 
 type ActionPanelItemProps = CustomizableActionProps<BaseProps> | ToggleProps
 
+// Forces the mouse to change to a pointer on hover
 const pointerStyle: React.CSSProperties = {
   cursor: 'pointer',
 };

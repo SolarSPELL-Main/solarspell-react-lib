@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-//Importing libraries, APIs from outside the project
 import React from 'react';
 import {
   GridColDef,
@@ -10,14 +9,15 @@ import {
   GridFilterMenuItem,
 } from '@material-ui/data-grid';
 
-//Importing functions from other files of the projects
 import DataTable, { OtherDataGridProps } from '../DataTable';
 import ExpandPanel from '../ExpandPanel';
 import { BaseMetadata, BaseMetadataType } from '../../types';
 
 // Optional components addable to the table
 type ComponentsDef = {
+  /** Kebab menu component to display in upper right of each table */
   KebabMenu?: React.JSXElementConstructor<any>
+  /** Actions to display in the Actions column of the table */
   ActionPanel?: React.JSXElementConstructor<any>
 }
 
@@ -31,15 +31,25 @@ type MetadataTableOptionalProps<
   T extends BaseMetadataType,
   M extends BaseMetadata,
 > = {
+  /** Optional components associated with the component */
   components?: ComponentsDef
+  /** Props objects associated with optional components */
   componentProps?: ComponentsPropsDef
+  /** 
+   * Additional columns to display besides the default columns.
+   * Default columns include:
+   *  Metadata Name
+   */
   additionalColumns?: GridColDef[]
+  /** Whether the metadata rows should be selectable */
   selectable?: boolean
+  /** Callback to fire on metadata row selection */
   onSelectChange?: (
     metadata: M[],
     metadataType: T,
     rows: GridSelectionModelChangeParams,
   ) => void
+  /** Additional properties associated with the underlying DataGrid */
   additionalProps?: OtherDataGridProps
 }
 
@@ -48,7 +58,9 @@ type MetadataTableProps<
 T extends BaseMetadataType,
 M extends BaseMetadata,
 > = {
+  /** Metadata type associated with this table */
   metadataType: T
+  /** Metadata of one type to display in the table */
   metadata: M[]
 } & MetadataTableOptionalProps<T,M>
 
@@ -79,6 +91,7 @@ function MetadataTable<
   T extends BaseMetadataType,
   M extends BaseMetadata,
 >(props: MetadataTableProps<T,M>): React.ReactElement {
+  // Default columns
   const columns: GridColDef[] = [
     {
       field: 'name',
@@ -92,7 +105,7 @@ function MetadataTable<
   ];
 
   // Add Actions column only if ActionPanel component specified
-  // Prioritizes Actions column, Name column, followed by custom columns
+  // Prioritizes Actions column, default columns, followed by custom columns
   if (props.components?.ActionPanel) {
     const ActionPanel = props.components.ActionPanel;
     const ActionPanelProps = props.componentProps?.ActionPanel;
