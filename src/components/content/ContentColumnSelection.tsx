@@ -87,6 +87,12 @@ function ContentColumnSelection<
     [props.onClose, constructCols],
   );
 
+  React.useEffect(() => {
+    if (props.initialState) {
+      props.onClose(constructCols(props.initialState))
+    }
+  }, [props.initialState])
+
   return (
     <Selection
       fields={fields}
