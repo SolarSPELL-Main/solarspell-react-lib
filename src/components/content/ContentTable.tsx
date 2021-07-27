@@ -7,7 +7,7 @@ import {
 } from '@material-ui/data-grid';
 
 //Importing from other files of the projects
-import DataTable from '../DataTable';
+import DataTable, { OtherDataGridProps } from '../DataTable';
 import { BaseContent } from '../../types';
 
 // Optional components addable to the table
@@ -30,6 +30,7 @@ type ContentTableOptionalProps<C> = {
     content: C[],
     rows: GridSelectionModelChangeParams,
   ) => void
+  additionalProps?: OtherDataGridProps
 }
 
 // Actual component props
@@ -120,6 +121,7 @@ function ContentTable<
       rows={props.content}
       selectable={props.selectable}
       onSelectChange={onSelectChange_}
+      additionalProps={props.additionalProps}
     />
   );
 }

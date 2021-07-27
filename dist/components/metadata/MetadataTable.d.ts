@@ -1,5 +1,6 @@
 import React from 'react';
 import { GridColDef, GridSelectionModelChangeParams } from '@material-ui/data-grid';
+import { OtherDataGridProps } from '../DataTable';
 import { BaseMetadata, BaseMetadataType } from '../../types';
 declare type ComponentsDef = {
     KebabMenu?: React.JSXElementConstructor<any>;
@@ -14,6 +15,7 @@ declare type MetadataTableOptionalProps<T extends BaseMetadataType, M extends Ba
     additionalColumns?: GridColDef[];
     selectable?: boolean;
     onSelectChange?: (metadata: M[], metadataType: T, rows: GridSelectionModelChangeParams) => void;
+    additionalProps?: OtherDataGridProps;
 };
 declare type MetadataTableProps<T extends BaseMetadataType, M extends BaseMetadata> = {
     metadataType: T;

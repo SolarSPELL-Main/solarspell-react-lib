@@ -5,6 +5,7 @@ import { BaseMetadata, BaseMetadataType } from '../../types';
 declare type ContentMetadataProps<T extends BaseMetadataType, M extends BaseMetadata<T>> = {
     metadataTypes: T[];
     metadata: Record<number, M[]>;
+    toAdd?: Record<number, M[]>;
     options: Record<number, M[]>;
     actions: ContentTaggerActionProps<T, M>;
     width?: GridSize;

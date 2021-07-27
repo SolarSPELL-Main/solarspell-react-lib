@@ -6,6 +6,8 @@ declare type TextInputDialogProps = {
     label: string;
     stopPropagation?: boolean;
     preventDefault?: boolean;
+    defaultValue?: string;
+    allowEnter?: boolean;
 } & DialogConfirmationStyleProps;
 /**
  * Creates a dialog with a text input box that will call a callback.

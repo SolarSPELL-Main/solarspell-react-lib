@@ -16,6 +16,7 @@ declare type ContentTaggerProps<T extends BaseMetadataType, M extends BaseMetada
     metadataType: T;
     options: M[];
     selected?: M[];
+    toAdd?: M[];
 } & ContentTaggerActionProps<T, M>;
 /**
  * This component displays editable metadata of content of a single type.

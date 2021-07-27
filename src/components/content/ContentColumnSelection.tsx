@@ -48,6 +48,7 @@ function ContentColumnSelection<
           flex: 1,
           disableColumnMenu: true,
           filterable: false,
+          sortable: false,
           hide: b,
           valueFormatter: (params: GridValueFormatterParams) => {
             const metadata = (

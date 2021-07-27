@@ -9,15 +9,22 @@ import {
   GridSlotsComponentsProps,
 } from '@material-ui/data-grid';
 
-// Optional selection enabling/disabling
-type SelectableProps = {
+type OtherDataGridProps = Partial<
+  Exclude<
+    React.ComponentProps<typeof DataGrid>,
+    'columns'|'rows'|'checkboxSelection'|'onSelectionModelChange'|
+    'components'|'componentsProps'
+  >
+>
+
+// Any optional props
+type DataTableOptionalProps = {
   selectable?: boolean
   onSelectChange?: (rows: GridSelectionModelChangeParams) => void
   components?: GridSlotsComponent
   componentsProps?: GridSlotsComponentsProps
+  additionalProps?: OtherDataGridProps
 }
-
-type DataTableOptionalProps = SelectableProps
 
 // Actual component props
 type DataTableProps = {
@@ -33,17 +40,18 @@ type DataTableProps = {
 function DataTable(props: DataTableProps): React.ReactElement {
   return (
     <DataGrid
+      autoHeight
+      disableSelectionOnClick
       columns={props.columns}
       rows={props.rows}
       checkboxSelection={props.selectable}
       onSelectionModelChange={props.onSelectChange}
       components={props.components}
       componentsProps={props.componentsProps}
-      autoHeight
-      disableSelectionOnClick
+      {...props.additionalProps}
     />
   );
 }
 
-export type { DataTableOptionalProps };
+export type { DataTableOptionalProps, OtherDataGridProps };
 export default DataTable;

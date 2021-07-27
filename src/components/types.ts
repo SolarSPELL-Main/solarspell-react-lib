@@ -47,11 +47,13 @@ type TextInputProps<T> = {
   textInputDescription?: string
   textInputLabel: string
   textInputSize?: DialogWidth
+  textInputDefaultValue?: string
   submitButtonText?: string
   cancelButtonText?: string
   submitButtonColor?: PropTypes.Color
   cancelButtonColor?: PropTypes.Color
   onAction: (input: string) => void
+  allowEnter?: boolean
 } & Omit<T, 'onAction'>
 
 type ButtonProps<T> = {

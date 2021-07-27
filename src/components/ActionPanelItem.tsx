@@ -141,6 +141,8 @@ function ActionPanelItem(props: ActionPanelItemProps): React.ReactElement {
             cancelText={props.cancelButtonText}
             cancelColor={props.cancelButtonColor}
             size={props.textInputSize}
+            defaultValue={props.textInputDefaultValue}
+            allowEnter={props.allowEnter}
           />
         </>
       );
