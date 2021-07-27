@@ -3,20 +3,35 @@ import { GridColDef, GridSelectionModelChangeParams } from '@material-ui/data-gr
 import { OtherDataGridProps } from '../DataTable';
 import { BaseContent } from '../../types';
 declare type ComponentsDef = {
+    /** The actions to display in the 'Actions' column */
     ActionPanel?: React.JSXElementConstructor<any>;
 };
 declare type ComponentsPropsDef = {
     [Component in keyof ComponentsDef]: any;
 };
 declare type ContentTableOptionalProps<C> = {
+    /** Optional components associated with the table */
     components?: ComponentsDef;
+    /** Properties associated with the optional components */
     componentProps?: ComponentsPropsDef;
+    /**
+     * Additional columns to render in the table.
+     * By default includes:
+     *  Title
+     *  Description
+     *  Year of publication
+     *  File name
+     */
     additionalColumns?: GridColDef[];
+    /** Whether the rows are selectable or not */
     selectable?: boolean;
+    /** Callback on selection change */
     onSelectChange?: (content: C[], rows: GridSelectionModelChangeParams) => void;
+    /** Just about any other props associated with a DataGrid */
     additionalProps?: OtherDataGridProps;
 };
 declare type ContentTableProps<C> = {
+    /** The content to display in the table */
     content: C[];
 } & ContentTableOptionalProps<C>;
 /**

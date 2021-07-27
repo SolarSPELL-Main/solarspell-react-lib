@@ -9,27 +9,35 @@ import { DialogButtonStyleProps } from './types';
 import Grid from '@material-ui/core/Grid';
 
 type SelectionFieldDescriptor<T> = {
+  /** The displayed name of the field */
   title: string
+  /** The actual key of the field */
   field: keyof T
 }
 
 type SelectionProps<T> = {
+  /** The fields available for selection */
   fields: SelectionFieldDescriptor<T>[]
+  /** Initial fields that are checked */
   initialState?: Record<string,boolean>
+  /** Whether the selection dialog is open */
   open: boolean
+  /** Callback on dialog close */
   onClose: (state: Record<string,boolean>) => void
+  /** Additional styling props */
   dialogStyle?: Partial<DialogButtonStyleProps>
 }
 
 /**
  * Dialog form for selecting keys of an object using checkboxes.
+ * Currently displays checkboxes in two columns.
  * @param props Context, callback, and styling of the component.
  * @returns A dialog form.
  */
 function Selection<T>(props: SelectionProps<T>): React.ReactElement {
-    const [state, setState] = React.useState<Record<string,boolean>>(
-        props.initialState ?? {}
-    );
+  const [state, setState] = React.useState<Record<string,boolean>>(
+    props.initialState ?? {},
+  );
 
   const setterFactory = React.useCallback(
     (field: keyof T) =>
