@@ -18,6 +18,7 @@ function KebabMenu(props) {
         setAnchorEl(e.currentTarget);
     }), []);
     const onClose = React.useCallback(preventEventFactory(() => setOpen(false)), []);
-    return (_jsxs(_Fragment, { children: [_jsx(MoreVertIcon, { onClick: onClick, onFocus: preventEvent() }, void 0), _jsx(Menu, Object.assign({ open: open, anchorEl: anchorEl, onClose: onClose }, { children: props.children }), void 0)] }, void 0));
+    return (_jsxs(_Fragment, { children: [_jsx(MoreVertIcon, { onClick: onClick, onFocus: preventEvent() }, void 0),
+            _jsx(Menu, Object.assign({ open: open, anchorEl: anchorEl, onClose: onClose }, { children: props.children }), void 0)] }, void 0));
 }
 export default KebabMenu;

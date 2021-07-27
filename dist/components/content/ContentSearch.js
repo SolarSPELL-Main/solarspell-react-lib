@@ -48,7 +48,8 @@ function ContentSearch(props) {
                                                     parseInt(event.target.value)
                                                     :
                                                         null })));
-                                        } }, void 0) }), void 0), _jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(TextField, { label: `${field.title} To` +
+                                        } }, void 0) }), void 0),
+                                _jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(TextField, { label: `${field.title} To` +
                                             (field.unit ? ` (${field.unit})` : ''), type: 'number', InputProps: {
                                             inputProps: {
                                                 min: (_d = field.min) !== null && _d !== void 0 ? _d : -Infinity,
@@ -78,7 +79,8 @@ function ContentSearch(props) {
                                                     :
                                                         oldState === null || oldState === void 0 ? void 0 : oldState.from
                                                 :
-                                                    null }))) }, void 0) }), void 0), _jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(KeyboardDatePicker, { label: `${field.title} To` +
+                                                    null }))) }, void 0) }), void 0),
+                                _jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(KeyboardDatePicker, { label: `${field.title} To` +
                                             (field.unit ? ` (${field.unit})` : ''), variant: 'inline', format: 'MM/dd/yyyy', value: null, inputValue: (_h = current === null || current === void 0 ? void 0 : current.rawTo) !== null && _h !== void 0 ? _h : '', onChange: (date, val) => setter((oldState) => (Object.assign(Object.assign({}, oldState), { rawTo: val, to: val ?
                                                 isValidDate(date) ?
                                                     field.stringifier(date)

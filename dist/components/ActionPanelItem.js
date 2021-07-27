@@ -33,7 +33,8 @@ function ActionPanelItem(props) {
                 setConfirmationDialogActive(false);
             }, [props.onAction]);
             const openConfirmationDialog = React.useCallback(() => setConfirmationDialogActive(true), []);
-            return (_jsxs(_Fragment, { children: [_jsx(ActionPanelItem, { type: 'button', tooltip: props.tooltip, icon: props.icon, onAction: openConfirmationDialog }, void 0), _jsx(ConfirmationDialog, { title: props.confirmationTitle, description: props.confirmationDescription, open: confirmationDialogActive, onClose: onAgree, confirmText: props.confirmButtonText, confirmColor: props.confirmButtonColor, cancelText: props.cancelButtonText, cancelColor: props.cancelButtonColor, size: props.confirmationSize }, void 0)] }, void 0));
+            return (_jsxs(_Fragment, { children: [_jsx(ActionPanelItem, { type: 'button', tooltip: props.tooltip, icon: props.icon, onAction: openConfirmationDialog }, void 0),
+                    _jsx(ConfirmationDialog, { title: props.confirmationTitle, description: props.confirmationDescription, open: confirmationDialogActive, onClose: onAgree, confirmText: props.confirmButtonText, confirmColor: props.confirmButtonColor, cancelText: props.cancelButtonText, cancelColor: props.cancelButtonColor, size: props.confirmationSize }, void 0)] }, void 0));
         }
         case 'text_input': {
             const [textInputDialogActive, setTextInputDialogActive,] = React.useState(false);
@@ -44,7 +45,8 @@ function ActionPanelItem(props) {
                 setTextInputDialogActive(false);
             }, [props.onAction]);
             const openTextInputDialog = React.useCallback(() => setTextInputDialogActive(true), []);
-            return (_jsxs(_Fragment, { children: [_jsx(ActionPanelItem, { type: 'button', tooltip: props.tooltip, icon: props.icon, onAction: openTextInputDialog }, void 0), _jsx(TextInputDialog, { title: props.textInputTitle, description: props.textInputDescription, label: props.textInputLabel, open: textInputDialogActive, onClose: onSubmit, confirmText: props.submitButtonText, confirmColor: props.submitButtonColor, cancelText: props.cancelButtonText, cancelColor: props.cancelButtonColor, size: props.textInputSize, defaultValue: props.textInputDefaultValue, allowEnter: props.allowEnter }, void 0)] }, void 0));
+            return (_jsxs(_Fragment, { children: [_jsx(ActionPanelItem, { type: 'button', tooltip: props.tooltip, icon: props.icon, onAction: openTextInputDialog }, void 0),
+                    _jsx(TextInputDialog, { title: props.textInputTitle, description: props.textInputDescription, label: props.textInputLabel, open: textInputDialogActive, onClose: onSubmit, confirmText: props.submitButtonText, confirmColor: props.submitButtonColor, cancelText: props.cancelButtonText, cancelColor: props.cancelButtonColor, size: props.textInputSize, defaultValue: props.textInputDefaultValue, allowEnter: props.allowEnter }, void 0)] }, void 0));
         }
     }
 }

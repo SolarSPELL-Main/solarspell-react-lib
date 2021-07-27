@@ -48,6 +48,11 @@ function ContentColumnSelection(props) {
         return columns;
     }, [props.fields, props.metadataTypes]);
     const onClose = React.useCallback((state) => props.onClose(constructCols(state)), [props.onClose, constructCols]);
+    React.useEffect(() => {
+        if (props.initialState) {
+            props.onClose(constructCols(props.initialState));
+        }
+    }, [props.initialState]);
     return (_jsx(Selection, { fields: fields, initialState: props.initialState, open: props.open, onClose: onClose }, void 0));
 }
 export default ContentColumnSelection;

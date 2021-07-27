@@ -9,7 +9,8 @@ import ExpandPanel from '../ExpandPanel';
 // Removes unnecessary options from ColumnMenu
 const CustomGridColumnMenu = React.forwardRef((props, ref) => {
     const { hideMenu, currentColumn } = props;
-    return (_jsxs(GridColumnMenuContainer, Object.assign({ ref: ref }, props, { children: [_jsx(SortGridMenuItems, { onClick: hideMenu, column: currentColumn }, void 0), _jsx(GridFilterMenuItem, { onClick: hideMenu, column: currentColumn }, void 0)] }), void 0));
+    return (_jsxs(GridColumnMenuContainer, Object.assign({ ref: ref }, props, { children: [_jsx(SortGridMenuItems, { onClick: hideMenu, column: currentColumn }, void 0),
+            _jsx(GridFilterMenuItem, { onClick: hideMenu, column: currentColumn }, void 0)] }), void 0));
 });
 /**
  * This component creates a single table for a metadata type and its members.
