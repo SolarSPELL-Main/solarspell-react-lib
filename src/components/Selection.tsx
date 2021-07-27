@@ -35,9 +35,9 @@ type SelectionProps<T> = {
  * @returns A dialog form.
  */
 function Selection<T>(props: SelectionProps<T>): React.ReactElement {
-    const [state, setState] = React.useState<Record<string,boolean>>(
-        props.initialState ?? {}
-    );
+  const [state, setState] = React.useState<Record<string,boolean>>(
+    props.initialState ?? {},
+  );
 
   const setterFactory = React.useCallback(
     (field: keyof T) =>
