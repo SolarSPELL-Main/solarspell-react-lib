@@ -9,6 +9,8 @@ import { KeyboardDatePicker } from '@material-ui/pickers';
 import ExpandPanel from '../ExpandPanel';
 /**
  * Expandable search bar for content (or general use).
+ * Contains preset fields for various purposes, specified by
+ * the 'type' property in the FieldDescriptor type.
  * @param props The callback and fields of the search bar.
  * @returns A search bar nested in an expandable panel.
  */
@@ -19,7 +21,8 @@ function ContentSearch(props) {
     // Fire onQueryChange callback on state change
     React.useEffect(() => {
         props.onQueryChange(state);
-    }, [state, props.onQueryChange]);
+    }, [state]);
+    // Check for whether a date is ready for submission (by nature of being valid)
     const isValidDate = (date) => date && !isNaN(date.getTime());
     return (_jsx(ExpandPanel, Object.assign({ header: 'Search' }, { children: _jsx(Grid, Object.assign({ container: true, spacing: 2 }, { children: props.fields.map(field => {
                 var _a, _b, _c, _d, _e, _f, _g, _h;
@@ -48,8 +51,7 @@ function ContentSearch(props) {
                                                     parseInt(event.target.value)
                                                     :
                                                         null })));
-                                        } }, void 0) }), void 0),
-                                _jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(TextField, { label: `${field.title} To` +
+                                        } }, void 0) }), void 0), _jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(TextField, { label: `${field.title} To` +
                                             (field.unit ? ` (${field.unit})` : ''), type: 'number', InputProps: {
                                             inputProps: {
                                                 min: (_d = field.min) !== null && _d !== void 0 ? _d : -Infinity,
@@ -73,21 +75,25 @@ function ContentSearch(props) {
                                         // So we require this kind of dual-state that keeps
                                         // track of the possibly-invalid state and the
                                         // actual valid state.
+                                        // Raw input values are stored in rawTo/From in state,
+                                        // and valid dates are stored in from/to in state, after
+                                        // stringification.
                                         value: null, inputValue: (_g = current === null || current === void 0 ? void 0 : current.rawFrom) !== null && _g !== void 0 ? _g : '', onChange: (date, val) => setter((oldState) => (Object.assign(Object.assign({}, oldState), { rawFrom: val, from: val ?
                                                 isValidDate(date) ?
                                                     field.stringifier(date)
                                                     :
                                                         oldState === null || oldState === void 0 ? void 0 : oldState.from
                                                 :
-                                                    null }))) }, void 0) }), void 0),
-                                _jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(KeyboardDatePicker, { label: `${field.title} To` +
+                                                    null }))), 
+                                        // Disables min/max date completely
+                                        minDate: null, maxDate: null }, void 0) }), void 0), _jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(KeyboardDatePicker, { label: `${field.title} To` +
                                             (field.unit ? ` (${field.unit})` : ''), variant: 'inline', format: 'MM/dd/yyyy', value: null, inputValue: (_h = current === null || current === void 0 ? void 0 : current.rawTo) !== null && _h !== void 0 ? _h : '', onChange: (date, val) => setter((oldState) => (Object.assign(Object.assign({}, oldState), { rawTo: val, to: val ?
                                                 isValidDate(date) ?
                                                     field.stringifier(date)
                                                     :
                                                         oldState === null || oldState === void 0 ? void 0 : oldState.to
                                                 :
-                                                    null }))) }, void 0) }), void 0)] }, void 0));
+                                                    null }))), minDate: null, maxDate: null }, void 0) }), void 0)] }, void 0));
                         break;
                     case 'enum':
                         element = (_jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(Select, Object.assign({ style: { alignSelf: 'bottom' }, label: field.title, value: current !== null && current !== void 0 ? current : field.initialValue, onChange: event => setter(event.target.value) }, { children: field.options.map(opt => (_jsx(MenuItem, Object.assign({ value: opt.value }, { children: opt.title }), opt.value))) }), void 0) }), void 0));

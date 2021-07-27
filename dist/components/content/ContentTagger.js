@@ -1,5 +1,4 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-//Importing from outside the project
 import React from 'react';
 import Autocomplete, { createFilterOptions, } from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
@@ -64,7 +63,7 @@ function ContentTagger(props) {
             const filtered = filter(options, params);
             // Suggest the creation of a new value if metadata not present
             if (props.creatable &&
-                filtered.length === 0 &&
+                !filtered.some(v => v.name === params.inputValue) &&
                 params.inputValue !== '') {
                 // Partial can be cast as M since it will not be included
                 // in the final results anyways (id == -1)

@@ -16,7 +16,7 @@ function MockContentViewer(): React.ReactElement {
         onClose={() => setOpen(false)}
         content={content[0]}
         metadataTypes={metadataTypes}
-        items={[
+        fields={[
           {
             title: 'Title',
             field: 'title',

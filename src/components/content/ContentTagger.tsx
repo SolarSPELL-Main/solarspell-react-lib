@@ -1,20 +1,29 @@
-//Importing from outside the project
 import React from 'react';
 import Autocomplete, {
   createFilterOptions,
 } from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 
-//Importing from other files of the projects
 import { BaseMetadata, BaseMetadataType } from '../../types';
 
 type CreatableProps<
   T extends BaseMetadataType,
   M extends BaseMetadata<T>,
 > = {
+  /**
+   * Whether the tagger should allow for tag creation.
+   * This means if the user input does not match
+   * the listed tags, it displays an additional
+   * 'Add "{user input}"' option.
+   */
   creatable: true
-  // Fired whenever a new tag is created
-  // Can be used for async metadata creation
+  /**
+   * Callback to fire on tag creation.
+   * Should ideally return a Promise that
+   * resolves into the newly created tags,
+   * but this can be circumvented using
+   * the toAdd prop.
+   */
   onCreate: (
     metadataType: T,
     newTags: M[],
@@ -28,13 +37,15 @@ type ContentTaggerActionProps<
   T extends BaseMetadataType,
   M extends BaseMetadata<T>,
 > = {
-  // Fired whenever a tag is selected
+  /** Callback to fire on tag selection */
   onSelect?: (
     metadataType: T,
     tags: M[],
   ) => void
-  // Fired whenever TextField input changes
-  // Can be used for async metadata fetching/filtering
+  /**
+   * Callback to fire on input change.
+   * Can be used for async option fetching, etc.
+   */
   onInputChange?: (
     metadataType: T,
     val: string,
@@ -45,14 +56,15 @@ type ContentTaggerProps<
   T extends BaseMetadataType,
   M extends BaseMetadata<T>,
 > = {
+  /** The label to display on the textfield used for tagging */
   label?: string
-  // Overarching type
+  /** The metadata type to which all the options belong */
   metadataType: T
-  // Possible options for metadata
+  /** Possible options for tagging */
   options: M[]
-  // Initial selected tags
+  /** List of currently selected tags */
   selected?: M[]
-  // Additional tags to add (added as an alternative to async creation)
+  /** Additional tags to add to selected */
   toAdd?: M[]
 } & ContentTaggerActionProps<T,M>
 
@@ -153,7 +165,7 @@ function ContentTagger<
         // Suggest the creation of a new value if metadata not present
         if (
           props.creatable &&
-          filtered.length === 0 &&
+          !filtered.some(v => v.name === params.inputValue) &&
           params.inputValue !== ''
         ) {
           // Partial can be cast as M since it will not be included

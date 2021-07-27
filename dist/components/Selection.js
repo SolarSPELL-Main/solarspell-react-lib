@@ -8,6 +8,7 @@ import ButtonDialog from './ButtonDialog';
 import Grid from '@material-ui/core/Grid';
 /**
  * Dialog form for selecting keys of an object using checkboxes.
+ * Currently displays checkboxes in two columns.
  * @param props Context, callback, and styling of the component.
  * @returns A dialog form.
  */

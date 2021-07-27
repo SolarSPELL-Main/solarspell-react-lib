@@ -9,9 +9,13 @@ import { KeyboardDatePicker } from '@material-ui/pickers';
 import ExpandPanel from '../ExpandPanel';
 
 type FieldDescriptor = {
+  /** Key name of the field */
   field: string
+  /** Displayed title of the field */
   title: string
+  /** What units the field is in */
   unit?: string
+  /** Grid columns taken up by the field */
   width: GridSize
 } & Field
 
@@ -19,12 +23,15 @@ type Field = NumericField | DateField | StringField | EnumField | CustomField
 
 type NumericField = {
   type: 'numeric'
+  /** Minimum value for field */
   min?: number
+  /** Maximum value for field */
   max?: number
 }
 
 type DateField = {
   type: 'date'
+  /** Conversion method from Date to string */
   stringifier: (val: Date) => string
 }
 
@@ -34,26 +41,36 @@ type StringField = {
 
 type EnumField = {
   type: 'enum'
+  /** The enum represented by the field */
   options: {
+    /** Actual value of the enum */
     value: string
+    /** Displayed name of the enum */
     title: string
   }[]
+  /** Initial selected enum value */
   initialValue: string
 }
 
 type CustomField = {
   type: 'custom'
+  /** Custom component to render for the field */
   component: React.JSXElementConstructor<any>
+  /** Props for the component derived from the state setter and current state */
   propFactory: (setter: (val: any) => void, state: Record<string,any>) => any
 }
 
 type ContentSearchProps = {
+  /** Fields to display in the search bar */
   fields: FieldDescriptor[]
+  /** Callback to fire whenever any field changes */
   onQueryChange: (values: any) => void
 }
 
 /**
  * Expandable search bar for content (or general use).
+ * Contains preset fields for various purposes, specified by
+ * the 'type' property in the FieldDescriptor type.
  * @param props The callback and fields of the search bar.
  * @returns A search bar nested in an expandable panel.
  */
@@ -74,8 +91,9 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
   // Fire onQueryChange callback on state change
   React.useEffect(() => {
     props.onQueryChange(state);
-  }, [state, props.onQueryChange]);
+  }, [state]);
 
+  // Check for whether a date is ready for submission (by nature of being valid)
   const isValidDate = (date: Date) => date && !isNaN(date.getTime());
 
   return (
@@ -181,6 +199,9 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                     // So we require this kind of dual-state that keeps
                     // track of the possibly-invalid state and the
                     // actual valid state.
+                    // Raw input values are stored in rawTo/From in state,
+                    // and valid dates are stored in from/to in state, after
+                    // stringification.
                     value={null}
                     inputValue={current?.rawFrom ?? ''}
                     onChange={(date: Date, val?: string|null) => setter(
@@ -196,6 +217,9 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                           null,
                       })
                     )}
+                    // Disables min/max date completely
+                    minDate={null}
+                    maxDate={null}
                   />
                 </Grid>
                 <Grid item xs={field.width} >
@@ -220,6 +244,8 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                           null,
                       })
                     )}
+                    minDate={null}
+                    maxDate={null}
                   />
                 </Grid>
               </>);

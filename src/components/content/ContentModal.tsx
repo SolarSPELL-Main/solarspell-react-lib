@@ -1,17 +1,20 @@
-//Importing from outside the project
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 
-//Importing from other files of the projects
 import Form, { FormFieldDescriptor } from '../Form';
 import { DialogConfirmationStyleProps } from '../types';
 import { BaseContent } from '../../types';
 
 type ContentModalProps<T> = {
+  /** Fields to show in the form */
   fields: FormFieldDescriptor<T>[]
-  onSubmit: (values?: Partial<T>) => void // null when submit cancelled
+  /** Callback on the user clicking the 'Submit' button */
+  onSubmit: (values?: Partial<T>) => void
+  /** Additional dialog styling props */
   dialogStyle: DialogConfirmationStyleProps
+  /** Whether the modal is open */
   open: boolean
+  /** The initial states of the form fields */
   initialState?: Partial<T>
 }
 
@@ -19,7 +22,7 @@ type ContentModalProps<T> = {
  * The modal for adding/editing content.
  * Takes care of state, validation, and callback.
  * @param props The form content and callbacks.
- * @returns A modal for content, displayed in a dialog.
+ * @returns A form for filling out content, displayed in a dialog.
  */
 function ContentModal<
   T extends BaseContent, // type for state
