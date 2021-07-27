@@ -3,22 +3,36 @@ import { GridColDef, GridSelectionModelChangeParams } from '@material-ui/data-gr
 import { OtherDataGridProps } from '../DataTable';
 import { BaseMetadata, BaseMetadataType } from '../../types';
 declare type ComponentsDef = {
+    /** Kebab menu component to display in upper right of each table */
     KebabMenu?: React.JSXElementConstructor<any>;
+    /** Actions to display in the Actions column of the table */
     ActionPanel?: React.JSXElementConstructor<any>;
 };
 declare type ComponentsPropsDef = {
     [Component in keyof ComponentsDef]: any;
 };
 declare type MetadataTableOptionalProps<T extends BaseMetadataType, M extends BaseMetadata> = {
+    /** Optional components associated with the component */
     components?: ComponentsDef;
+    /** Props objects associated with optional components */
     componentProps?: ComponentsPropsDef;
+    /**
+     * Additional columns to display besides the default columns.
+     * Default columns include:
+     *  Metadata Name
+     */
     additionalColumns?: GridColDef[];
+    /** Whether the metadata rows should be selectable */
     selectable?: boolean;
+    /** Callback to fire on metadata row selection */
     onSelectChange?: (metadata: M[], metadataType: T, rows: GridSelectionModelChangeParams) => void;
+    /** Additional properties associated with the underlying DataGrid */
     additionalProps?: OtherDataGridProps;
 };
 declare type MetadataTableProps<T extends BaseMetadataType, M extends BaseMetadata> = {
+    /** Metadata type associated with this table */
     metadataType: T;
+    /** Metadata of one type to display in the table */
     metadata: M[];
 } & MetadataTableOptionalProps<T, M>;
 /**
