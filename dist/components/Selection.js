@@ -12,7 +12,8 @@ import Grid from '@material-ui/core/Grid';
  * @returns A dialog form.
  */
 function Selection(props) {
-    const [state, setState] = React.useState({});
+    var _a;
+    const [state, setState] = React.useState((_a = props.initialState) !== null && _a !== void 0 ? _a : {});
     const setterFactory = React.useCallback((field) => (_e, checked) => setState(state => (Object.assign(Object.assign({}, state), { [field]: checked }))), []);
     const onClose = React.useCallback(() => props.onClose(state), [props.onClose, state]);
     return (_jsx(ButtonDialog, Object.assign({ open: props.open, onClose: onClose, buttonColor: 'primary', size: 'sm' }, props.dialogStyle, { children: _jsx(FormGroup, { children: _jsx(Grid, Object.assign({ container: true }, { children: props.fields.map((field, idx) => {
