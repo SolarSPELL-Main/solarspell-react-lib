@@ -45,24 +45,30 @@ function ContentSearch(props) {
                                                 min: (_a = field.min) !== null && _a !== void 0 ? _a : -Infinity,
                                                 max: (_b = field.max) !== null && _b !== void 0 ? _b : Infinity,
                                             },
-                                        }, fullWidth: true, value: (_c = current === null || current === void 0 ? void 0 : current.from) !== null && _c !== void 0 ? _c : '', onChange: event => {
+                                        }, fullWidth: true, value: (_c = current === null || current === void 0 ? void 0 : current.rawFrom) !== null && _c !== void 0 ? _c : '', onChange: event => {
                                             event.persist();
                                             setter((oldState) => (Object.assign(Object.assign({}, oldState), { from: event.target.value ?
-                                                    parseInt(event.target.value)
+                                                    field.formatter ?
+                                                        field.formatter(parseInt(event.target.value), 'from')
+                                                        :
+                                                            parseInt(event.target.value)
                                                     :
-                                                        null })));
+                                                        null, rawFrom: event.target.value })));
                                         } }, void 0) }), void 0), _jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(TextField, { label: `${field.title} To` +
                                             (field.unit ? ` (${field.unit})` : ''), type: 'number', InputProps: {
                                             inputProps: {
                                                 min: (_d = field.min) !== null && _d !== void 0 ? _d : -Infinity,
                                                 max: (_e = field.max) !== null && _e !== void 0 ? _e : Infinity,
                                             },
-                                        }, fullWidth: true, value: (_f = current === null || current === void 0 ? void 0 : current.to) !== null && _f !== void 0 ? _f : '', onChange: event => {
+                                        }, fullWidth: true, value: (_f = current === null || current === void 0 ? void 0 : current.rawTo) !== null && _f !== void 0 ? _f : '', onChange: event => {
                                             event.persist();
                                             setter((oldState) => (Object.assign(Object.assign({}, oldState), { to: event.target.value ?
-                                                    parseInt(event.target.value)
+                                                    field.formatter ?
+                                                        field.formatter(parseInt(event.target.value), 'to')
+                                                        :
+                                                            parseInt(event.target.value)
                                                     :
-                                                        null })));
+                                                        null, rawTo: event.target.value })));
                                         } }, void 0) }), void 0)] }, void 0));
                         break;
                     case 'date':
@@ -80,7 +86,7 @@ function ContentSearch(props) {
                                         // stringification.
                                         value: null, inputValue: (_g = current === null || current === void 0 ? void 0 : current.rawFrom) !== null && _g !== void 0 ? _g : '', onChange: (date, val) => setter((oldState) => (Object.assign(Object.assign({}, oldState), { rawFrom: val, from: val ?
                                                 isValidDate(date) ?
-                                                    field.stringifier(date)
+                                                    field.formatter(date, 'from')
                                                     :
                                                         oldState === null || oldState === void 0 ? void 0 : oldState.from
                                                 :
@@ -89,7 +95,7 @@ function ContentSearch(props) {
                                         minDate: null, maxDate: null }, void 0) }), void 0), _jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(KeyboardDatePicker, { label: `${field.title} To` +
                                             (field.unit ? ` (${field.unit})` : ''), variant: 'inline', format: 'MM/dd/yyyy', value: null, inputValue: (_h = current === null || current === void 0 ? void 0 : current.rawTo) !== null && _h !== void 0 ? _h : '', onChange: (date, val) => setter((oldState) => (Object.assign(Object.assign({}, oldState), { rawTo: val, to: val ?
                                                 isValidDate(date) ?
-                                                    field.stringifier(date)
+                                                    field.formatter(date, 'to')
                                                     :
                                                         oldState === null || oldState === void 0 ? void 0 : oldState.to
                                                 :

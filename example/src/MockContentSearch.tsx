@@ -45,13 +45,16 @@ function MockContentSearch(): React.ReactElement {
           unit: 'MB',
           width: 2,
           min: 0,
+          formatter: (
+            val,
+          ) => val * 1024 * 1024,
         },
         {
           field: 'reviewed',
           title: 'Reviewed',
           type: 'date',
           width: 2,
-          stringifier: (val: Date) => format(val, 'yyyy-MM-dd'),
+          formatter: (val: Date) => format(val, 'yyyy-MM-dd'),
         },
         {
           field: 'active',
