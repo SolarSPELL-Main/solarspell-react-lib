@@ -25,6 +25,8 @@ declare type NumericField = {
     min?: number;
     /** Maximum value for field */
     max?: number;
+    /** Conversion method from number to string */
+    formatter?: (val: number, field: 'from' | 'to') => number | string;
 };
 declare type DateField = {
     /**
@@ -39,7 +41,7 @@ declare type DateField = {
      */
     type: 'date';
     /** Conversion method from Date to string */
-    stringifier: (val: Date) => string;
+    formatter: (val: Date, field: 'from' | 'to') => string;
 };
 declare type StringField = {
     /**

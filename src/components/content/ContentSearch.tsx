@@ -35,6 +35,8 @@ type NumericField = {
   min?: number
   /** Maximum value for field */
   max?: number
+  /** Conversion method from number to string */
+  formatter?: (val: number, field: 'from'|'to') => number|string
 }
 
 type DateField = {
@@ -50,7 +52,7 @@ type DateField = {
    */
   type: 'date'
   /** Conversion method from Date to string */
-  stringifier: (val: Date) => string
+  formatter: (val: Date, field: 'from'|'to') => string
 }
 
 type StringField = {
@@ -171,16 +173,23 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                       },
                     }}
                     fullWidth
-                    value={current?.from ?? ''}
+                    value={current?.rawFrom ?? ''}
                     onChange={event => {
                       event.persist();
                       setter(
                         (oldState: any) => ({
                           ...oldState,
                           from: event.target.value ?
-                            parseInt(event.target.value)
+                            field.formatter ?
+                              field.formatter(
+                                parseInt(event.target.value),
+                                'from',
+                              )
+                              :
+                              parseInt(event.target.value)
                             :
                             null,
+                          rawFrom: event.target.value,
                         })
                       );
                     }}
@@ -199,16 +208,23 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                       },
                     }}
                     fullWidth
-                    value={current?.to ?? ''}
+                    value={current?.rawTo ?? ''}
                     onChange={event => {
                       event.persist();
                       setter(
                         (oldState: any) => ({
                           ...oldState,
                           to: event.target.value ?
-                            parseInt(event.target.value)
+                            field.formatter ?
+                              field.formatter(
+                                parseInt(event.target.value),
+                                'to',
+                              )
+                              :
+                              parseInt(event.target.value)
                             :
                             null,
+                          rawTo: event.target.value,
                         })
                       );
                     }}
@@ -243,7 +259,7 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                         rawFrom: val,
                         from: val ?
                           isValidDate(date) ?
-                            field.stringifier(date)
+                            field.formatter(date,'from')
                             :
                             oldState?.from
                           :
@@ -270,7 +286,7 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                         rawTo: val,
                         to: val ?
                           isValidDate(date) ?
-                            field.stringifier(date)
+                            field.formatter(date,'to')
                             :
                             oldState?.to
                           :
