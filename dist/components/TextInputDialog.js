@@ -34,6 +34,7 @@ function TextInputDialog(_a) {
             }, onKeyDown: e => {
                 if (props.allowEnter && e.key === 'Enter') {
                     onClose(true);
+                    e.preventDefault();
                 }
                 e.stopPropagation();
             } }, void 0) }), void 0));
