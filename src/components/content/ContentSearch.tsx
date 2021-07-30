@@ -100,6 +100,8 @@ type ContentSearchProps = {
   fields: FieldDescriptor[]
   /** Callback to fire whenever any field changes */
   onQueryChange: (values: any) => void
+  /** Initial state, this prop should be used sparingly */
+  initialState?: Record<string,any>
 }
 
 /**
@@ -110,7 +112,9 @@ type ContentSearchProps = {
  * @returns A search bar nested in an expandable panel.
  */
 function ContentSearch(props: ContentSearchProps): React.ReactElement {
-  const [state, setState] = React.useState<Record<string,any>>({});
+  const [state, setState] = React.useState<Record<string,any>>(
+    props.initialState ?? {}
+  );
 
   // Factory for setters
   const setterFactory = React.useCallback(
