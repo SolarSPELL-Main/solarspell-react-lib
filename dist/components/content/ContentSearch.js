@@ -15,7 +15,17 @@ import ExpandPanel from '../ExpandPanel';
  * @returns A search bar nested in an expandable panel.
  */
 function ContentSearch(props) {
-    const [state, setState] = React.useState({});
+    const [state, setState] = React.useState(
+    // Create initial state
+    props.fields.reduce((accum, field) => {
+        // Takes into account fields with initial values
+        if ('initialValue' in field) {
+            return Object.assign(Object.assign({}, accum), { [field.field]: field.initialValue });
+        }
+        else {
+            return Object.assign(Object.assign({}, accum), { [field.field]: undefined });
+        }
+    }, {}));
     // Factory for setters
     const setterFactory = React.useCallback((field) => (val) => setState(oldState => (Object.assign(Object.assign({}, oldState), { [field]: (val instanceof Function) ? val(oldState[field]) : val }))), [setState]);
     // Fire onQueryChange callback on state change
