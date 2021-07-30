@@ -110,7 +110,26 @@ type ContentSearchProps = {
  * @returns A search bar nested in an expandable panel.
  */
 function ContentSearch(props: ContentSearchProps): React.ReactElement {
-  const [state, setState] = React.useState<Record<string,any>>({});
+  const [state, setState] = React.useState<Record<string,any>>(
+    // Create initial state
+    props.fields.reduce<Record<string,any>>(
+      (accum, field) => {
+        // Takes into account fields with initial values
+        if ('initialValue' in field) {
+          return {
+            ...accum,
+            [field.field]: field.initialValue,
+          };
+        } else {
+          return {
+            ...accum,
+            [field.field]: undefined,
+          };
+        }
+      },
+      {},
+    ),
+  );
 
   // Factory for setters
   const setterFactory = React.useCallback(
