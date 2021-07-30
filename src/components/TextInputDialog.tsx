@@ -87,6 +87,7 @@ function TextInputDialog({
         onKeyDown={e => {
           if (props.allowEnter && e.key === 'Enter') {
             onClose(true);
+            e.preventDefault();
           }
 
           e.stopPropagation();
