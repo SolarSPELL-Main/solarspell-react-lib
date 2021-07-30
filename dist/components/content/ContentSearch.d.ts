@@ -85,8 +85,6 @@ declare type ContentSearchProps = {
     fields: FieldDescriptor[];
     /** Callback to fire whenever any field changes */
     onQueryChange: (values: any) => void;
-    /** Initial state, this prop should be used sparingly */
-    initialState?: Record<string, any>;
 };
 /**
  * Expandable search bar for content (or general use).
