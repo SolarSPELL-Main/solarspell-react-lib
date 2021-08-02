@@ -159,192 +159,188 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
           let element: React.ReactElement;
           
           // Construct search field according to field descriptor
-          switch (field.type) {
-            case 'string':
-              element = (
-                <Grid item xs={field.width} >
-                  <TextField
-                    label={`${field.title}` + 
-                      (field.unit ? ` (${field.unit})` : '')
-                    }
-                    fullWidth
-                    value={current ?? ''}
-                    onChange={event => {
-                      event.persist();
-                      setter(event.target.value);
-                    }}
-                  />
-                </Grid>
-              );
-              break;
-            case 'numeric':
-              element = (<>
-                <Grid item xs={field.width} >
-                  <TextField
-                    label={`${field.title} From` + 
-                      (field.unit ? ` (${field.unit})` : '')
-                    }
-                    type={'number'}
-                    InputProps={{
-                      inputProps: {
-                        min: field.min ?? -Infinity,
-                        max: field.max ?? Infinity,
-                      },
-                    }}
-                    fullWidth
-                    value={current?.rawFrom ?? ''}
-                    onChange={event => {
-                      event.persist();
-                      setter(
-                        (oldState: any) => ({
-                          ...oldState,
-                          from: event.target.value ?
-                            field.formatter ?
-                              field.formatter(
-                                parseInt(event.target.value),
-                                'from',
-                              )
-                              :
-                              parseInt(event.target.value)
-                            :
-                            null,
-                          rawFrom: event.target.value,
-                        })
-                      );
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={field.width} >
-                  <TextField
-                    label={`${field.title} To` + 
-                      (field.unit ? ` (${field.unit})` : '')
-                    }
-                    type={'number'}
-                    InputProps={{
-                      inputProps: {
-                        min: field.min ?? -Infinity,
-                        max: field.max ?? Infinity,
-                      },
-                    }}
-                    fullWidth
-                    value={current?.rawTo ?? ''}
-                    onChange={event => {
-                      event.persist();
-                      setter(
-                        (oldState: any) => ({
-                          ...oldState,
-                          to: event.target.value ?
-                            field.formatter ?
-                              field.formatter(
-                                parseInt(event.target.value),
-                                'to',
-                              )
-                              :
-                              parseInt(event.target.value)
-                            :
-                            null,
-                          rawTo: event.target.value,
-                        })
-                      );
-                    }}
-                  />
-                </Grid>
-              </>);
-              break;
-            case 'date':
-              element = (<>
-                <Grid item xs={field.width} >
-                  <KeyboardDatePicker
-                    label={`${field.title} From` + 
-                      (field.unit ? ` (${field.unit})` : '')
-                    }
-                    variant={'inline'}
-                    format={'MM/dd/yyyy'}
-                    // Why all this complicated hubaloo?
-                    // Because we want the user to be able to type in
-                    // any date they want, but we also want the actual
-                    // state submitted to be valid.
-                    // So we require this kind of dual-state that keeps
-                    // track of the possibly-invalid state and the
-                    // actual valid state.
-                    // Raw input values are stored in rawTo/From in state,
-                    // and valid dates are stored in from/to in state, after
-                    // stringification.
-                    value={null}
-                    inputValue={current?.rawFrom ?? ''}
-                    onChange={(date: Date, val?: string|null) => setter(
+          if (field.type === 'string') {
+            element = (
+              <Grid item xs={field.width} >
+                <TextField
+                  label={`${field.title}` + 
+                    (field.unit ? ` (${field.unit})` : '')
+                  }
+                  fullWidth
+                  value={current ?? ''}
+                  onChange={event => {
+                    event.persist();
+                    setter(event.target.value);
+                  }}
+                />
+              </Grid>
+            );
+          } else if (field.type === 'numeric') {
+            element = (<>
+              <Grid item xs={field.width} >
+                <TextField
+                  label={`${field.title} From` + 
+                    (field.unit ? ` (${field.unit})` : '')
+                  }
+                  type={'number'}
+                  InputProps={{
+                    inputProps: {
+                      min: field.min ?? -Infinity,
+                      max: field.max ?? Infinity,
+                    },
+                  }}
+                  fullWidth
+                  value={current?.rawFrom ?? ''}
+                  onChange={event => {
+                    event.persist();
+                    setter(
                       (oldState: any) => ({
                         ...oldState,
-                        rawFrom: val,
-                        from: val ?
-                          isValidDate(date) ?
-                            field.formatter(date,'from')
+                        from: event.target.value ?
+                          field.formatter ?
+                            field.formatter(
+                              parseInt(event.target.value),
+                              'from',
+                            )
                             :
-                            oldState?.from
+                            parseInt(event.target.value)
                           :
                           null,
+                        rawFrom: event.target.value,
                       })
-                    )}
-                    // Disables min/max date completely
-                    minDate={null}
-                    maxDate={null}
-                  />
-                </Grid>
-                <Grid item xs={field.width} >
-                  <KeyboardDatePicker
-                    label={`${field.title} To` + 
-                      (field.unit ? ` (${field.unit})` : '')
-                    }
-                    variant={'inline'}
-                    format={'MM/dd/yyyy'}
-                    value={null}
-                    inputValue={current?.rawTo ?? ''}
-                    onChange={(date: Date, val?: string|null) => setter(
+                    );
+                  }}
+                />
+              </Grid>
+              <Grid item xs={field.width} >
+                <TextField
+                  label={`${field.title} To` + 
+                    (field.unit ? ` (${field.unit})` : '')
+                  }
+                  type={'number'}
+                  InputProps={{
+                    inputProps: {
+                      min: field.min ?? -Infinity,
+                      max: field.max ?? Infinity,
+                    },
+                  }}
+                  fullWidth
+                  value={current?.rawTo ?? ''}
+                  onChange={event => {
+                    event.persist();
+                    setter(
                       (oldState: any) => ({
                         ...oldState,
-                        rawTo: val,
-                        to: val ?
-                          isValidDate(date) ?
-                            field.formatter(date,'to')
+                        to: event.target.value ?
+                          field.formatter ?
+                            field.formatter(
+                              parseInt(event.target.value),
+                              'to',
+                            )
                             :
-                            oldState?.to
+                            parseInt(event.target.value)
                           :
                           null,
+                        rawTo: event.target.value,
                       })
-                    )}
-                    minDate={null}
-                    maxDate={null}
-                  />
-                </Grid>
-              </>);
-              break;
-            case 'enum':
-              element = (
-                <Grid item xs={field.width} >
-                  <Select
-                    style={{alignSelf: 'bottom'}}
-                    label={field.title}
-                    value={current ?? field.initialValue}
-                    onChange={event => setter(event.target.value)}
-                  >
-                    {field.options.map(
-                      opt => (
-                        <MenuItem value={opt.value} key={opt.value}>
-                          {opt.title}
-                        </MenuItem>
-                      )
-                    )}
-                  </Select>
-                </Grid>
-              );
-              break;
-            case 'custom':
-              element = (
-                <Grid item xs={field.width}>
-                  <field.component {...field.propFactory(setter, state)} />
-                </Grid>
-              );
-              break;
+                    );
+                  }}
+                />
+              </Grid>
+            </>);
+          } else if (field.type === 'date') {
+            element = (<>
+              <Grid item xs={field.width} >
+                <KeyboardDatePicker
+                  label={`${field.title} From` + 
+                    (field.unit ? ` (${field.unit})` : '')
+                  }
+                  variant={'inline'}
+                  format={'MM/dd/yyyy'}
+                  // Why all this complicated hubaloo?
+                  // Because we want the user to be able to type in
+                  // any date they want, but we also want the actual
+                  // state submitted to be valid.
+                  // So we require this kind of dual-state that keeps
+                  // track of the possibly-invalid state and the
+                  // actual valid state.
+                  // Raw input values are stored in rawTo/From in state,
+                  // and valid dates are stored in from/to in state, after
+                  // stringification.
+                  value={null}
+                  inputValue={current?.rawFrom ?? ''}
+                  onChange={(date: Date, val?: string|null) => setter(
+                    (oldState: any) => ({
+                      ...oldState,
+                      rawFrom: val,
+                      from: val ?
+                        isValidDate(date) ?
+                          field.formatter(date,'from')
+                          :
+                          oldState?.from
+                        :
+                        null,
+                    })
+                  )}
+                  // Disables min/max date completely
+                  minDate={null}
+                  maxDate={null}
+                />
+              </Grid>
+              <Grid item xs={field.width} >
+                <KeyboardDatePicker
+                  label={`${field.title} To` + 
+                    (field.unit ? ` (${field.unit})` : '')
+                  }
+                  variant={'inline'}
+                  format={'MM/dd/yyyy'}
+                  value={null}
+                  inputValue={current?.rawTo ?? ''}
+                  onChange={(date: Date, val?: string|null) => setter(
+                    (oldState: any) => ({
+                      ...oldState,
+                      rawTo: val,
+                      to: val ?
+                        isValidDate(date) ?
+                          field.formatter(date,'to')
+                          :
+                          oldState?.to
+                        :
+                        null,
+                    })
+                  )}
+                  minDate={null}
+                  maxDate={null}
+                />
+              </Grid>
+            </>);
+          } else if (field.type === 'enum') {
+            element = (
+              <Grid item xs={field.width} >
+                <Select
+                  style={{alignSelf: 'bottom'}}
+                  label={field.title}
+                  value={current ?? field.initialValue}
+                  onChange={event => setter(event.target.value)}
+                >
+                  {field.options.map(
+                    opt => (
+                      <MenuItem value={opt.value} key={opt.value}>
+                        {opt.title}
+                      </MenuItem>
+                    )
+                  )}
+                </Select>
+              </Grid>
+            );
+          } else if (field.type === 'custom') {
+            element = (
+              <Grid item xs={field.width}>
+                <field.component {...field.propFactory(setter, state)} />
+              </Grid>
+            );
+          } else {
+            throw Error('Invalid field type.');
           }
 
           return <React.Fragment key={field.field}>{element}</React.Fragment>;
