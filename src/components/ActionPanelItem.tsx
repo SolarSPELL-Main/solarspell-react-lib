@@ -55,115 +55,112 @@ const pointerStyle: React.CSSProperties = {
  * @returns A clickable icon.
  */
 function ActionPanelItem(props: ActionPanelItemProps): React.ReactElement {
-  switch (props.type) {
-    case 'button': {
-      return (
-        <Tooltip title={props.tooltip || ''}>
-          <props.icon
-            style={pointerStyle}
-            onClick={props.onAction}
-          />
-        </Tooltip>
-      );
-    }
-    case 'toggle': {
-      const [active, setActive] = React.useState(props.active ?? false);
-      const toggle = React.useCallback(
-        () => props.toggle(!active, setActive),
-        [active, props.toggle]
-      );
+  if (props.type === 'button') {
+    return (
+      <Tooltip title={props.tooltip || ''}>
+        <props.icon
+          style={pointerStyle}
+          onClick={props.onAction}
+        />
+      </Tooltip>
+    );
+  } else if (props.type === 'toggle') {
+    const [active, setActive] = React.useState(props.active ?? false);
+    const toggle = React.useCallback(
+      () => props.toggle(!active, setActive),
+      [active, props.toggle]
+    );
 
-      return (
+    return (
+      <ActionPanelItem
+        type={'button'}
+        tooltip={props.tooltip}
+        icon={active ? props.activeIcon : props.inactiveIcon}
+        onAction={toggle}
+      />
+    );
+  } else if (props.type === 'confirm') {
+    const [
+      confirmationDialogActive,
+      setConfirmationDialogActive,
+    ] = React.useState(false);
+    const onAgree = React.useCallback(
+      (agreed: boolean) => {
+        if (agreed) {
+          props.onAction();
+        }
+        setConfirmationDialogActive(false);
+      },
+      [props.onAction]
+    );
+    const openConfirmationDialog = React.useCallback(
+      () => setConfirmationDialogActive(true),
+      [],
+    );
+
+    return (
+      <>
         <ActionPanelItem
           type={'button'}
           tooltip={props.tooltip}
-          icon={active ? props.activeIcon : props.inactiveIcon}
-          onAction={toggle}
+          icon={props.icon}
+          onAction={openConfirmationDialog}
         />
-      );
-    }
-    case 'confirm': {
-      const [
-        confirmationDialogActive,
-        setConfirmationDialogActive,
-      ] = React.useState(false);
-      const onAgree = React.useCallback(
-        (agreed: boolean) => {
-          if (agreed) {
-            props.onAction();
-          }
-          setConfirmationDialogActive(false);
-        },
-        [props.onAction]
-      );
-      const openConfirmationDialog = React.useCallback(
-        () => setConfirmationDialogActive(true),
-        [],
-      );
+        <ConfirmationDialog
+          title={props.confirmationTitle}
+          description={props.confirmationDescription}
+          open={confirmationDialogActive}
+          onClose={onAgree}
+          confirmText={props.confirmButtonText}
+          confirmColor={props.confirmButtonColor}
+          cancelText={props.cancelButtonText}
+          cancelColor={props.cancelButtonColor}
+          size={props.confirmationSize}
+        />
+      </>
+    );
+  } else if (props.type === 'text_input') {
+    const [
+      textInputDialogActive,
+      setTextInputDialogActive,
+    ] = React.useState(false);
+    const onSubmit = React.useCallback((val: string) => {
+      if (val) {
+        props.onAction(val);
+      }
+      setTextInputDialogActive(false);
+    }, [props.onAction]);
+    const openTextInputDialog = React.useCallback(
+      () => setTextInputDialogActive(true),
+      [],
+    );
 
-      return (
-        <>
-          <ActionPanelItem
-            type={'button'}
-            tooltip={props.tooltip}
-            icon={props.icon}
-            onAction={openConfirmationDialog}
-          />
-          <ConfirmationDialog
-            title={props.confirmationTitle}
-            description={props.confirmationDescription}
-            open={confirmationDialogActive}
-            onClose={onAgree}
-            confirmText={props.confirmButtonText}
-            confirmColor={props.confirmButtonColor}
-            cancelText={props.cancelButtonText}
-            cancelColor={props.cancelButtonColor}
-            size={props.confirmationSize}
-          />
-        </>
-      );
-    }
-    case 'text_input': {
-      const [
-        textInputDialogActive,
-        setTextInputDialogActive,
-      ] = React.useState(false);
-      const onSubmit = React.useCallback((val: string) => {
-        if (val) {
-          props.onAction(val);
-        }
-        setTextInputDialogActive(false);
-      }, [props.onAction]);
-      const openTextInputDialog = React.useCallback(
-        () => setTextInputDialogActive(true),
-        [],
-      );
-
-      return (
-        <>
-          <ActionPanelItem
-            type={'button'}
-            tooltip={props.tooltip}
-            icon={props.icon}
-            onAction={openTextInputDialog}
-          />
-          <TextInputDialog
-            title={props.textInputTitle}
-            description={props.textInputDescription}
-            label={props.textInputLabel}
-            open={textInputDialogActive}
-            onClose={onSubmit}
-            confirmText={props.submitButtonText}
-            confirmColor={props.submitButtonColor}
-            cancelText={props.cancelButtonText}
-            cancelColor={props.cancelButtonColor}
-            size={props.textInputSize}
-            defaultValue={props.textInputDefaultValue}
-            allowEnter={props.allowEnter}
-          />
-        </>
-      );
-    }
+    return (
+      <>
+        <ActionPanelItem
+          type={'button'}
+          tooltip={props.tooltip}
+          icon={props.icon}
+          onAction={openTextInputDialog}
+        />
+        <TextInputDialog
+          title={props.textInputTitle}
+          description={props.textInputDescription}
+          label={props.textInputLabel}
+          open={textInputDialogActive}
+          onClose={onSubmit}
+          confirmText={props.submitButtonText}
+          confirmColor={props.submitButtonColor}
+          cancelText={props.cancelButtonText}
+          cancelColor={props.cancelButtonColor}
+          size={props.textInputSize}
+          defaultValue={props.textInputDefaultValue}
+          allowEnter={props.allowEnter}
+        />
+      </>
+    );
+  } else {
+    throw Error('Invalid type');
   }
 }
 

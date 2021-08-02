@@ -63,31 +63,29 @@ function Form(props) {
         }) }), void 0));
     let finalRender = _jsx(_Fragment, {}, void 0);
     let deps = [];
-    switch (props.type) {
-        case 'dialog':
-            // Form state initialization should reset on open/close
-            // Hence props.open is included in deps
-            deps = [props.open, props.initialState];
-            finalRender = (_jsx(ConfirmationDialog, Object.assign({ onClose: (submitted) => {
-                    // Form was submitted
-                    if (submitted) {
-                        // Submit with state
-                        onSubmit();
-                        // Form was closed
-                    }
-                    else {
-                        // Submit with nothing
-                        props.onSubmit();
-                    }
-                }, open: props.open, preventDefault: false, confirmAdditionalProps: {
-                    endIcon: submitting && _jsx(CircularProgress, { size: '1em' }, void 0),
-                } }, props.dialogStyle, { children: formBody }), void 0));
-            break;
-        default:
-            // Form state initialization should only depend on initialState prop
-            deps = [props.initialState];
-            finalRender = (_jsxs(_Fragment, { children: [formBody, _jsx(Button, Object.assign({ onClick: onSubmit, endIcon: submitting && _jsx(CircularProgress, { size: '1em' }, void 0) }, { children: "Submit" }), void 0)] }, void 0));
-            break;
+    if (props.type === 'dialog') {
+        // Form state initialization should reset on open/close
+        // Hence props.open is included in deps
+        deps = [props.open, props.initialState];
+        finalRender = (_jsx(ConfirmationDialog, Object.assign({ onClose: (submitted) => {
+                // Form was submitted
+                if (submitted) {
+                    // Submit with state
+                    onSubmit();
+                    // Form was closed
+                }
+                else {
+                    // Submit with nothing
+                    props.onSubmit();
+                }
+            }, open: props.open, preventDefault: false, confirmAdditionalProps: {
+                endIcon: submitting && _jsx(CircularProgress, { size: '1em' }, void 0),
+            } }, props.dialogStyle, { children: formBody }), void 0));
+    }
+    else {
+        // Form state initialization should only depend on initialState prop
+        deps = [props.initialState];
+        finalRender = (_jsxs(_Fragment, { children: [formBody, _jsx(Button, Object.assign({ onClick: onSubmit, endIcon: submitting && _jsx(CircularProgress, { size: '1em' }, void 0) }, { children: "Submit" }), void 0)] }, void 0));
     }
     // Initializes state with initial values and initial state
     // initialState takes priority over initialValue properties

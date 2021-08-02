@@ -179,54 +179,51 @@ function Form<T>(props: FormProps<T>): React.ReactElement {
   let finalRender = <></>;
   let deps = [];
 
-  switch (props.type) {
-    case 'dialog':
-      // Form state initialization should reset on open/close
-      // Hence props.open is included in deps
-      deps = [props.open, props.initialState];
-      finalRender = (
-        <ConfirmationDialog
-          onClose={(submitted: boolean) => {
-            // Form was submitted
-            if (submitted) {
-              // Submit with state
-              onSubmit();
-            // Form was closed
-            } else {
-              // Submit with nothing
-              props.onSubmit();
-            }
-          }}
-          open={props.open}
-          preventDefault={false}
-          confirmAdditionalProps={{
-            endIcon: submitting && <CircularProgress
-              size={'1em'}
-            />,
-          }}
-          {...props.dialogStyle}
+  if (props.type === 'dialog') {
+    // Form state initialization should reset on open/close
+    // Hence props.open is included in deps
+    deps = [props.open, props.initialState];
+    finalRender = (
+      <ConfirmationDialog
+        onClose={(submitted: boolean) => {
+          // Form was submitted
+          if (submitted) {
+            // Submit with state
+            onSubmit();
+          // Form was closed
+          } else {
+            // Submit with nothing
+            props.onSubmit();
+          }
+        }}
+        open={props.open}
+        preventDefault={false}
+        confirmAdditionalProps={{
+          endIcon: submitting && <CircularProgress
+            size={'1em'}
+          />,
+        }}
+        {...props.dialogStyle}
+      >
+        {formBody}
+      </ConfirmationDialog>
+    );
+  } else {
+    // Form state initialization should only depend on initialState prop
+    deps = [props.initialState];
+    finalRender = (
+      <>
+        {formBody}
+        <Button
+          onClick={onSubmit}
+          endIcon={submitting && <CircularProgress
+            size={'1em'}
+          />}
         >
-          {formBody}
-        </ConfirmationDialog>
-      );
-      break;
-    default:
-      // Form state initialization should only depend on initialState prop
-      deps = [props.initialState];
-      finalRender = (
-        <>
-          {formBody}
-          <Button
-            onClick={onSubmit}
-            endIcon={submitting && <CircularProgress
-              size={'1em'}
-            />}
-          >
-            Submit
-          </Button>
-        </>
-      );
-      break;
+          Submit
+        </Button>
+      </>
+    );
   }
 
   // Initializes state with initial values and initial state

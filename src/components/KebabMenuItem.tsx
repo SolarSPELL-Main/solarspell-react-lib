@@ -21,94 +21,92 @@ type KebabMenuItemProps = CustomizableActionProps<BaseProps>
  * @returns A clickable menu item.
  */
 function KebabMenuItem(props: KebabMenuItemProps): React.ReactElement {
-  switch (props.type) {
-    case 'button': {
-      const onClick = React.useCallback(
-        preventEventFactory(props.onAction),
-        [props.onAction],
-      );
+  if (props.type === 'button') {
+    const onClick = React.useCallback(
+      preventEventFactory(props.onAction),
+      [props.onAction],
+    );
 
-      return (
-        <MenuItem onClick={onClick}>{props.label}</MenuItem>
-      );
-    }
-    case 'confirm': {
-      const [
-        confirmationDialogActive,
-        setConfirmationDialogActive,
-      ] = React.useState(false);
-      const onAgree = React.useCallback((agreed: boolean) => {
-        if (agreed) {
-          props.onAction();
-        }
-        setConfirmationDialogActive(false);
-      }, [props.onAction]);
-      const openConfirmationDialog = React.useCallback(
-        () => setConfirmationDialogActive(true),
-        [],
-      );
+    return (
+      <MenuItem onClick={onClick}>{props.label}</MenuItem>
+    );
+  } else if (props.type === 'confirm') {
+    const [
+      confirmationDialogActive,
+      setConfirmationDialogActive,
+    ] = React.useState(false);
+    const onAgree = React.useCallback((agreed: boolean) => {
+      if (agreed) {
+        props.onAction();
+      }
+      setConfirmationDialogActive(false);
+    }, [props.onAction]);
+    const openConfirmationDialog = React.useCallback(
+      () => setConfirmationDialogActive(true),
+      [],
+    );
 
-      return (
-        <>
-          <KebabMenuItem
-            type={'button'}
-            label={props.label}
-            onAction={openConfirmationDialog}
-          />
-          <ConfirmationDialog
-            title={props.confirmationTitle}
-            description={props.confirmationDescription}
-            open={confirmationDialogActive}
-            onClose={onAgree}
-            confirmText={props.confirmButtonText}
-            confirmColor={props.confirmButtonColor}
-            cancelText={props.cancelButtonText}
-            cancelColor={props.cancelButtonColor}
-            size={props.confirmationSize}
-          />
-        </>
-      );
-    }
-    case 'text_input': {
-      const [
-        textInputDialogActive,
-        setTextInputDialogActive,
-      ] = React.useState(false);
-      const onSubmit = React.useCallback((val: string) => {
-        if (val) {
-          props.onAction(val);
-        }
-        setTextInputDialogActive(false);
-      }, [props.onAction]);
-      const openTextInputDialog = React.useCallback(
-        () => setTextInputDialogActive(true),
-        [],
-      );
+    return (
+      <>
+        <KebabMenuItem
+          type={'button'}
+          label={props.label}
+          onAction={openConfirmationDialog}
+        />
+        <ConfirmationDialog
+          title={props.confirmationTitle}
+          description={props.confirmationDescription}
+          open={confirmationDialogActive}
+          onClose={onAgree}
+          confirmText={props.confirmButtonText}
+          confirmColor={props.confirmButtonColor}
+          cancelText={props.cancelButtonText}
+          cancelColor={props.cancelButtonColor}
+          size={props.confirmationSize}
+        />
+      </>
+    );
+  } else if (props.type === 'text_input') {
+    const [
+      textInputDialogActive,
+      setTextInputDialogActive,
+    ] = React.useState(false);
+    const onSubmit = React.useCallback((val: string) => {
+      if (val) {
+        props.onAction(val);
+      }
+      setTextInputDialogActive(false);
+    }, [props.onAction]);
+    const openTextInputDialog = React.useCallback(
+      () => setTextInputDialogActive(true),
+      [],
+    );
 
-      return (
-        <>
-          <KebabMenuItem
-            type={'button'}
-            label={props.label}
-            onAction={openTextInputDialog}
-          />
-          <TextInputDialog
-            title={props.textInputTitle}
-            description={props.textInputDescription}
-            label={props.textInputLabel}
-            open={textInputDialogActive}
-            onClose={onSubmit}
-            confirmText={props.submitButtonText}
-            confirmColor={props.submitButtonColor}
-            cancelText={props.cancelButtonText}
-            cancelColor={props.cancelButtonColor}
-            size={props.textInputSize}
-            allowEnter={props.allowEnter}
-            defaultValue={props.textInputDefaultValue}
-          />
-        </>
-      );
-    }
+    return (
+      <>
+        <KebabMenuItem
+          type={'button'}
+          label={props.label}
+          onAction={openTextInputDialog}
+        />
+        <TextInputDialog
+          title={props.textInputTitle}
+          description={props.textInputDescription}
+          label={props.textInputLabel}
+          open={textInputDialogActive}
+          onClose={onSubmit}
+          confirmText={props.submitButtonText}
+          confirmColor={props.submitButtonColor}
+          cancelText={props.cancelButtonText}
+          cancelColor={props.cancelButtonColor}
+          size={props.textInputSize}
+          allowEnter={props.allowEnter}
+          defaultValue={props.textInputDefaultValue}
+        />
+      </>
+    );
+  } else {
+    throw Error('Invalid type');
   }
 }
 
