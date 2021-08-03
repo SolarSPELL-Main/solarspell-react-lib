@@ -282,9 +282,6 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                         null,
                     })
                   )}
-                  // Disables min/max date completely
-                  minDate={null}
-                  maxDate={null}
                 />
               </Grid>
               <Grid item xs={field.width} >
@@ -309,8 +306,6 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                         null,
                     })
                   )}
-                  minDate={null}
-                  maxDate={null}
                 />
               </Grid>
             </>);
