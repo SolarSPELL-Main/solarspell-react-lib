@@ -99,16 +99,14 @@ function ContentSearch(props) {
                                                 :
                                                     oldState === null || oldState === void 0 ? void 0 : oldState.from
                                             :
-                                                null }))), 
-                                    // Disables min/max date completely
-                                    minDate: null, maxDate: null }, void 0) }), void 0), _jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(KeyboardDatePicker, { label: `${field.title} To` +
+                                                null }))) }, void 0) }), void 0), _jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(KeyboardDatePicker, { label: `${field.title} To` +
                                         (field.unit ? ` (${field.unit})` : ''), variant: 'inline', format: 'MM/dd/yyyy', value: null, inputValue: (_h = current === null || current === void 0 ? void 0 : current.rawTo) !== null && _h !== void 0 ? _h : '', onChange: (date, val) => setter((oldState) => (Object.assign(Object.assign({}, oldState), { rawTo: val, to: val ?
                                             isValidDate(date) ?
                                                 field.formatter(date, 'to')
                                                 :
                                                     oldState === null || oldState === void 0 ? void 0 : oldState.to
                                             :
-                                                null }))), minDate: null, maxDate: null }, void 0) }), void 0)] }, void 0));
+                                                null }))) }, void 0) }), void 0)] }, void 0));
                 }
                 else if (field.type === 'enum') {
                     element = (_jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(Select, Object.assign({ style: { alignSelf: 'bottom' }, label: field.title, value: current !== null && current !== void 0 ? current : field.initialValue, onChange: event => setter(event.target.value) }, { children: field.options.map(opt => (_jsx(MenuItem, Object.assign({ value: opt.value }, { children: opt.title }), opt.value))) }), void 0) }), void 0));
