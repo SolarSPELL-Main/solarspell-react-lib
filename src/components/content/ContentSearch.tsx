@@ -43,6 +43,8 @@ type NumericField = {
   min?: number
   /** Maximum value for field */
   max?: number
+  /** Whether the value should be parsed as an int or a float */
+  parseAs?: 'int' | 'float'
   /** Conversion method from number to string */
   formatter?: (val: number, field: 'from'|'to') => number|string
 }
@@ -169,7 +171,7 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
         {props.fields.map(field => {
           const current = state[field.field];
           const setter = setterFactory(field.field);
-          let element: React.ReactElement;
+          let element: React.ReactElement|React.ReactElement[];
           
           // Construct search field according to field descriptor
           // Single TextField for string field
@@ -191,10 +193,13 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
             );
           // Two TextFields for numeric field
           } else if (field.type === 'numeric') {
-            element = (<>
-              <Grid item xs={field.width} >
+            const parseAs = field.parseAs ?? 'int';
+            const parser = parseAs === 'float' ? parseFloat : parseInt;
+
+            element = ['From', 'To'].map(s =>
+              <Grid item xs={field.width} key={s}>
                 <TextField
-                  label={`${field.title} From` + 
+                  label={`${field.title} ${s}` + 
                     (field.unit ? ` (${field.unit})` : '')
                   }
                   type={'number'}
@@ -205,70 +210,43 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                     },
                   }}
                   fullWidth
-                  value={current?.rawFrom ?? ''}
+                  value={current?.[`raw${s}`] ?? ''}
+                  onKeyDown={e => {
+                    // Stops keys such as 'e' showing up in TextFields,
+                    // or '.' if the number should be an integer
+                    if (e.key === 'e' || (e.key === '.' && parseAs === 'int')) {
+                      e.stopPropagation();
+                      e.preventDefault();
+                    }
+                  }}
                   onChange={event => {
                     event.persist();
                     setter(
                       (oldState: any) => ({
                         ...oldState,
-                        from: event.target.value ?
+                        [s.toLowerCase()]: event.target.value ?
                           field.formatter ?
                             field.formatter(
-                              parseFloat(event.target.value),
-                              'from',
+                              parser(event.target.value),
+                              s.toLowerCase() as 'from'|'to',
                             )
                             :
-                            parseFloat(event.target.value)
+                            parser(event.target.value)
                           :
                           null,
-                        rawFrom: event.target.value,
+                        [`raw${s}`]: event.target.value,
                       })
                     );
                   }}
                 />
               </Grid>
-              <Grid item xs={field.width} >
-                <TextField
-                  label={`${field.title} To` + 
-                    (field.unit ? ` (${field.unit})` : '')
-                  }
-                  type={'number'}
-                  InputProps={{
-                    inputProps: {
-                      min: field.min ?? -Infinity,
-                      max: field.max ?? Infinity,
-                    },
-                  }}
-                  fullWidth
-                  value={current?.rawTo ?? ''}
-                  onChange={event => {
-                    event.persist();
-                    setter(
-                      (oldState: any) => ({
-                        ...oldState,
-                        to: event.target.value ?
-                          field.formatter ?
-                            field.formatter(
-                              parseFloat(event.target.value),
-                              'to',
-                            )
-                            :
-                            parseFloat(event.target.value)
-                          :
-                          null,
-                        rawTo: event.target.value,
-                      })
-                    );
-                  }}
-                />
-              </Grid>
-            </>);
+            );
           // Two TextFields for date field
           } else if (field.type === 'date') {
-            element = (<>
-              <Grid item xs={field.width} >
+            element = ['From', 'To'].map(s => 
+              <Grid item xs={field.width} key={s}>
                 <KeyboardDatePicker
-                  label={`${field.title} From` + 
+                  label={`${field.title} ${s}` + 
                     (field.unit ? ` (${field.unit})` : '')
                   }
                   variant={'inline'}
@@ -284,47 +262,23 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                   // and valid dates are stored in from/to in state, after
                   // stringification.
                   value={null}
-                  inputValue={current?.rawFrom ?? ''}
+                  inputValue={current?.[`raw${s}`] ?? ''}
                   onChange={(date: Date, val?: string|null) => setter(
                     (oldState: any) => ({
                       ...oldState,
-                      rawFrom: val,
-                      from: val ?
+                      [`raw${s}`]: val,
+                      [s.toLowerCase()]: val ?
                         isValidDate(date) ?
-                          field.formatter(date,'from')
+                          field.formatter(date,s.toLowerCase() as 'from'|'to')
                           :
-                          oldState?.from
+                          oldState?.[s.toLowerCase()]
                         :
                         null,
                     })
                   )}
                 />
               </Grid>
-              <Grid item xs={field.width} >
-                <KeyboardDatePicker
-                  label={`${field.title} To` + 
-                    (field.unit ? ` (${field.unit})` : '')
-                  }
-                  variant={'inline'}
-                  format={'MM/dd/yyyy'}
-                  value={null}
-                  inputValue={current?.rawTo ?? ''}
-                  onChange={(date: Date, val?: string|null) => setter(
-                    (oldState: any) => ({
-                      ...oldState,
-                      rawTo: val,
-                      to: val ?
-                        isValidDate(date) ?
-                          field.formatter(date,'to')
-                          :
-                          oldState?.to
-                        :
-                        null,
-                    })
-                  )}
-                />
-              </Grid>
-            </>);
+            );
           // Select component for enum field
           } else if (field.type === 'enum') {
             element = (

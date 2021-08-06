@@ -49,6 +49,7 @@ function MockContentSearch(): React.ReactElement {
           formatter: (
             val,
           ) => val * 1024 * 1024,
+          parseAs: 'float',
         },
         {
           field: 'reviewed',
