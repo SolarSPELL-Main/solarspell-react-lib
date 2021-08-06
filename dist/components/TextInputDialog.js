@@ -1,8 +1,12 @@
 import { __rest } from "tslib";
+
 import { jsx as _jsx } from "react/jsx-runtime";
 import React from 'react';
+
 import TextField from '@material-ui/core/TextField';
+
 import ConfirmationDialog from './ConfirmationDialog';
+
 /**
  * Creates a dialog with a text input box that will call a callback.
  * @param props The styling and functional properties of the dialog.

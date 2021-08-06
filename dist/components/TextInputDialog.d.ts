@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { DialogConfirmationStyleProps } from './types';
+
 declare type TextInputDialogProps = {
     /** Whether the dialog is open */
     open: boolean;

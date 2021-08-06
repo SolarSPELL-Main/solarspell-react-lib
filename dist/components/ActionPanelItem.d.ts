@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { SvgIconComponent } from '@material-ui/icons';
+
 import { CustomizableActionProps } from './types';
 declare type BaseProps = {
     /** Tooltip to display on hovering over the icon */

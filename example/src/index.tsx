@@ -1,20 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 
 import {
   unstable_createMuiStrictModeTheme as createMuiTheme,
   ThemeProvider,
 } from '@material-ui/core/styles';
-
 import CssBaseline from '@material-ui/core/CssBaseline';
-
 import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
+
 import DateFnsUtils from '@date-io/date-fns';
+
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 
 // Disable Transitions for Strict Mode
 // Also use unstable func to create MUI theme specific for Strict Mode

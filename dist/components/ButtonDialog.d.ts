@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { DialogButtonStyleProps } from './types';
+
 declare type ButtonDialogProps = {
     /** Whether the dialog is open */
     open: boolean;

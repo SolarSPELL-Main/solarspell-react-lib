@@ -1,8 +1,9 @@
 import React from 'react';
-import { ActionPanel, ActionPanelItem } from 'solarspell-react-lib';
 
 import PrintIcon from '@material-ui/icons/Print';
 import PrintDisabledIcon from '@material-ui/icons/PrintDisabled';
+
+import { ActionPanel, ActionPanelItem } from 'solarspell-react-lib';
 
 function MockActionPanel(): React.ReactElement {
   return (

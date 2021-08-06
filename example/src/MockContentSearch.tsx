@@ -1,12 +1,13 @@
 import React from 'react';
+
+import { format } from 'date-fns';
+
 import {
   ContentSearch,
   ContentMetadataDisplay,
   BaseMetadataType,
   BaseMetadata,
 } from 'solarspell-react-lib';
-import { format } from 'date-fns';
-
 import { metadata, metadataTypes } from './MockData';
 
 function MockContentSearch(): React.ReactElement {

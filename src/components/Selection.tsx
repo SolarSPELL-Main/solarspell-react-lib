@@ -1,12 +1,13 @@
 import React from 'react';
+
 import Checkbox from '@material-ui/core/Checkbox';
 // Form components only used for layout
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
+import Grid from '@material-ui/core/Grid';
 
 import ButtonDialog from './ButtonDialog';
 import { DialogButtonStyleProps } from './types';
-import Grid from '@material-ui/core/Grid';
 
 type SelectionFieldDescriptor<T> = {
   /** The displayed name of the field */

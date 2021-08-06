@@ -1,7 +1,10 @@
 import React from 'react';
+
 import { GridColDef, GridSelectionModelChangeParams } from '@material-ui/data-grid';
+
 import { OtherDataGridProps } from '../DataTable';
 import { BaseContent } from '../../types';
+
 declare type ComponentsDef = {
     /** The actions to display in the 'Actions' column */
     ActionPanel?: React.JSXElementConstructor<any>;

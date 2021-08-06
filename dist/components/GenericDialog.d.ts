@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { GenericDialogStyleProps } from './types';
+
 declare type GenericDialogProps = {
     /** Whether the dialog is open */
     open: boolean;

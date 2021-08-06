@@ -1,6 +1,6 @@
 import React from 'react';
-import { ContentMetadataDisplay } from 'solarspell-react-lib';
 
+import { ContentMetadataDisplay } from 'solarspell-react-lib';
 import { metadata, metadataTypes } from './MockData';
 
 function MockTagger(): React.ReactElement {

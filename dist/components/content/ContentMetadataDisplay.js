@@ -1,5 +1,7 @@
 import { jsx as _jsx } from "react/jsx-runtime";
+
 import Grid from '@material-ui/core/Grid';
+
 import ContentTagger from './ContentTagger';
 /**
  * This component displays all the metadata of content.

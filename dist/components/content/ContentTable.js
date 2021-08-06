@@ -1,6 +1,7 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
+
 import DataTable from '../DataTable';
 /**
  * This component creates a single table for content.

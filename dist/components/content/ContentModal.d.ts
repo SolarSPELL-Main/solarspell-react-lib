@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { FormFieldDescriptor } from '../Form';
 import { DialogConfirmationStyleProps } from '../types';
 import { BaseContent } from '../../types';

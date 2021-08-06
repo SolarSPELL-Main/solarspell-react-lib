@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { DialogButtonStyleProps } from '../types';
 import { BaseContent, BaseMetadataType } from '../../types';
 declare type FieldDescriptor<T> = {

@@ -1,4 +1,5 @@
 import { Fragment as _Fragment, jsx as _jsx } from "react/jsx-runtime";
+
 /**
  * Skeleton implementation of potential new component.
  * Essentially a div for now.

@@ -1,7 +1,10 @@
 import React from 'react';
+
 import { GridSize, GridSpacing } from '@material-ui/core/Grid';
+
 import { ContentTaggerActionProps } from './ContentTagger';
 import { BaseMetadata, BaseMetadataType } from '../../types';
+
 declare type ContentMetadataProps<T extends BaseMetadataType, M extends BaseMetadata<T>> = {
     /** Metadata types available for tagging */
     metadataTypes: T[];

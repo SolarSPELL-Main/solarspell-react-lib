@@ -1,7 +1,10 @@
 import { __rest } from "tslib";
+
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 import React from 'react';
+
 import Button from '@material-ui/core/Button';
+
 import GenericDialog from './GenericDialog';
 import { preventEventFactory, preventEvent } from '../utils';
 /**

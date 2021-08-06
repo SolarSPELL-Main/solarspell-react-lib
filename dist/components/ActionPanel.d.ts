@@ -1,4 +1,5 @@
 import React from 'react';
+
 /**
  * Skeleton implementation of potential new component.
  * Essentially a div for now.

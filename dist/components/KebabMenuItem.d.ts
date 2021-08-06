@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { CustomizableActionProps } from './types';
+
 declare type BaseProps = {
     /** Text to display in MenuItem */
     label: string;

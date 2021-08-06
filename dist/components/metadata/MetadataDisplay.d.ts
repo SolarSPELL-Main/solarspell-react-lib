@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { MetadataTableOptionalProps } from './MetadataTable';
 import { BaseMetadata, BaseMetadataType } from '../../types';
+
 declare type MetadataDisplayProps<T extends BaseMetadataType, M extends BaseMetadata> = {
     /** Metadata types to display in separate tables */
     metadataTypes: T[];

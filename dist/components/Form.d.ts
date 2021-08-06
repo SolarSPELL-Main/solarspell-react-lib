@@ -1,5 +1,7 @@
 import React from 'react';
+
 import type { DialogConfirmationStyleProps } from './types';
+
 declare type FormFieldDescriptor<T> = {
     /** The component to render for the form field */
     component: React.JSXElementConstructor<any>;

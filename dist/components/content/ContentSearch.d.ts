@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { GridSize } from '@material-ui/core/Grid';
+
 declare type FieldDescriptor = {
     /** Key name of the field */
     field: string;

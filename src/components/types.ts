@@ -1,4 +1,5 @@
 import type { ComponentProps } from 'react';
+
 import type Button from '@material-ui/core/Button';
 import type Dialog from '@material-ui/core/Dialog';
 import type { PropTypes } from '@material-ui/core';
