@@ -1,11 +1,8 @@
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 import React from 'react';
-
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
-
 import { preventEvent, preventEventFactory } from '../utils';
-
 /**
  * Creates a kebab icon with an associated menu.
  * @param props Currently only consists of the child KebabMenuItems to display.

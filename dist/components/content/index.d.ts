@@ -5,5 +5,4 @@ import ContentTagger from './ContentTagger';
 import ContentSearch from './ContentSearch';
 import ContentViewer from './ContentViewer';
 import ContentColumnSelection from './ContentColumnSelection';
-
 export { ContentMetadataDisplay, ContentModal, ContentTable, ContentTagger, ContentSearch, ContentViewer, ContentColumnSelection, };

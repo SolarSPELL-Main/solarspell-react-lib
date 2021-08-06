@@ -1,14 +1,11 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import React from 'react';
-
 import Checkbox from '@material-ui/core/Checkbox';
 // Form components only used for layout
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
-
-import ButtonDialog from './ButtonDialog';
 import Grid from '@material-ui/core/Grid';
-
+import ButtonDialog from './ButtonDialog';
 /**
  * Dialog form for selecting keys of an object using checkboxes.
  * Currently displays checkboxes in two columns.

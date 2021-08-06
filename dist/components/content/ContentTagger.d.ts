@@ -1,6 +1,6 @@
 import React from 'react';
-
 import { BaseMetadata, BaseMetadataType } from '../../types';
+/** Enables creation of new metadata in the tagger */
 declare type CreatableProps<T extends BaseMetadataType, M extends BaseMetadata<T>> = {
     /**
      * Whether the tagger should allow for tag creation.
@@ -21,6 +21,7 @@ declare type CreatableProps<T extends BaseMetadataType, M extends BaseMetadata<T
     creatable?: false;
     onCreate?: never;
 };
+/** Callbacks associated with the component */
 declare type ContentTaggerActionProps<T extends BaseMetadataType, M extends BaseMetadata<T>> = {
     /** Callback to fire on tag selection */
     onSelect?: (metadataType: T, tags: M[]) => void;
@@ -30,6 +31,7 @@ declare type ContentTaggerActionProps<T extends BaseMetadataType, M extends Base
      */
     onInputChange?: (metadataType: T, val: string) => void;
 } & CreatableProps<T, M>;
+/** Main props object */
 declare type ContentTaggerProps<T extends BaseMetadataType, M extends BaseMetadata<T>> = {
     /** The label to display on the textfield used for tagging */
     label?: string;

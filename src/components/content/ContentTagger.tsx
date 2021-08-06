@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 
 import { BaseMetadata, BaseMetadataType } from '../../types';
 
+/** Enables creation of new metadata in the tagger */
 type CreatableProps<
   T extends BaseMetadataType,
   M extends BaseMetadata<T>,
@@ -34,6 +35,7 @@ type CreatableProps<
   onCreate?: never
 }
 
+/** Callbacks associated with the component */
 type ContentTaggerActionProps<
   T extends BaseMetadataType,
   M extends BaseMetadata<T>,
@@ -53,6 +55,7 @@ type ContentTaggerActionProps<
   ) => void
 } & CreatableProps<T,M>
 
+/** Main props object */
 type ContentTaggerProps<
   T extends BaseMetadataType,
   M extends BaseMetadata<T>,
@@ -83,6 +86,7 @@ function ContentTagger<
   const [selected, setSelected] = React.useState(props.selected);
   const filter = createFilterOptions<M>();
 
+  // Check if callbacks are null before calling them
   const onInputChange = React.useCallback((_event, val: string) => {
     if (props.onInputChange) {
       props.onInputChange(props.metadataType, val);
@@ -113,6 +117,7 @@ function ContentTagger<
     setSelected(props.selected);
   }, [props.selected]);
 
+  // Sync option for adding metadata to selected
   React.useEffect(() => {
     const keySet = new Set(selected?.map(v => v.id));
     const toAdd = props.toAdd?.filter(v => !keySet.has(v.id));

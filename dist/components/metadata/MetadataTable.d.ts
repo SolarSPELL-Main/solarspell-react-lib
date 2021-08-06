@@ -1,7 +1,5 @@
 import React from 'react';
-
 import { GridColDef, GridSelectionModelChangeParams } from '@material-ui/data-grid';
-
 import { OtherDataGridProps } from '../DataTable';
 import { BaseMetadata, BaseMetadataType } from '../../types';
 declare type ComponentsDef = {

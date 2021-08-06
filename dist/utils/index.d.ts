@@ -1,5 +1,4 @@
 import React from 'react';
-
 /**
  * Creates a preventative EventHandler which also calls a function.
  * @param func The function to call.

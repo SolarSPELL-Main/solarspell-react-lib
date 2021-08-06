@@ -1,11 +1,8 @@
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 import React from 'react';
-
 import Tooltip from '@material-ui/core/Tooltip/';
-
 import ConfirmationDialog from './ConfirmationDialog';
 import TextInputDialog from './TextInputDialog';
-
 // Forces the mouse to change to a pointer on hover
 const pointerStyle = {
     cursor: 'pointer',

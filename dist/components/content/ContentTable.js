@@ -1,7 +1,6 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-
 import DataTable from '../DataTable';
 /**
  * This component creates a single table for content.
@@ -65,6 +64,7 @@ function ContentTable(props) {
             },
         });
     }
+    // Only calls props.onSelectChange if it is not null
     const onSelectChange_ = React.useCallback((rows) => {
         if (props.onSelectChange) {
             props.onSelectChange(props.content, rows);

@@ -1,6 +1,5 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import React from 'react';
-
 import Autocomplete, { createFilterOptions, } from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 /**
@@ -13,6 +12,7 @@ import TextField from '@material-ui/core/TextField';
 function ContentTagger(props) {
     const [selected, setSelected] = React.useState(props.selected);
     const filter = createFilterOptions();
+    // Check if callbacks are null before calling them
     const onInputChange = React.useCallback((_event, val) => {
         if (props.onInputChange) {
             props.onInputChange(props.metadataType, val);
@@ -39,6 +39,7 @@ function ContentTagger(props) {
     React.useEffect(() => {
         setSelected(props.selected);
     }, [props.selected]);
+    // Sync option for adding metadata to selected
     React.useEffect(() => {
         var _a;
         const keySet = new Set(selected === null || selected === void 0 ? void 0 : selected.map(v => v.id));

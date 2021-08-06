@@ -1,10 +1,8 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-
 import ButtonDialog from '../ButtonDialog';
 /**
  * Dialog for viewing content.

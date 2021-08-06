@@ -5,6 +5,7 @@ import Form, { FormFieldDescriptor } from '../Form';
 import { DialogConfirmationStyleProps } from '../types';
 import { BaseContent } from '../../types';
 
+/** Main props object */
 type ContentModalProps<T> = {
   /** Fields to show in the form */
   fields: FormFieldDescriptor<T>[]

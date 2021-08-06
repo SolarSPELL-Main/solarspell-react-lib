@@ -13,7 +13,6 @@ import Selection from './components/Selection';
 import { MetadataDisplay, MetadataTable } from './components/metadata';
 import { ContentTagger, ContentMetadataDisplay, ContentModal, ContentTable, ContentSearch, ContentViewer, ContentColumnSelection } from './components/content';
 import { BaseMetadata, BaseMetadataType, BaseContent } from './types';
-
 export { 
 /** Metadata */
 MetadataDisplay, MetadataTable, 

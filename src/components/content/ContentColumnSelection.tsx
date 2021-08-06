@@ -7,18 +7,19 @@ import Selection, { SelectionFieldDescriptor } from '../Selection';
 import { BaseMetadataType, BaseContent } from '../../types';
 
 type ContentColumnSelectionFieldDescriptor<T> = {
-  /** Additional prop specifying how the generated grid column should look */
+  /** Function specifying how the generated grid column should look */
   column?: (
     field: ContentColumnSelectionFieldDescriptor<T>,
     hidden: boolean,
   ) => GridColDef
 } & SelectionFieldDescriptor<T>
 
-// To divorce strict type-checking from keyof Content
+/** To divorce strict type-checking from keyof Content */
 type AnySelectionFieldDescriptor = ContentColumnSelectionFieldDescriptor<
   Record<string,unknown>
 >
 
+/** Main props object */
 type ContentColumnSelectionProps<T,M> = {
   /** The items selectable in the component */
   fields: ContentColumnSelectionFieldDescriptor<T>[]
