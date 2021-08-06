@@ -1,13 +1,11 @@
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { KeyboardDatePicker } from '@material-ui/pickers';
-
 import ExpandPanel from '../ExpandPanel';
 /**
  * Expandable search bar for content (or general use).
@@ -42,12 +40,14 @@ function ContentSearch(props) {
                 const setter = setterFactory(field.field);
                 let element;
                 // Construct search field according to field descriptor
+                // Single TextField for string field
                 if (field.type === 'string') {
                     element = (_jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(TextField, { label: `${field.title}` +
                                 (field.unit ? ` (${field.unit})` : ''), fullWidth: true, value: current !== null && current !== void 0 ? current : '', onChange: event => {
                                 event.persist();
                                 setter(event.target.value);
                             } }, void 0) }), void 0));
+                    // Two TextFields for numeric field
                 }
                 else if (field.type === 'numeric') {
                     element = (_jsxs(_Fragment, { children: [_jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(TextField, { label: `${field.title} From` +
@@ -60,9 +60,9 @@ function ContentSearch(props) {
                                         event.persist();
                                         setter((oldState) => (Object.assign(Object.assign({}, oldState), { from: event.target.value ?
                                                 field.formatter ?
-                                                    field.formatter(parseInt(event.target.value), 'from')
+                                                    field.formatter(parseFloat(event.target.value), 'from')
                                                     :
-                                                        parseInt(event.target.value)
+                                                        parseFloat(event.target.value)
                                                 :
                                                     null, rawFrom: event.target.value })));
                                     } }, void 0) }), void 0), _jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(TextField, { label: `${field.title} To` +
@@ -75,12 +75,13 @@ function ContentSearch(props) {
                                         event.persist();
                                         setter((oldState) => (Object.assign(Object.assign({}, oldState), { to: event.target.value ?
                                                 field.formatter ?
-                                                    field.formatter(parseInt(event.target.value), 'to')
+                                                    field.formatter(parseFloat(event.target.value), 'to')
                                                     :
-                                                        parseInt(event.target.value)
+                                                        parseFloat(event.target.value)
                                                 :
                                                     null, rawTo: event.target.value })));
                                     } }, void 0) }), void 0)] }, void 0));
+                    // Two TextFields for date field
                 }
                 else if (field.type === 'date') {
                     element = (_jsxs(_Fragment, { children: [_jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(KeyboardDatePicker, { label: `${field.title} From` +
@@ -109,9 +110,11 @@ function ContentSearch(props) {
                                                     oldState === null || oldState === void 0 ? void 0 : oldState.to
                                             :
                                                 null }))) }, void 0) }), void 0)] }, void 0));
+                    // Select component for enum field
                 }
                 else if (field.type === 'enum') {
                     element = (_jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(Select, Object.assign({ style: { alignSelf: 'bottom' }, label: field.title, value: current !== null && current !== void 0 ? current : field.initialValue, onChange: event => setter(event.target.value) }, { children: field.options.map(opt => (_jsx(MenuItem, Object.assign({ value: opt.value }, { children: opt.title }), opt.value))) }), void 0) }), void 0));
+                    // Custom component for custom field
                 }
                 else if (field.type === 'custom') {
                     element = (_jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(field.component, Object.assign({}, field.propFactory(setter, state)), void 0) }), void 0));

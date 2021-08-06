@@ -9,18 +9,18 @@ import {
 import DataTable, { OtherDataGridProps } from '../DataTable';
 import { BaseContent } from '../../types';
 
-// Optional components addable to the table
+/** Optional components that can be added to the table */
 type ComponentsDef = {
   /** The actions to display in the 'Actions' column */
   ActionPanel?: React.JSXElementConstructor<any>
 }
 
-// Corresponding properties to pass to optional components
+/** Corresponding properties to pass to optional components */
 type ComponentsPropsDef = {
   [Component in keyof ComponentsDef]: any
 }
 
-// Optional customizable properties of the table
+/** Optional customizable properties of the table */
 type ContentTableOptionalProps<C> = {
   /** Optional components associated with the table */
   components?: ComponentsDef
@@ -46,7 +46,7 @@ type ContentTableOptionalProps<C> = {
   additionalProps?: OtherDataGridProps
 }
 
-// Actual component props
+/** Main props object */
 type ContentTableProps<C> = {
   /** The content to display in the table */
   content: C[]
@@ -124,6 +124,7 @@ function ContentTable<
     });
   }
 
+  // Only calls props.onSelectChange if it is not null
   const onSelectChange_ = React.useCallback((rows) => {
     if (props.onSelectChange) {
       props.onSelectChange(props.content, rows);

@@ -1,7 +1,5 @@
 import React from 'react';
-
 import { DialogButtonStyleProps } from './types';
-
 declare type SelectionFieldDescriptor<T> = {
     /** The displayed name of the field */
     title: string;

@@ -1,12 +1,9 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-
 import { GridColumnMenuContainer, SortGridMenuItems, GridFilterMenuItem, } from '@material-ui/data-grid';
-
 import DataTable from '../DataTable';
 import ExpandPanel from '../ExpandPanel';
-
 // Removes unnecessary options from ColumnMenu
 const CustomGridColumnMenu = React.forwardRef((props, ref) => {
     const { hideMenu, currentColumn } = props;

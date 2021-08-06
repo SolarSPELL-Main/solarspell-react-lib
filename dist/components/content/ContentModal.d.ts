@@ -1,8 +1,8 @@
 import React from 'react';
-
 import { FormFieldDescriptor } from '../Form';
 import { DialogConfirmationStyleProps } from '../types';
 import { BaseContent } from '../../types';
+/** Main props object */
 declare type ContentModalProps<T> = {
     /** Fields to show in the form */
     fields: FormFieldDescriptor<T>[];

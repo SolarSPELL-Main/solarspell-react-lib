@@ -1,5 +1,4 @@
 import React from 'react';
-
 /**
  * Creates a kebab icon with an associated menu.
  * @param props Currently only consists of the child KebabMenuItems to display.

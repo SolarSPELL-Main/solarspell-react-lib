@@ -1,7 +1,6 @@
 import React from 'react';
-
 import { GridSize } from '@material-ui/core/Grid';
-
+/** Specifies how a field should be displayed on the SearchBar */
 declare type FieldDescriptor = {
     /** Key name of the field */
     field: string;
@@ -9,10 +8,16 @@ declare type FieldDescriptor = {
     title: string;
     /** What units the field is in */
     unit?: string;
-    /** Grid columns taken up by the field */
+    /**
+     * Grid columns taken up by each component in the field.
+     * Fields with to/from fields have two components,
+     * other fields only have one.
+     */
     width: GridSize;
 } & Field;
+/** Union type of all possible Field types */
 declare type Field = NumericField | DateField | StringField | EnumField | CustomField;
+/** Field for from/to numbers */
 declare type NumericField = {
     /**
      * Specifies that the field should be rendered by two
@@ -30,6 +35,7 @@ declare type NumericField = {
     /** Conversion method from number to string */
     formatter?: (val: number, field: 'from' | 'to') => number | string;
 };
+/** Field for from/to dates */
 declare type DateField = {
     /**
      * Specifies that the field should be rendered by two
@@ -45,6 +51,7 @@ declare type DateField = {
     /** Conversion method from Date to string */
     formatter: (val: Date, field: 'from' | 'to') => string;
 };
+/** Field for a string */
 declare type StringField = {
     /**
      * Specifies that the field should be rendered by one
@@ -53,6 +60,7 @@ declare type StringField = {
      */
     type: 'string';
 };
+/** Field for selectable values from a set */
 declare type EnumField = {
     /**
      * Specifies that the field should be rendered by a
@@ -70,6 +78,7 @@ declare type EnumField = {
     /** Initial selected enum value */
     initialValue: string;
 };
+/** Field for just about anything */
 declare type CustomField = {
     /**
      * Specifies that the field should be rendered by a
@@ -82,6 +91,7 @@ declare type CustomField = {
     /** Props for the component derived from the state setter and current state */
     propFactory: (setter: (val: any) => void, state: Record<string, any>) => any;
 };
+/** Main props object */
 declare type ContentSearchProps = {
     /** Fields to display in the search bar */
     fields: FieldDescriptor[];

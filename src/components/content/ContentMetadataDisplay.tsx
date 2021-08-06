@@ -5,7 +5,8 @@ import Grid, { GridSize, GridSpacing } from '@material-ui/core/Grid';
 import ContentTagger, { ContentTaggerActionProps } from './ContentTagger';
 import { BaseMetadata, BaseMetadataType } from '../../types';
 
-type ContentMetadataProps<
+/** Main props object */
+type ContentMetadataDisplayProps<
   T extends BaseMetadataType,
   M extends BaseMetadata<T>,
 > = {
@@ -38,10 +39,10 @@ type ContentMetadataProps<
  * @param props The context and callbacks of the component.
  * @returns A display for all content metadata.
  */
-function ContentMetadata<
+function ContentMetadataDisplay<
   T extends BaseMetadataType,
   M extends BaseMetadata<T>,
->(props: ContentMetadataProps<T,M>): React.ReactElement {
+>(props: ContentMetadataDisplayProps<T,M>): React.ReactElement {
   return (
     <Grid container spacing={props.spacing} >
       {props.metadataTypes.map(metadataType => {
@@ -67,4 +68,4 @@ function ContentMetadata<
   );
 }
 
-export default ContentMetadata;
+export default ContentMetadataDisplay;

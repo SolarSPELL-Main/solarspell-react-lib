@@ -10,6 +10,7 @@ import ButtonDialog from '../ButtonDialog';
 import { DialogButtonStyleProps } from '../types';
 import { BaseContent, BaseMetadataType } from '../../types';
 
+/** How each field in the viewer should be displayed */
 type FieldDescriptor<T> = {
   /** Title to display for the field */
   title: string
@@ -21,6 +22,7 @@ type FieldDescriptor<T> = {
   defaultValue?: string
 }
 
+/** Main props object */
 type ContentViewerProps<T,M> = {
   /** The content to extract fields from */
   content: T

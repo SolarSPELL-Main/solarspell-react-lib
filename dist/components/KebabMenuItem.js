@@ -1,8 +1,6 @@
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 import React from 'react';
-
 import MenuItem from '@material-ui/core/MenuItem';
-
 import ConfirmationDialog from './ConfirmationDialog';
 import TextInputDialog from './TextInputDialog';
 import { preventEventFactory } from '../utils';

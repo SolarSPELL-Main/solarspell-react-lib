@@ -1,7 +1,7 @@
 import React from 'react';
-
 import { DialogButtonStyleProps } from '../types';
 import { BaseContent, BaseMetadataType } from '../../types';
+/** How each field in the viewer should be displayed */
 declare type FieldDescriptor<T> = {
     /** Title to display for the field */
     title: string;
@@ -12,6 +12,7 @@ declare type FieldDescriptor<T> = {
     /** What to display if the value is undefined */
     defaultValue?: string;
 };
+/** Main props object */
 declare type ContentViewerProps<T, M> = {
     /** The content to extract fields from */
     content: T;

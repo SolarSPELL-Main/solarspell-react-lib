@@ -1,14 +1,12 @@
 import React from 'react';
-
 import { GridColDef } from '@material-ui/data-grid';
-
 import { SelectionFieldDescriptor } from '../Selection';
 import { BaseMetadataType, BaseContent } from '../../types';
-
 declare type ContentColumnSelectionFieldDescriptor<T> = {
-    /** Additional prop specifying how the generated grid column should look */
+    /** Function specifying how the generated grid column should look */
     column?: (field: ContentColumnSelectionFieldDescriptor<T>, hidden: boolean) => GridColDef;
 } & SelectionFieldDescriptor<T>;
+/** Main props object */
 declare type ContentColumnSelectionProps<T, M> = {
     /** The items selectable in the component */
     fields: ContentColumnSelectionFieldDescriptor<T>[];

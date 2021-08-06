@@ -9,6 +9,7 @@ import { KeyboardDatePicker } from '@material-ui/pickers';
 
 import ExpandPanel from '../ExpandPanel';
 
+/** Specifies how a field should be displayed on the SearchBar */
 type FieldDescriptor = {
   /** Key name of the field */
   field: string
@@ -16,12 +17,18 @@ type FieldDescriptor = {
   title: string
   /** What units the field is in */
   unit?: string
-  /** Grid columns taken up by the field */
+  /** 
+   * Grid columns taken up by each component in the field.
+   * Fields with to/from fields have two components,
+   * other fields only have one.
+   */
   width: GridSize
 } & Field
 
+/** Union type of all possible Field types */
 type Field = NumericField | DateField | StringField | EnumField | CustomField
 
+/** Field for from/to numbers */
 type NumericField = {
   /** 
    * Specifies that the field should be rendered by two
@@ -40,6 +47,7 @@ type NumericField = {
   formatter?: (val: number, field: 'from'|'to') => number|string
 }
 
+/** Field for from/to dates */
 type DateField = {
   /** 
    * Specifies that the field should be rendered by two
@@ -56,6 +64,7 @@ type DateField = {
   formatter: (val: Date, field: 'from'|'to') => string
 }
 
+/** Field for a string */
 type StringField = {
   /** 
    * Specifies that the field should be rendered by one
@@ -65,6 +74,7 @@ type StringField = {
   type: 'string'
 }
 
+/** Field for selectable values from a set */
 type EnumField = {
   /** 
    * Specifies that the field should be rendered by a
@@ -83,6 +93,7 @@ type EnumField = {
   initialValue: string
 }
 
+/** Field for just about anything */
 type CustomField = {
   /**
    * Specifies that the field should be rendered by a
@@ -96,6 +107,7 @@ type CustomField = {
   propFactory: (setter: (val: any) => void, state: Record<string,any>) => any
 }
 
+/** Main props object */
 type ContentSearchProps = {
   /** Fields to display in the search bar */
   fields: FieldDescriptor[]
@@ -160,6 +172,7 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
           let element: React.ReactElement;
           
           // Construct search field according to field descriptor
+          // Single TextField for string field
           if (field.type === 'string') {
             element = (
               <Grid item xs={field.width} >
@@ -176,6 +189,7 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                 />
               </Grid>
             );
+          // Two TextFields for numeric field
           } else if (field.type === 'numeric') {
             element = (<>
               <Grid item xs={field.width} >
@@ -200,11 +214,11 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                         from: event.target.value ?
                           field.formatter ?
                             field.formatter(
-                              parseInt(event.target.value),
+                              parseFloat(event.target.value),
                               'from',
                             )
                             :
-                            parseInt(event.target.value)
+                            parseFloat(event.target.value)
                           :
                           null,
                         rawFrom: event.target.value,
@@ -235,11 +249,11 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                         to: event.target.value ?
                           field.formatter ?
                             field.formatter(
-                              parseInt(event.target.value),
+                              parseFloat(event.target.value),
                               'to',
                             )
                             :
-                            parseInt(event.target.value)
+                            parseFloat(event.target.value)
                           :
                           null,
                         rawTo: event.target.value,
@@ -249,6 +263,7 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                 />
               </Grid>
             </>);
+          // Two TextFields for date field
           } else if (field.type === 'date') {
             element = (<>
               <Grid item xs={field.width} >
@@ -310,6 +325,7 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                 />
               </Grid>
             </>);
+          // Select component for enum field
           } else if (field.type === 'enum') {
             element = (
               <Grid item xs={field.width} >
@@ -329,6 +345,7 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                 </Select>
               </Grid>
             );
+          // Custom component for custom field
           } else if (field.type === 'custom') {
             element = (
               <Grid item xs={field.width}>

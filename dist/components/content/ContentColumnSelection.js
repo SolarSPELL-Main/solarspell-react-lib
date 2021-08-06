@@ -1,8 +1,6 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-
 import Selection from '../Selection';
 /**
  * Column selection modal for content.

@@ -1,17 +1,17 @@
 import React from 'react';
-
 import { GridColDef, GridSelectionModelChangeParams } from '@material-ui/data-grid';
-
 import { OtherDataGridProps } from '../DataTable';
 import { BaseContent } from '../../types';
-
+/** Optional components that can be added to the table */
 declare type ComponentsDef = {
     /** The actions to display in the 'Actions' column */
     ActionPanel?: React.JSXElementConstructor<any>;
 };
+/** Corresponding properties to pass to optional components */
 declare type ComponentsPropsDef = {
     [Component in keyof ComponentsDef]: any;
 };
+/** Optional customizable properties of the table */
 declare type ContentTableOptionalProps<C> = {
     /** Optional components associated with the table */
     components?: ComponentsDef;
@@ -33,6 +33,7 @@ declare type ContentTableOptionalProps<C> = {
     /** Just about any other props associated with a DataGrid */
     additionalProps?: OtherDataGridProps;
 };
+/** Main props object */
 declare type ContentTableProps<C> = {
     /** The content to display in the table */
     content: C[];
