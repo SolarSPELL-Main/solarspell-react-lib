@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import ButtonDialog from './ButtonDialog';
 import { DialogButtonStyleProps } from './types';
 
+/** Specifies how a field should be displayed in the dialog */
 type SelectionFieldDescriptor<T> = {
   /** The displayed name of the field */
   title: string
@@ -16,6 +17,7 @@ type SelectionFieldDescriptor<T> = {
   field: keyof T
 }
 
+/** Main props object */
 type SelectionProps<T> = {
   /** The fields available for selection */
   fields: SelectionFieldDescriptor<T>[]

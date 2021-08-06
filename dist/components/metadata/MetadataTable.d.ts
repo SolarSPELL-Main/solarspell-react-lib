@@ -2,15 +2,18 @@ import React from 'react';
 import { GridColDef, GridSelectionModelChangeParams } from '@material-ui/data-grid';
 import { OtherDataGridProps } from '../DataTable';
 import { BaseMetadata, BaseMetadataType } from '../../types';
+/** Optional components that can be added to the table */
 declare type ComponentsDef = {
     /** Kebab menu component to display in upper right of each table */
     KebabMenu?: React.JSXElementConstructor<any>;
     /** Actions to display in the Actions column of the table */
     ActionPanel?: React.JSXElementConstructor<any>;
 };
+/** Corresponding properties to pass to optional components */
 declare type ComponentsPropsDef = {
     [Component in keyof ComponentsDef]: any;
 };
+/** Optional customizable properties of the table */
 declare type MetadataTableOptionalProps<T extends BaseMetadataType, M extends BaseMetadata> = {
     /** Optional components associated with the component */
     components?: ComponentsDef;
@@ -29,6 +32,7 @@ declare type MetadataTableOptionalProps<T extends BaseMetadataType, M extends Ba
     /** Additional properties associated with the underlying DataGrid */
     additionalProps?: OtherDataGridProps;
 };
+/** Main props object */
 declare type MetadataTableProps<T extends BaseMetadataType, M extends BaseMetadata> = {
     /** Metadata type associated with this table */
     metadataType: T;

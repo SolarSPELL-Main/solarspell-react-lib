@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import GenericDialog from './GenericDialog';
 import { DialogButtonStyleProps } from './types';
 
+/** Main props object */
 type ButtonDialogProps = {
   /** Whether the dialog is open */
   open: boolean

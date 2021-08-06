@@ -14,6 +14,7 @@ function KebabMenu(
   props: React.PropsWithChildren<unknown>
 ): React.ReactElement {
   const [open, setOpen] = React.useState(false);
+  // Anchor el ref element needed for pop-up menu to function properly
   const [anchorEl, setAnchorEl] = React.useState<null | SVGSVGElement>(null);
   const onClick = React.useCallback(preventEventFactory(e => {
     setOpen(true);

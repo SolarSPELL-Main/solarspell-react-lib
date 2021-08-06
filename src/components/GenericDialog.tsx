@@ -8,6 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import { GenericDialogStyleProps } from './types';
 
+/** Main props object */
 type GenericDialogProps = {
   /** Whether the dialog is open */
   open: boolean

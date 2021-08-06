@@ -1,6 +1,8 @@
 import React from 'react';
 import { DataGrid, GridColDef, GridRowData, GridSelectionModelChangeParams, GridSlotsComponent, GridSlotsComponentsProps } from '@material-ui/data-grid';
+/** Excludes props of DataGrid that are covered by other props */
 declare type OtherDataGridProps = Partial<Exclude<React.ComponentProps<typeof DataGrid>, 'columns' | 'rows' | 'checkboxSelection' | 'onSelectionModelChange' | 'components' | 'componentsProps'>>;
+/** Any optional props */
 declare type DataTableOptionalProps = {
     /** Whether the rows of the DataGrid should be selectable */
     selectable?: boolean;
@@ -13,6 +15,7 @@ declare type DataTableOptionalProps = {
     /** Any other props of the DataGrid */
     additionalProps?: OtherDataGridProps;
 };
+/** Main props object */
 declare type DataTableProps = {
     /** Columns to display in the DataGrid */
     columns: GridColDef[];

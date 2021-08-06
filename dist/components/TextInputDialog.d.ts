@@ -1,13 +1,14 @@
 import React from 'react';
 import { DialogConfirmationStyleProps } from './types';
+/** Main props object */
 declare type TextInputDialogProps = {
     /** Whether the dialog is open */
     open: boolean;
     /**
      * Callback to fire on closing the dialog.
      * Note, the string is the empty string if
-     * the dialog is not closed using the textfield
-     * or clicking the submit button.
+     * submission is cancelled or if the TextField
+     * is empty
      */
     onClose: (input: string) => void;
     /** Label to display for the textfield */

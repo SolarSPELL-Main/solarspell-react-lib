@@ -14,7 +14,7 @@ import DataTable, { OtherDataGridProps } from '../DataTable';
 import ExpandPanel from '../ExpandPanel';
 import { BaseMetadata, BaseMetadataType } from '../../types';
 
-// Optional components addable to the table
+/** Optional components that can be added to the table */
 type ComponentsDef = {
   /** Kebab menu component to display in upper right of each table */
   KebabMenu?: React.JSXElementConstructor<any>
@@ -22,12 +22,12 @@ type ComponentsDef = {
   ActionPanel?: React.JSXElementConstructor<any>
 }
 
-// Corresponding properties to pass to optional components
+/** Corresponding properties to pass to optional components */
 type ComponentsPropsDef = {
   [Component in keyof ComponentsDef]: any
 }
 
-// Optional customizable properties of the table
+/** Optional customizable properties of the table */
 type MetadataTableOptionalProps<
   T extends BaseMetadataType,
   M extends BaseMetadata,
@@ -54,7 +54,7 @@ type MetadataTableOptionalProps<
   additionalProps?: OtherDataGridProps
 }
 
-// Actual component props
+/** Main props object */
 type MetadataTableProps<
 T extends BaseMetadataType,
 M extends BaseMetadata,
@@ -65,7 +65,10 @@ M extends BaseMetadata,
   metadata: M[]
 } & MetadataTableOptionalProps<T,M>
 
-// Removes unnecessary options from ColumnMenu
+/**
+ * Removes certain options from the original GridColumnMenu.
+ * These include the options to hide/show columns
+ */
 const CustomGridColumnMenu = React.forwardRef<
   HTMLUListElement,
   GridColumnMenuProps
@@ -144,6 +147,7 @@ function MetadataTable<
     );
   }
 
+  // Check if onSelectChange callback is null before firing
   const onSelectChange_ = React.useCallback((rows) => {
     if (props.onSelectChange) {
       props.onSelectChange(props.metadata, props.metadataType, rows);
