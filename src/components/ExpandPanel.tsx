@@ -6,6 +6,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
+/** Main props object */
 type ExpandPanelProps = {
   /** Header to display on top left of the panel */
   header: string

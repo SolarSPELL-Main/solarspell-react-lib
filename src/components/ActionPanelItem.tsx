@@ -7,6 +7,7 @@ import ConfirmationDialog from './ConfirmationDialog';
 import TextInputDialog from './TextInputDialog';
 import { CustomizableActionProps } from './types';
 
+/** Props needed for every ActionPanelItem, regardless of functionality */
 type BaseProps = {
   /** Tooltip to display on hovering over the icon */
   tooltip?: string
@@ -16,7 +17,7 @@ type BaseProps = {
   onAction: () => void
 }
 
-// Special prop for allowing a toggleable action
+/** Special functionality for allowing a toggleable icon */
 type ToggleProps = {
   /** Specifies that the icon should be toggleable on/off */
   type: 'toggle'
@@ -43,9 +44,10 @@ type ToggleProps = {
   active?: boolean
 }
 
+/** Main props object */
 type ActionPanelItemProps = CustomizableActionProps<BaseProps> | ToggleProps
 
-// Forces the mouse to change to a pointer on hover
+// Forces the mouse to change to a pointer on hover over the icon
 const pointerStyle: React.CSSProperties = {
   cursor: 'pointer',
 };

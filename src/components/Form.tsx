@@ -9,22 +9,28 @@ import ConfirmationDialog from './ConfirmationDialog';
 import { fullEvery } from '../utils';
 import type { DialogConfirmationStyleProps } from './types';
 
+/** Specifies how each field in the form should be rendered */
 type FormFieldDescriptor<T> = {
   /** The component to render for the form field */
   component: React.JSXElementConstructor<any>
   /** Should return the props of the field component */
   propFactory: (
-    state: Partial<T>, // current state
-    reasons: Partial<Record<keyof T,any>>, // current error reasons
-    setter: (val: any) => void, // sets item's field in state to value
+    /** Current state of the form */
+    state: Partial<T>,
+    /** Current vlidation failure reasons in the form */
+    reasons: Partial<Record<keyof T,any>>,
+    /** Setter for this specific field */
+    setter: (val: any) => void,
+    /** Setter for any field in the form */
     genericSetter: (
       field: keyof T,
       val: any,
-    ) => void, // set any field in state to value
+    ) => void,
+    /** Setter for validation failure reason for any field in the form */
     genericReasonSetter: (
       field: keyof T,
       val: any,
-    ) => void, // set any field in reasons to value
+    ) => void,
   ) => any
   /** Actual key of the field */
   field: keyof T
@@ -36,6 +42,8 @@ type FormFieldDescriptor<T> = {
   mb?: string|number
 } | {
   // Similar properties as above, but no rendered component
+  // Used for things such as properties that should be present
+  // in the state, but aren't explicitly editable by the user
   component?: never
   propFactory?: never
   field: keyof T
@@ -44,7 +52,7 @@ type FormFieldDescriptor<T> = {
   mb?: never
 }
 
-// Specifies how the form itself should be rendered
+/** Specifies how the form itself should be rendered */
 type FormOptionalProps<T> = {
   /** Indicates that the form should be rendered in a dialog */
   type: 'dialog'
@@ -61,7 +69,7 @@ type FormOptionalProps<T> = {
   onSubmit: (values: Partial<T>) => void
 }
 
-// Final type for the Form props
+/** Main props object */
 type FormProps<T> = {
   /** Fields to display in the form */
   fields: FormFieldDescriptor<T>[]

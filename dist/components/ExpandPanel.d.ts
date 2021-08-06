@@ -1,4 +1,5 @@
 import React from 'react';
+/** Main props object */
 declare type ExpandPanelProps = {
     /** Header to display on top left of the panel */
     header: string;

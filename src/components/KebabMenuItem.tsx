@@ -7,6 +7,7 @@ import TextInputDialog from './TextInputDialog';
 import { preventEventFactory } from '../utils';
 import { CustomizableActionProps } from './types';
 
+/** Props common to all KebabMenuItems regardless of functionality */
 type BaseProps = {
   /** Text to display in MenuItem */
   label: string
@@ -14,6 +15,7 @@ type BaseProps = {
   onAction: () => void
 }
 
+/** Main props object */
 type KebabMenuItemProps = CustomizableActionProps<BaseProps>
 
 /**

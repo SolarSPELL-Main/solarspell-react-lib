@@ -1,6 +1,7 @@
 import React from 'react';
 import { SvgIconComponent } from '@material-ui/icons';
 import { CustomizableActionProps } from './types';
+/** Props needed for every ActionPanelItem, regardless of functionality */
 declare type BaseProps = {
     /** Tooltip to display on hovering over the icon */
     tooltip?: string;
@@ -9,6 +10,7 @@ declare type BaseProps = {
     /** Callback to fire on clicking the icon */
     onAction: () => void;
 };
+/** Special functionality for allowing a toggleable icon */
 declare type ToggleProps = {
     /** Specifies that the icon should be toggleable on/off */
     type: 'toggle';
@@ -31,6 +33,7 @@ declare type ToggleProps = {
     /** Whether the component is initially active or not (default false) */
     active?: boolean;
 };
+/** Main props object */
 declare type ActionPanelItemProps = CustomizableActionProps<BaseProps> | ToggleProps;
 /**
  * Creates a clickable icon for a variety of different use cases.

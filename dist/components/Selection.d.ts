@@ -1,11 +1,13 @@
 import React from 'react';
 import { DialogButtonStyleProps } from './types';
+/** Specifies how a field should be displayed in the dialog */
 declare type SelectionFieldDescriptor<T> = {
     /** The displayed name of the field */
     title: string;
     /** The actual key of the field */
     field: keyof T;
 };
+/** Main props object */
 declare type SelectionProps<T> = {
     /** The fields available for selection */
     fields: SelectionFieldDescriptor<T>[];

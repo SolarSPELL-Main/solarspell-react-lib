@@ -4,7 +4,10 @@ import React from 'react';
 import { GridColumnMenuContainer, SortGridMenuItems, GridFilterMenuItem, } from '@material-ui/data-grid';
 import DataTable from '../DataTable';
 import ExpandPanel from '../ExpandPanel';
-// Removes unnecessary options from ColumnMenu
+/**
+ * Removes certain options from the original GridColumnMenu.
+ * These include the options to hide/show columns
+ */
 const CustomGridColumnMenu = React.forwardRef((props, ref) => {
     const { hideMenu, currentColumn } = props;
     return (_jsxs(GridColumnMenuContainer, Object.assign({ ref: ref }, props, { children: [_jsx(SortGridMenuItems, { onClick: hideMenu, column: currentColumn }, void 0), _jsx(GridFilterMenuItem, { onClick: hideMenu, column: currentColumn }, void 0)] }), void 0));
@@ -54,6 +57,7 @@ function MetadataTable(props) {
     if ((_d = props.components) === null || _d === void 0 ? void 0 : _d.KebabMenu) {
         headerMenu = (_jsx(props.components.KebabMenu, Object.assign({}, (_e = props.componentProps) === null || _e === void 0 ? void 0 : _e.KebabMenu, { metadataType: props.metadataType }), void 0));
     }
+    // Check if onSelectChange callback is null before firing
     const onSelectChange_ = React.useCallback((rows) => {
         if (props.onSelectChange) {
             props.onSelectChange(props.metadata, props.metadataType, rows);

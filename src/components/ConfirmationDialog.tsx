@@ -6,6 +6,7 @@ import GenericDialog from './GenericDialog';
 import { preventEventFactory, preventEvent } from '../utils';
 import { DialogConfirmationStyleProps } from './types';
 
+/** Main props object */
 type ConfirmationDialogProps = {
   /** Whether the dialog is open or not */
   open: boolean

@@ -9,7 +9,7 @@ import {
   GridSlotsComponentsProps,
 } from '@material-ui/data-grid';
 
-// Excludes props of DataGrid that are covered by other props
+/** Excludes props of DataGrid that are covered by other props */
 type OtherDataGridProps = Partial<
   Exclude<
     React.ComponentProps<typeof DataGrid>,
@@ -18,7 +18,7 @@ type OtherDataGridProps = Partial<
   >
 >
 
-// Any optional props
+/** Any optional props */
 type DataTableOptionalProps = {
   /** Whether the rows of the DataGrid should be selectable */
   selectable?: boolean
@@ -32,7 +32,7 @@ type DataTableOptionalProps = {
   additionalProps?: OtherDataGridProps
 }
 
-// Actual component props
+/** Main props object */
 type DataTableProps = {
   /** Columns to display in the DataGrid */
   columns: GridColDef[]

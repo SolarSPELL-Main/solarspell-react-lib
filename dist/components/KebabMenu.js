@@ -10,6 +10,7 @@ import { preventEvent, preventEventFactory } from '../utils';
  */
 function KebabMenu(props) {
     const [open, setOpen] = React.useState(false);
+    // Anchor el ref element needed for pop-up menu to function properly
     const [anchorEl, setAnchorEl] = React.useState(null);
     const onClick = React.useCallback(preventEventFactory(e => {
         setOpen(true);
