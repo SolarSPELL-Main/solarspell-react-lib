@@ -1,4 +1,4 @@
-import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
+import { jsx as _jsx } from "react/jsx-runtime";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
@@ -35,7 +35,7 @@ function ContentSearch(props) {
     // Check for whether a date is ready for submission (by nature of being valid)
     const isValidDate = (date) => date && !isNaN(date.getTime());
     return (_jsx(ExpandPanel, Object.assign({ header: 'Search' }, { children: _jsx(Grid, Object.assign({ container: true, spacing: 2 }, { children: props.fields.map(field => {
-                var _a, _b, _c, _d, _e, _f, _g, _h, _j;
+                var _a;
                 const current = state[field.field];
                 const setter = setterFactory(field.field);
                 let element;
@@ -52,78 +52,57 @@ function ContentSearch(props) {
                 else if (field.type === 'numeric') {
                     const parseAs = (_a = field.parseAs) !== null && _a !== void 0 ? _a : 'int';
                     const parser = parseAs === 'float' ? parseFloat : parseInt;
-                    element = (_jsxs(_Fragment, { children: [_jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(TextField, { label: `${field.title} From` +
-                                        (field.unit ? ` (${field.unit})` : ''), type: 'number', InputProps: {
-                                        inputProps: {
-                                            min: (_b = field.min) !== null && _b !== void 0 ? _b : -Infinity,
-                                            max: (_c = field.max) !== null && _c !== void 0 ? _c : Infinity,
-                                        },
-                                    }, fullWidth: true, value: (_d = current === null || current === void 0 ? void 0 : current.rawFrom) !== null && _d !== void 0 ? _d : '', onKeyDown: e => {
-                                        // Stops keys such as 'e' showing up in TextFields,
-                                        // or '.' if the number should be an integer
-                                        if (e.key === 'e' || (e.key === '.' && parseAs === 'int')) {
-                                            e.stopPropagation();
-                                            e.preventDefault();
-                                        }
-                                    }, onChange: event => {
-                                        event.persist();
-                                        setter((oldState) => (Object.assign(Object.assign({}, oldState), { from: event.target.value ?
-                                                field.formatter ?
-                                                    field.formatter(parser(event.target.value), 'from')
-                                                    :
-                                                        parser(event.target.value)
+                    element = ['From', 'To'].map(s => {
+                        var _a, _b, _c;
+                        return _jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(TextField, { label: `${field.title} ${s}` +
+                                    (field.unit ? ` (${field.unit})` : ''), type: 'number', InputProps: {
+                                    inputProps: {
+                                        min: (_a = field.min) !== null && _a !== void 0 ? _a : -Infinity,
+                                        max: (_b = field.max) !== null && _b !== void 0 ? _b : Infinity,
+                                    },
+                                }, fullWidth: true, value: (_c = current === null || current === void 0 ? void 0 : current[`raw${s}`]) !== null && _c !== void 0 ? _c : '', onKeyDown: e => {
+                                    // Stops keys such as 'e' showing up in TextFields,
+                                    // or '.' if the number should be an integer
+                                    if (e.key === 'e' || (e.key === '.' && parseAs === 'int')) {
+                                        e.stopPropagation();
+                                        e.preventDefault();
+                                    }
+                                }, onChange: event => {
+                                    event.persist();
+                                    setter((oldState) => (Object.assign(Object.assign({}, oldState), { [s.toLowerCase()]: event.target.value ?
+                                            field.formatter ?
+                                                field.formatter(parser(event.target.value), s.toLowerCase())
                                                 :
-                                                    null, rawFrom: event.target.value })));
-                                    } }, void 0) }), void 0), _jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(TextField, { label: `${field.title} To` +
-                                        (field.unit ? ` (${field.unit})` : ''), type: 'number', InputProps: {
-                                        inputProps: {
-                                            min: (_e = field.min) !== null && _e !== void 0 ? _e : -Infinity,
-                                            max: (_f = field.max) !== null && _f !== void 0 ? _f : Infinity,
-                                        },
-                                    }, fullWidth: true, value: (_g = current === null || current === void 0 ? void 0 : current.rawTo) !== null && _g !== void 0 ? _g : '', onKeyDown: e => {
-                                        if (e.key === 'e' || (e.key === '.' && parseAs === 'int')) {
-                                            e.stopPropagation();
-                                            e.preventDefault();
-                                        }
-                                    }, onChange: event => {
-                                        event.persist();
-                                        setter((oldState) => (Object.assign(Object.assign({}, oldState), { to: event.target.value ?
-                                                field.formatter ?
-                                                    field.formatter(parser(event.target.value), 'to')
-                                                    :
-                                                        parser(event.target.value)
-                                                :
-                                                    null, rawTo: event.target.value })));
-                                    } }, void 0) }), void 0)] }, void 0));
+                                                    parser(event.target.value)
+                                            :
+                                                null, [`raw${s}`]: event.target.value })));
+                                } }, void 0) }), s);
+                    });
                     // Two TextFields for date field
                 }
                 else if (field.type === 'date') {
-                    element = (_jsxs(_Fragment, { children: [_jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(KeyboardDatePicker, { label: `${field.title} From` +
-                                        (field.unit ? ` (${field.unit})` : ''), variant: 'inline', format: 'MM/dd/yyyy', 
-                                    // Why all this complicated hubaloo?
-                                    // Because we want the user to be able to type in
-                                    // any date they want, but we also want the actual
-                                    // state submitted to be valid.
-                                    // So we require this kind of dual-state that keeps
-                                    // track of the possibly-invalid state and the
-                                    // actual valid state.
-                                    // Raw input values are stored in rawTo/From in state,
-                                    // and valid dates are stored in from/to in state, after
-                                    // stringification.
-                                    value: null, inputValue: (_h = current === null || current === void 0 ? void 0 : current.rawFrom) !== null && _h !== void 0 ? _h : '', onChange: (date, val) => setter((oldState) => (Object.assign(Object.assign({}, oldState), { rawFrom: val, from: val ?
-                                            isValidDate(date) ?
-                                                field.formatter(date, 'from')
-                                                :
-                                                    oldState === null || oldState === void 0 ? void 0 : oldState.from
+                    element = ['From', 'To'].map(s => {
+                        var _a;
+                        return _jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(KeyboardDatePicker, { label: `${field.title} ${s}` +
+                                    (field.unit ? ` (${field.unit})` : ''), variant: 'inline', format: 'MM/dd/yyyy', 
+                                // Why all this complicated hubaloo?
+                                // Because we want the user to be able to type in
+                                // any date they want, but we also want the actual
+                                // state submitted to be valid.
+                                // So we require this kind of dual-state that keeps
+                                // track of the possibly-invalid state and the
+                                // actual valid state.
+                                // Raw input values are stored in rawTo/From in state,
+                                // and valid dates are stored in from/to in state, after
+                                // stringification.
+                                value: null, inputValue: (_a = current === null || current === void 0 ? void 0 : current[`raw${s}`]) !== null && _a !== void 0 ? _a : '', onChange: (date, val) => setter((oldState) => (Object.assign(Object.assign({}, oldState), { [`raw${s}`]: val, [s.toLowerCase()]: val ?
+                                        isValidDate(date) ?
+                                            field.formatter(date, s.toLowerCase())
                                             :
-                                                null }))) }, void 0) }), void 0), _jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(KeyboardDatePicker, { label: `${field.title} To` +
-                                        (field.unit ? ` (${field.unit})` : ''), variant: 'inline', format: 'MM/dd/yyyy', value: null, inputValue: (_j = current === null || current === void 0 ? void 0 : current.rawTo) !== null && _j !== void 0 ? _j : '', onChange: (date, val) => setter((oldState) => (Object.assign(Object.assign({}, oldState), { rawTo: val, to: val ?
-                                            isValidDate(date) ?
-                                                field.formatter(date, 'to')
-                                                :
-                                                    oldState === null || oldState === void 0 ? void 0 : oldState.to
-                                            :
-                                                null }))) }, void 0) }), void 0)] }, void 0));
+                                                oldState === null || oldState === void 0 ? void 0 : oldState[s.toLowerCase()]
+                                        :
+                                            null }))) }, void 0) }), s);
+                    });
                     // Select component for enum field
                 }
                 else if (field.type === 'enum') {
