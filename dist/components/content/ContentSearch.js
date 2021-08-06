@@ -35,7 +35,7 @@ function ContentSearch(props) {
     // Check for whether a date is ready for submission (by nature of being valid)
     const isValidDate = (date) => date && !isNaN(date.getTime());
     return (_jsx(ExpandPanel, Object.assign({ header: 'Search' }, { children: _jsx(Grid, Object.assign({ container: true, spacing: 2 }, { children: props.fields.map(field => {
-                var _a, _b, _c, _d, _e, _f, _g, _h;
+                var _a, _b, _c, _d, _e, _f, _g, _h, _j;
                 const current = state[field.field];
                 const setter = setterFactory(field.field);
                 let element;
@@ -50,34 +50,48 @@ function ContentSearch(props) {
                     // Two TextFields for numeric field
                 }
                 else if (field.type === 'numeric') {
+                    const parseAs = (_a = field.parseAs) !== null && _a !== void 0 ? _a : 'int';
+                    const parser = parseAs === 'float' ? parseFloat : parseInt;
                     element = (_jsxs(_Fragment, { children: [_jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(TextField, { label: `${field.title} From` +
                                         (field.unit ? ` (${field.unit})` : ''), type: 'number', InputProps: {
                                         inputProps: {
-                                            min: (_a = field.min) !== null && _a !== void 0 ? _a : -Infinity,
-                                            max: (_b = field.max) !== null && _b !== void 0 ? _b : Infinity,
+                                            min: (_b = field.min) !== null && _b !== void 0 ? _b : -Infinity,
+                                            max: (_c = field.max) !== null && _c !== void 0 ? _c : Infinity,
                                         },
-                                    }, fullWidth: true, value: (_c = current === null || current === void 0 ? void 0 : current.rawFrom) !== null && _c !== void 0 ? _c : '', onChange: event => {
+                                    }, fullWidth: true, value: (_d = current === null || current === void 0 ? void 0 : current.rawFrom) !== null && _d !== void 0 ? _d : '', onKeyDown: e => {
+                                        // Stops keys such as 'e' showing up in TextFields,
+                                        // or '.' if the number should be an integer
+                                        if (e.key === 'e' || (e.key === '.' && parseAs === 'int')) {
+                                            e.stopPropagation();
+                                            e.preventDefault();
+                                        }
+                                    }, onChange: event => {
                                         event.persist();
                                         setter((oldState) => (Object.assign(Object.assign({}, oldState), { from: event.target.value ?
                                                 field.formatter ?
-                                                    field.formatter(parseFloat(event.target.value), 'from')
+                                                    field.formatter(parser(event.target.value), 'from')
                                                     :
-                                                        parseFloat(event.target.value)
+                                                        parser(event.target.value)
                                                 :
                                                     null, rawFrom: event.target.value })));
                                     } }, void 0) }), void 0), _jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(TextField, { label: `${field.title} To` +
                                         (field.unit ? ` (${field.unit})` : ''), type: 'number', InputProps: {
                                         inputProps: {
-                                            min: (_d = field.min) !== null && _d !== void 0 ? _d : -Infinity,
-                                            max: (_e = field.max) !== null && _e !== void 0 ? _e : Infinity,
+                                            min: (_e = field.min) !== null && _e !== void 0 ? _e : -Infinity,
+                                            max: (_f = field.max) !== null && _f !== void 0 ? _f : Infinity,
                                         },
-                                    }, fullWidth: true, value: (_f = current === null || current === void 0 ? void 0 : current.rawTo) !== null && _f !== void 0 ? _f : '', onChange: event => {
+                                    }, fullWidth: true, value: (_g = current === null || current === void 0 ? void 0 : current.rawTo) !== null && _g !== void 0 ? _g : '', onKeyDown: e => {
+                                        if (e.key === 'e' || (e.key === '.' && parseAs === 'int')) {
+                                            e.stopPropagation();
+                                            e.preventDefault();
+                                        }
+                                    }, onChange: event => {
                                         event.persist();
                                         setter((oldState) => (Object.assign(Object.assign({}, oldState), { to: event.target.value ?
                                                 field.formatter ?
-                                                    field.formatter(parseFloat(event.target.value), 'to')
+                                                    field.formatter(parser(event.target.value), 'to')
                                                     :
-                                                        parseFloat(event.target.value)
+                                                        parser(event.target.value)
                                                 :
                                                     null, rawTo: event.target.value })));
                                     } }, void 0) }), void 0)] }, void 0));
@@ -96,14 +110,14 @@ function ContentSearch(props) {
                                     // Raw input values are stored in rawTo/From in state,
                                     // and valid dates are stored in from/to in state, after
                                     // stringification.
-                                    value: null, inputValue: (_g = current === null || current === void 0 ? void 0 : current.rawFrom) !== null && _g !== void 0 ? _g : '', onChange: (date, val) => setter((oldState) => (Object.assign(Object.assign({}, oldState), { rawFrom: val, from: val ?
+                                    value: null, inputValue: (_h = current === null || current === void 0 ? void 0 : current.rawFrom) !== null && _h !== void 0 ? _h : '', onChange: (date, val) => setter((oldState) => (Object.assign(Object.assign({}, oldState), { rawFrom: val, from: val ?
                                             isValidDate(date) ?
                                                 field.formatter(date, 'from')
                                                 :
                                                     oldState === null || oldState === void 0 ? void 0 : oldState.from
                                             :
                                                 null }))) }, void 0) }), void 0), _jsx(Grid, Object.assign({ item: true, xs: field.width }, { children: _jsx(KeyboardDatePicker, { label: `${field.title} To` +
-                                        (field.unit ? ` (${field.unit})` : ''), variant: 'inline', format: 'MM/dd/yyyy', value: null, inputValue: (_h = current === null || current === void 0 ? void 0 : current.rawTo) !== null && _h !== void 0 ? _h : '', onChange: (date, val) => setter((oldState) => (Object.assign(Object.assign({}, oldState), { rawTo: val, to: val ?
+                                        (field.unit ? ` (${field.unit})` : ''), variant: 'inline', format: 'MM/dd/yyyy', value: null, inputValue: (_j = current === null || current === void 0 ? void 0 : current.rawTo) !== null && _j !== void 0 ? _j : '', onChange: (date, val) => setter((oldState) => (Object.assign(Object.assign({}, oldState), { rawTo: val, to: val ?
                                             isValidDate(date) ?
                                                 field.formatter(date, 'to')
                                                 :

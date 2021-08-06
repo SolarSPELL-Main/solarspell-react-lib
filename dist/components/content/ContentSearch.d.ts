@@ -32,6 +32,8 @@ declare type NumericField = {
     min?: number;
     /** Maximum value for field */
     max?: number;
+    /** Whether the value should be parsed as an int or a float */
+    parseAs?: 'int' | 'float';
     /** Conversion method from number to string */
     formatter?: (val: number, field: 'from' | 'to') => number | string;
 };

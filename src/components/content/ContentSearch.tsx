@@ -43,6 +43,8 @@ type NumericField = {
   min?: number
   /** Maximum value for field */
   max?: number
+  /** Whether the value should be parsed as an int or a float */
+  parseAs?: 'int' | 'float'
   /** Conversion method from number to string */
   formatter?: (val: number, field: 'from'|'to') => number|string
 }
@@ -191,6 +193,9 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
             );
           // Two TextFields for numeric field
           } else if (field.type === 'numeric') {
+            const parseAs = field.parseAs ?? 'int';
+            const parser = parseAs === 'float' ? parseFloat : parseInt;
+
             element = (<>
               <Grid item xs={field.width} >
                 <TextField
@@ -206,6 +211,14 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                   }}
                   fullWidth
                   value={current?.rawFrom ?? ''}
+                  onKeyDown={e => {
+                    // Stops keys such as 'e' showing up in TextFields,
+                    // or '.' if the number should be an integer
+                    if (e.key === 'e' || (e.key === '.' && parseAs === 'int')) {
+                      e.stopPropagation();
+                      e.preventDefault();
+                    }
+                  }}
                   onChange={event => {
                     event.persist();
                     setter(
@@ -214,11 +227,11 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                         from: event.target.value ?
                           field.formatter ?
                             field.formatter(
-                              parseFloat(event.target.value),
+                              parser(event.target.value),
                               'from',
                             )
                             :
-                            parseFloat(event.target.value)
+                            parser(event.target.value)
                           :
                           null,
                         rawFrom: event.target.value,
@@ -241,6 +254,12 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                   }}
                   fullWidth
                   value={current?.rawTo ?? ''}
+                  onKeyDown={e => {
+                    if (e.key === 'e' || (e.key === '.' && parseAs === 'int')) {
+                      e.stopPropagation();
+                      e.preventDefault();
+                    }
+                  }}
                   onChange={event => {
                     event.persist();
                     setter(
@@ -249,11 +268,11 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
                         to: event.target.value ?
                           field.formatter ?
                             field.formatter(
-                              parseFloat(event.target.value),
+                              parser(event.target.value),
                               'to',
                             )
                             :
-                            parseFloat(event.target.value)
+                            parser(event.target.value)
                           :
                           null,
                         rawTo: event.target.value,
