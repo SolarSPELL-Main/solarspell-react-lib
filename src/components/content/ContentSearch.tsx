@@ -115,6 +115,8 @@ type ContentSearchProps = {
   fields: FieldDescriptor[]
   /** Callback to fire whenever any field changes */
   onQueryChange: (values: any) => void
+  /** See ExpandPanel for prop description */
+  mountContents?: boolean
 }
 
 /**
@@ -166,7 +168,7 @@ function ContentSearch(props: ContentSearchProps): React.ReactElement {
   const isValidDate = (date: Date) => date && !isNaN(date.getTime());
 
   return (
-    <ExpandPanel header={'Search'}>
+    <ExpandPanel header={'Search'} mountContents={props.mountContents}>
       <Grid container spacing={2}>
         {props.fields.map(field => {
           const current = state[field.field];

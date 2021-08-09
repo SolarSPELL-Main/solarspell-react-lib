@@ -63,6 +63,8 @@ M extends BaseMetadata,
   metadataType: T
   /** Metadata of one type to display in the table */
   metadata: M[]
+  /** See ExpandPanel for prop description */
+  mountContents?: boolean
 } & MetadataTableOptionalProps<T,M>
 
 /**
@@ -158,6 +160,7 @@ function MetadataTable<
     <ExpandPanel
       header={props.metadataType.name}
       headerMenu={headerMenu}
+      mountContents={props.mountContents}
     >
       <DataTable
         columns={columns}

@@ -99,6 +99,8 @@ declare type ContentSearchProps = {
     fields: FieldDescriptor[];
     /** Callback to fire whenever any field changes */
     onQueryChange: (values: any) => void;
+    /** See ExpandPanel for prop description */
+    mountContents?: boolean;
 };
 /**
  * Expandable search bar for content (or general use).
