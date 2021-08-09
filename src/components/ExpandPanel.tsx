@@ -12,6 +12,11 @@ type ExpandPanelProps = {
   header: string
   /** Optional component to display at top right of the panel */
   headerMenu?: React.ReactElement
+  /** 
+   * Whether to enable default behavior of mounting all Accordion contents
+   * even when not expanded
+   */
+  mountContents?: boolean
 }
 
 // Establishes consistent font size for the header
@@ -28,7 +33,9 @@ function ExpandPanel(
   props: React.PropsWithChildren<ExpandPanelProps>
 ): React.ReactElement {
   return (
-    <Accordion>
+    <Accordion TransitionProps={{
+      unmountOnExit: !(props.mountContents ?? true),
+    }}>
       <AccordionSummary>
         <Grid container>
           <Grid item xs={6} style={{ textAlign: 'left' }}>
