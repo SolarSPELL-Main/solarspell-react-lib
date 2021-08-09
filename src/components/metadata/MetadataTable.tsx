@@ -52,6 +52,8 @@ type MetadataTableOptionalProps<
   ) => void
   /** Additional properties associated with the underlying DataGrid */
   additionalProps?: OtherDataGridProps
+  /** See ExpandPanel for prop description */
+  mountContents?: boolean
 }
 
 /** Main props object */
@@ -63,8 +65,6 @@ M extends BaseMetadata,
   metadataType: T
   /** Metadata of one type to display in the table */
   metadata: M[]
-  /** See ExpandPanel for prop description */
-  mountContents?: boolean
 } & MetadataTableOptionalProps<T,M>
 
 /**
