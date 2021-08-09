@@ -38,6 +38,8 @@ declare type MetadataTableProps<T extends BaseMetadataType, M extends BaseMetada
     metadataType: T;
     /** Metadata of one type to display in the table */
     metadata: M[];
+    /** See ExpandPanel for prop description */
+    mountContents?: boolean;
 } & MetadataTableOptionalProps<T, M>;
 /**
  * This component creates a single table for a metadata type and its members.

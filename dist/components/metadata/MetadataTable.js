@@ -63,7 +63,7 @@ function MetadataTable(props) {
             props.onSelectChange(props.metadata, props.metadataType, rows);
         }
     }, [props.onSelectChange, props.metadata, props.metadataType]);
-    return (_jsx(ExpandPanel, Object.assign({ header: props.metadataType.name, headerMenu: headerMenu }, { children: _jsx(DataTable, { columns: columns, rows: props.metadata, selectable: props.selectable, onSelectChange: props.onSelectChange ? onSelectChange_ : undefined, components: {
+    return (_jsx(ExpandPanel, Object.assign({ header: props.metadataType.name, headerMenu: headerMenu, mountContents: props.mountContents }, { children: _jsx(DataTable, { columns: columns, rows: props.metadata, selectable: props.selectable, onSelectChange: props.onSelectChange ? onSelectChange_ : undefined, components: {
                 ColumnMenu: CustomGridColumnMenu,
             }, additionalProps: props.additionalProps }, void 0) }), void 0));
 }

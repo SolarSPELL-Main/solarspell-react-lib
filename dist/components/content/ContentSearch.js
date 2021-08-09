@@ -34,7 +34,7 @@ function ContentSearch(props) {
     }, [state]);
     // Check for whether a date is ready for submission (by nature of being valid)
     const isValidDate = (date) => date && !isNaN(date.getTime());
-    return (_jsx(ExpandPanel, Object.assign({ header: 'Search' }, { children: _jsx(Grid, Object.assign({ container: true, spacing: 2 }, { children: props.fields.map(field => {
+    return (_jsx(ExpandPanel, Object.assign({ header: 'Search', mountContents: props.mountContents }, { children: _jsx(Grid, Object.assign({ container: true, spacing: 2 }, { children: props.fields.map(field => {
                 var _a;
                 const current = state[field.field];
                 const setter = setterFactory(field.field);
