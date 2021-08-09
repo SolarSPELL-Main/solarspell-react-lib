@@ -5,6 +5,11 @@ declare type ExpandPanelProps = {
     header: string;
     /** Optional component to display at top right of the panel */
     headerMenu?: React.ReactElement;
+    /**
+     * Whether to enable default behavior of mounting all Accordion contents
+     * even when not expanded
+     */
+    mountContents?: boolean;
 };
 /**
  * Boilerplate for a simple expandable Accordion with menu in top right.
