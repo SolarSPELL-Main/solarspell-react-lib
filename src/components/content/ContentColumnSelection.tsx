@@ -78,7 +78,7 @@ function ContentColumnSelection<
 
   // Construct GridColDefs from state and fields
   const constructCols = React.useCallback(
-    (state: Record<string,boolean>) => {
+    () => {
       const columns = fields.map(field => {
         const column = field.column ??
         // Default column definitions for all fields
@@ -101,7 +101,7 @@ function ContentColumnSelection<
   );
 
   const onClose = React.useCallback(
-    () => props.onClose(constructCols(state)),
+    () => props.onClose(constructCols()),
     [props.onClose, constructCols],
   );
 

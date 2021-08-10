@@ -38,7 +38,7 @@ function ContentColumnSelection(props) {
         })),
     ];
     // Construct GridColDefs from state and fields
-    const constructCols = React.useCallback((state) => {
+    const constructCols = React.useCallback(() => {
         const columns = fields.map(field => {
             var _a;
             const column = (_a = field.column) !== null && _a !== void 0 ? _a : 
@@ -56,7 +56,7 @@ function ContentColumnSelection(props) {
         });
         return columns;
     }, [props.fields, props.metadataTypes]);
-    const onClose = React.useCallback(() => props.onClose(constructCols(state)), [props.onClose, constructCols]);
+    const onClose = React.useCallback(() => props.onClose(constructCols()), [props.onClose, constructCols]);
     React.useEffect(() => {
         onClose();
     }, [props.metadataTypes]);
