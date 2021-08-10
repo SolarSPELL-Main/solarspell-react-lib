@@ -97,7 +97,7 @@ function ContentColumnSelection<
 
       return columns;
     },
-    [props.fields, props.metadataTypes],
+    [props.fields, props.metadataTypes, state],
   );
 
   const onClose = React.useCallback(

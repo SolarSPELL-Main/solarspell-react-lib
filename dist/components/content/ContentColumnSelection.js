@@ -55,7 +55,7 @@ function ContentColumnSelection(props) {
             return column(field, !state[field.field]);
         });
         return columns;
-    }, [props.fields, props.metadataTypes]);
+    }, [props.fields, props.metadataTypes, state]);
     const onClose = React.useCallback(() => props.onClose(constructCols()), [props.onClose, constructCols]);
     React.useEffect(() => {
         onClose();
