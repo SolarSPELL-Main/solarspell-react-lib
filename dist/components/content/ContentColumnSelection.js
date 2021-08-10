@@ -58,6 +58,9 @@ function ContentColumnSelection(props) {
         return columns;
     }, [props.fields, props.metadataTypes, state]);
     const onClose = React.useCallback(() => props.onClose(constructCols()), [props.onClose, constructCols]);
+    // Effect is needed to update columns when metadata types change
+    // due to fetching.
+    // Also acts as the initial update on first render for initialState
     React.useEffect(() => {
         onClose();
     }, [props.metadataTypes]);
