@@ -45,6 +45,10 @@ function ContentColumnSelection<
   T extends BaseContent = BaseContent,
   M extends BaseMetadataType = BaseMetadataType,
 >(props: ContentColumnSelectionProps<T,M>): React.ReactElement {
+  const [state, setState] = React.useState<Record<string,boolean>>(
+    props.initialState ?? {},
+  );
+
   const fields = [
     ...props.fields,
     // Construct FieldDescriptors for all metadata types
@@ -76,7 +80,7 @@ function ContentColumnSelection<
 
   // Construct GridColDefs from state and fields
   const constructCols = React.useCallback(
-    (state: Record<string,boolean>) => {
+    () => {
       const columns = fields.map(field => {
         const column = field.column ??
         // Default column definitions for all fields
@@ -95,29 +99,30 @@ function ContentColumnSelection<
 
       return columns;
     },
-    [props.fields, props.metadataTypes],
+    [props.fields, props.metadataTypes, state],
   );
 
   const onClose = React.useCallback(
-    (state: Record<string,boolean>) => props.onClose(constructCols(state)),
+    () => props.onClose(constructCols()),
     [props.onClose, constructCols],
   );
-
-  // Needed for frontend to properly fetch column defs on initial load
-  // Metadata types included as dependency since they change often, and
-  // initial state may include a few transient metadata types.
+  
+  // Effect is needed to update columns when metadata types change
+  // due to fetching.
+  // Also acts as the initial update on first render for initialState
   React.useEffect(() => {
-    if (props.initialState) {
-      onClose(props.initialState);
-    }
-  }, [props.initialState, props.metadataTypes]);
+    onClose();
+  }, [props.metadataTypes]);
 
   return (
     <Selection
       fields={fields}
-      initialState={props.initialState}
+      value={state}
       open={props.open}
       onClose={onClose}
+      onChange={(field, checked) => 
+        setState(oldState => ({ ...oldState, [field.field]: checked }))
+      }
     />
   );
 }

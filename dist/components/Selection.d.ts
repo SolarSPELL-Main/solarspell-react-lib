@@ -11,12 +11,14 @@ declare type SelectionFieldDescriptor<T> = {
 declare type SelectionProps<T> = {
     /** The fields available for selection */
     fields: SelectionFieldDescriptor<T>[];
-    /** Initial fields that are checked */
-    initialState?: Record<string, boolean>;
     /** Whether the selection dialog is open */
     open: boolean;
+    /** Which fields are currently checked/unchecked */
+    value: Record<string, boolean>;
     /** Callback on dialog close */
-    onClose: (state: Record<string, boolean>) => void;
+    onClose: () => void;
+    /** Callback when state changes */
+    onChange?: (field: SelectionFieldDescriptor<T>, checked: boolean) => void;
     /** Additional styling props */
     dialogStyle?: Partial<DialogButtonStyleProps>;
 };

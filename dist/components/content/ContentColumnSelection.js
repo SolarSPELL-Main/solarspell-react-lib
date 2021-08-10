@@ -11,6 +11,8 @@ import Selection from '../Selection';
  * @returns A dialog checkbox form for selecting columns.
  */
 function ContentColumnSelection(props) {
+    var _a;
+    const [state, setState] = React.useState((_a = props.initialState) !== null && _a !== void 0 ? _a : {});
     const fields = [
         ...props.fields,
         // Construct FieldDescriptors for all metadata types
@@ -37,7 +39,7 @@ function ContentColumnSelection(props) {
         })),
     ];
     // Construct GridColDefs from state and fields
-    const constructCols = React.useCallback((state) => {
+    const constructCols = React.useCallback(() => {
         const columns = fields.map(field => {
             var _a;
             const column = (_a = field.column) !== null && _a !== void 0 ? _a : 
@@ -54,16 +56,14 @@ function ContentColumnSelection(props) {
             return column(field, !state[field.field]);
         });
         return columns;
-    }, [props.fields, props.metadataTypes]);
-    const onClose = React.useCallback((state) => props.onClose(constructCols(state)), [props.onClose, constructCols]);
-    // Needed for frontend to properly fetch column defs on initial load
-    // Metadata types included as dependency since they change often, and
-    // initial state may include a few transient metadata types.
+    }, [props.fields, props.metadataTypes, state]);
+    const onClose = React.useCallback(() => props.onClose(constructCols()), [props.onClose, constructCols]);
+    // Effect is needed to update columns when metadata types change
+    // due to fetching.
+    // Also acts as the initial update on first render for initialState
     React.useEffect(() => {
-        if (props.initialState) {
-            onClose(props.initialState);
-        }
-    }, [props.initialState, props.metadataTypes]);
-    return (_jsx(Selection, { fields: fields, initialState: props.initialState, open: props.open, onClose: onClose }, void 0));
+        onClose();
+    }, [props.metadataTypes]);
+    return (_jsx(Selection, { fields: fields, value: state, open: props.open, onClose: onClose, onChange: (field, checked) => setState(oldState => (Object.assign(Object.assign({}, oldState), { [field.field]: checked }))) }, void 0));
 }
 export default ContentColumnSelection;
