@@ -104,11 +104,13 @@ function ContentColumnSelection<
   );
 
   // Needed for frontend to properly fetch column defs on initial load
+  // Metadata types included as dependency since they change often, and
+  // initial state may include a few transient metadata types.
   React.useEffect(() => {
     if (props.initialState) {
       onClose(props.initialState);
     }
-  }, [props.initialState]);
+  }, [props.initialState, props.metadataTypes]);
 
   return (
     <Selection
