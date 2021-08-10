@@ -11,7 +11,8 @@ import Selection from '../Selection';
  * @returns A dialog checkbox form for selecting columns.
  */
 function ContentColumnSelection(props) {
-    const [state, setState] = React.useState({});
+    var _a;
+    const [state, setState] = React.useState((_a = props.initialState) !== null && _a !== void 0 ? _a : {});
     const fields = [
         ...props.fields,
         // Construct FieldDescriptors for all metadata types
@@ -60,6 +61,6 @@ function ContentColumnSelection(props) {
     React.useEffect(() => {
         onClose();
     }, [props.metadataTypes]);
-    return (_jsx(Selection, { fields: fields, initialState: props.initialState, open: props.open, onClose: onClose, onStateChange: newState => setState(newState) }, void 0));
+    return (_jsx(Selection, { fields: fields, value: state, open: props.open, onClose: onClose, onChange: (field, checked) => setState(oldState => (Object.assign(Object.assign({}, oldState), { [field.field]: checked }))) }, void 0));
 }
 export default ContentColumnSelection;

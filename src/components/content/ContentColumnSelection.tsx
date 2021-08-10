@@ -45,7 +45,9 @@ function ContentColumnSelection<
   T extends BaseContent = BaseContent,
   M extends BaseMetadataType = BaseMetadataType,
 >(props: ContentColumnSelectionProps<T,M>): React.ReactElement {
-  const [state, setState] = React.useState<Record<string,boolean>>({});
+  const [state, setState] = React.useState<Record<string,boolean>>(
+    props.initialState ?? {},
+  );
 
   const fields = [
     ...props.fields,
@@ -112,10 +114,12 @@ function ContentColumnSelection<
   return (
     <Selection
       fields={fields}
-      initialState={props.initialState}
+      value={state}
       open={props.open}
       onClose={onClose}
-      onStateChange={newState => setState(newState)}
+      onChange={(field, checked) => 
+        setState(oldState => ({ ...oldState, [field.field]: checked }))
+      }
     />
   );
 }

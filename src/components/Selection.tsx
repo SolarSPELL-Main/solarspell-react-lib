@@ -21,14 +21,14 @@ type SelectionFieldDescriptor<T> = {
 type SelectionProps<T> = {
   /** The fields available for selection */
   fields: SelectionFieldDescriptor<T>[]
-  /** Initial fields that are checked */
-  initialState?: Record<string,boolean>
   /** Whether the selection dialog is open */
   open: boolean
+  /** Which fields are currently checked/unchecked */
+  value: Record<string,boolean>
   /** Callback on dialog close */
-  onClose: (state: Record<string,boolean>) => void
+  onClose: () => void
   /** Callback when state changes */
-  onStateChange?: (state: Record<string,boolean>) => void
+  onChange?: (field: SelectionFieldDescriptor<T>, checked: boolean) => void
   /** Additional styling props */
   dialogStyle?: Partial<DialogButtonStyleProps>
 }
@@ -40,29 +40,10 @@ type SelectionProps<T> = {
  * @returns A dialog form.
  */
 function Selection<T>(props: SelectionProps<T>): React.ReactElement {
-  const [state, setState] = React.useState<Record<string,boolean>>(
-    props.initialState ?? {},
-  );
-
-  const setterFactory = React.useCallback(
-    (field: keyof T) =>
-      (_e: React.SyntheticEvent, checked: boolean) => setState(state => ({
-        ...state,
-        [field]: checked,
-      })),
-    [],
-  );
-
   const onClose = React.useCallback(
-    () => props.onClose(state),
-    [props.onClose, state],
+    () => props.onClose(),
+    [props.onClose],
   );
-
-  React.useEffect(() => {
-    if (props.onStateChange) {
-      props.onStateChange(state);
-    }
-  }, [state]);
 
   return (
     <ButtonDialog
@@ -82,8 +63,12 @@ function Selection<T>(props: SelectionProps<T>): React.ReactElement {
             >
               <FormControlLabel
                 control={<Checkbox
-                  checked={state[field.field] ?? false}
-                  onChange={setterFactory(field.field)}
+                  checked={props.value[field.field] ?? false}
+                  onChange={(_e, checked) => {
+                    if (props.onChange) {
+                      props.onChange(field, checked);
+                    }
+                  }}
                 />}
                 label={field.title}
               />
