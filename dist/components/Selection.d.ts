@@ -17,6 +17,8 @@ declare type SelectionProps<T> = {
     open: boolean;
     /** Callback on dialog close */
     onClose: (state: Record<string, boolean>) => void;
+    /** Callback when state changes */
+    onStateChange?: (state: Record<string, boolean>) => void;
     /** Additional styling props */
     dialogStyle?: Partial<DialogButtonStyleProps>;
 };

@@ -11,6 +11,7 @@ import Selection from '../Selection';
  * @returns A dialog checkbox form for selecting columns.
  */
 function ContentColumnSelection(props) {
+    const [state, setState] = React.useState({});
     const fields = [
         ...props.fields,
         // Construct FieldDescriptors for all metadata types
@@ -55,15 +56,10 @@ function ContentColumnSelection(props) {
         });
         return columns;
     }, [props.fields, props.metadataTypes]);
-    const onClose = React.useCallback((state) => props.onClose(constructCols(state)), [props.onClose, constructCols]);
-    // Needed for frontend to properly fetch column defs on initial load
-    // Metadata types included as dependency since they change often, and
-    // initial state may include a few transient metadata types.
+    const onClose = React.useCallback(() => props.onClose(constructCols(state)), [props.onClose, constructCols]);
     React.useEffect(() => {
-        if (props.initialState) {
-            onClose(props.initialState);
-        }
-    }, [props.initialState, props.metadataTypes]);
-    return (_jsx(Selection, { fields: fields, initialState: props.initialState, open: props.open, onClose: onClose }, void 0));
+        onClose();
+    }, [props.metadataTypes]);
+    return (_jsx(Selection, { fields: fields, initialState: props.initialState, open: props.open, onClose: onClose, onStateChange: newState => setState(newState) }, void 0));
 }
 export default ContentColumnSelection;

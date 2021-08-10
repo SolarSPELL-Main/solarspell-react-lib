@@ -27,6 +27,8 @@ type SelectionProps<T> = {
   open: boolean
   /** Callback on dialog close */
   onClose: (state: Record<string,boolean>) => void
+  /** Callback when state changes */
+  onStateChange?: (state: Record<string,boolean>) => void
   /** Additional styling props */
   dialogStyle?: Partial<DialogButtonStyleProps>
 }
@@ -55,6 +57,12 @@ function Selection<T>(props: SelectionProps<T>): React.ReactElement {
     () => props.onClose(state),
     [props.onClose, state],
   );
+
+  React.useEffect(() => {
+    if (props.onStateChange) {
+      props.onStateChange(state);
+    }
+  }, [state]);
 
   return (
     <ButtonDialog

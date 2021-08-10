@@ -45,6 +45,8 @@ function ContentColumnSelection<
   T extends BaseContent = BaseContent,
   M extends BaseMetadataType = BaseMetadataType,
 >(props: ContentColumnSelectionProps<T,M>): React.ReactElement {
+  const [state, setState] = React.useState<Record<string,boolean>>({});
+
   const fields = [
     ...props.fields,
     // Construct FieldDescriptors for all metadata types
@@ -99,18 +101,13 @@ function ContentColumnSelection<
   );
 
   const onClose = React.useCallback(
-    (state: Record<string,boolean>) => props.onClose(constructCols(state)),
+    () => props.onClose(constructCols(state)),
     [props.onClose, constructCols],
   );
 
-  // Needed for frontend to properly fetch column defs on initial load
-  // Metadata types included as dependency since they change often, and
-  // initial state may include a few transient metadata types.
   React.useEffect(() => {
-    if (props.initialState) {
-      onClose(props.initialState);
-    }
-  }, [props.initialState, props.metadataTypes]);
+    onClose();
+  }, [props.metadataTypes]);
 
   return (
     <Selection
@@ -118,6 +115,7 @@ function ContentColumnSelection<
       initialState={props.initialState}
       open={props.open}
       onClose={onClose}
+      onStateChange={newState => setState(newState)}
     />
   );
 }
