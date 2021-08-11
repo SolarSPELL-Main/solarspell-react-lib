@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import { GridCellParams, GridColDef, GridValueFormatterParams } from '@material-ui/data-grid';
+import { GridCellParams, GridColDef } from '@material-ui/data-grid';
 
 import Selection, { SelectionFieldDescriptor } from '../Selection';
 import { BaseMetadataType, BaseContent } from '../../types';
@@ -67,12 +67,6 @@ function ContentColumnSelection<
           // Currently not implemented, so not recommended
           sortable: false,
           hide: b,
-            // valueFormatter: (params: GridValueFormatterParams) => {
-            //   const metadata = (
-            //     params.row.metadata as Record<number,M[]>
-            //   )[metadataType.id];
-            //   return metadata?.map(m => m.name).join(', ') ?? '';
-            // },
           renderCell: (params: GridCellParams) => {
             const metadata = (
               params.row.metadata as Record<number,M[]>

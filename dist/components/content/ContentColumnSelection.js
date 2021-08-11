@@ -1,7 +1,8 @@
-import { jsx as _jsx } from "react/jsx-runtime";
+import { jsx as _jsx, Fragment as _Fragment } from "react/jsx-runtime";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import Selection from '../Selection';
+import { Chip } from '@material-ui/core';
 /**
  * Column selection modal for content.
  * Provides support for selecting which Content fields should
@@ -30,11 +31,18 @@ function ContentColumnSelection(props) {
                 // Currently not implemented, so not recommended
                 sortable: false,
                 hide: b,
-                valueFormatter: (params) => {
-                    var _a;
+                // valueFormatter: (params: GridValueFormatterParams) => {
+                //   const metadata = (
+                //     params.row.metadata as Record<number,M[]>
+                //   )[metadataType.id];
+                //   return metadata?.map(m => m.name).join(', ') ?? '';
+                // },
+                renderCell: (params) => {
                     const metadata = params.row.metadata[metadataType.id];
-                    return (_a = metadata === null || metadata === void 0 ? void 0 : metadata.map(m => m.name).join(', ')) !== null && _a !== void 0 ? _a : '';
-                },
+                    return _jsx(_Fragment, { children: metadata ?
+                            metadata.map(m => _jsx(Chip, { label: m.name }, void 0)) :
+                            undefined }, void 0);
+                }
             }),
         })),
     ];

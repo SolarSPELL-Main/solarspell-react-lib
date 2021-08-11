@@ -12,6 +12,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
  */
 function GenericDialog(_a) {
     var { size = 'md' } = _a, props = __rest(_a, ["size"]);
-    return (_jsxs(Dialog, Object.assign({}, props.additionalProps, { open: props.open, onClose: props.onClose, maxWidth: size }, { children: [props.title && _jsx(DialogTitle, { children: props.title }, void 0), (props.description || props.children) && _jsxs(DialogContent, { children: [_jsx(DialogContentText, { children: props.description }, void 0), props.children] }, void 0), _jsx(DialogActions, { children: props.actions }, void 0)] }), void 0));
+    return (_jsxs(Dialog, Object.assign({}, props.additionalProps, { open: props.open, onClose: props.onClose, maxWidth: size }, { children: [props.title && _jsx(DialogTitle, { children: props.title }, void 0),
+            (props.description || props.children) && _jsxs(DialogContent, { children: [_jsx(DialogContentText, { children: props.description }, void 0),
+                    props.children] }, void 0),
+            _jsx(DialogActions, { children: props.actions }, void 0)] }), void 0));
 }
 export default GenericDialog;

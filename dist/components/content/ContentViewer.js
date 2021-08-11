@@ -10,7 +10,8 @@ import ButtonDialog from '../ButtonDialog';
  * @returns A dialog for viewing content.
  */
 function ContentViewer({ fields, dialogStyle, open, onClose, content, metadataTypes, fileDisplay, }) {
-    return (_jsx(ButtonDialog, Object.assign({}, dialogStyle, { title: 'View Content Item', open: open, onClose: onClose }, { children: _jsxs(Grid, Object.assign({ container: true }, { children: [_jsxs(Grid, Object.assign({ item: true, xs: 4 }, { children: [fields.map((field, idx) => (_jsxs(Box, Object.assign({ mb: 1 }, { children: [_jsx(Typography, Object.assign({ variant: 'h6' }, { children: field.title }), void 0), _jsx(Typography, { children: content[field.field] != null ?
+    return (_jsx(ButtonDialog, Object.assign({}, dialogStyle, { title: 'View Content Item', open: open, onClose: onClose }, { children: _jsxs(Grid, Object.assign({ container: true }, { children: [_jsxs(Grid, Object.assign({ item: true, xs: 4 }, { children: [fields.map((field, idx) => (_jsxs(Box, Object.assign({ mb: 1 }, { children: [_jsx(Typography, Object.assign({ variant: 'h6' }, { children: field.title }), void 0),
+                                _jsx(Typography, { children: content[field.field] != null ?
                                         field.formatter ?
                                             field.formatter(content[field.field])
                                             :
@@ -19,7 +20,8 @@ function ContentViewer({ fields, dialogStyle, open, onClose, content, metadataTy
                                             field.defaultValue != null ?
                                                 field.defaultValue
                                                 :
-                                                    _jsx("i", { children: "Not Available" }, void 0) }, void 0)] }), idx))), metadataTypes.map(type => {
+                                                    _jsx("i", { children: "Not Available" }, void 0) }, void 0)] }), idx))),
+                        metadataTypes.map(type => {
                             const metadata = content.metadata[type.id];
                             let body;
                             if (metadata && metadata.length > 0) {
@@ -28,7 +30,9 @@ function ContentViewer({ fields, dialogStyle, open, onClose, content, metadataTy
                             else {
                                 body = _jsx(Typography, { children: _jsx("i", { children: "No entries" }, void 0) }, void 0);
                             }
-                            return (_jsxs(Box, Object.assign({ mb: 1 }, { children: [_jsx(Typography, Object.assign({ variant: 'h6' }, { children: type.name }), void 0), body] }), type.id));
-                        })] }), void 0), _jsx(Grid, Object.assign({ item: true, xs: 8 }, { children: open && fileDisplay.formatter(content[fileDisplay.field]) }), void 0)] }), void 0) }), void 0));
+                            return (_jsxs(Box, Object.assign({ mb: 1 }, { children: [_jsx(Typography, Object.assign({ variant: 'h6' }, { children: type.name }), void 0),
+                                    body] }), type.id));
+                        })] }), void 0),
+                _jsx(Grid, Object.assign({ item: true, xs: 8 }, { children: open && fileDisplay.formatter(content[fileDisplay.field]) }), void 0)] }), void 0) }), void 0));
 }
 export default ContentViewer;
