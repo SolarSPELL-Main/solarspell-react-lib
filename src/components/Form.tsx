@@ -56,7 +56,11 @@ type FormFieldDescriptor<T> = {
 type FormOptionalProps<T> = {
   /** Indicates that the form should be rendered in a dialog */
   type: 'dialog'
-  /** Callback to fire on successful validation and submission */
+  /** 
+   * Callback to fire on successful validation and submission.
+   * Since the form is now a dialog, also fires on dialog close,
+   * in which case values is undefined.
+   */
   onSubmit: (values?: Partial<T>) => void
   /** Additional style props for the dialog itself */
   dialogStyle: DialogConfirmationStyleProps
