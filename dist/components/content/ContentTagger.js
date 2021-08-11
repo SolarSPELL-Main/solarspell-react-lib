@@ -1,5 +1,4 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-//Importing from outside the project
 import React from 'react';
 import Autocomplete, { createFilterOptions, } from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
@@ -13,6 +12,7 @@ import TextField from '@material-ui/core/TextField';
 function ContentTagger(props) {
     const [selected, setSelected] = React.useState(props.selected);
     const filter = createFilterOptions();
+    // Check if callbacks are null before calling them
     const onInputChange = React.useCallback((_event, val) => {
         if (props.onInputChange) {
             props.onInputChange(props.metadataType, val);
@@ -39,6 +39,7 @@ function ContentTagger(props) {
     React.useEffect(() => {
         setSelected(props.selected);
     }, [props.selected]);
+    // Sync option for adding metadata to selected
     React.useEffect(() => {
         var _a;
         const keySet = new Set(selected === null || selected === void 0 ? void 0 : selected.map(v => v.id));
@@ -64,7 +65,7 @@ function ContentTagger(props) {
             const filtered = filter(options, params);
             // Suggest the creation of a new value if metadata not present
             if (props.creatable &&
-                filtered.length === 0 &&
+                !filtered.some(v => v.name === params.inputValue) &&
                 params.inputValue !== '') {
                 // Partial can be cast as M since it will not be included
                 // in the final results anyways (id == -1)

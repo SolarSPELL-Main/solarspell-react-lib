@@ -1,8 +1,6 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-//Importing from outside the project
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-//Importing from other files of the projects
 import DataTable from '../DataTable';
 /**
  * This component creates a single table for content.
@@ -12,6 +10,7 @@ import DataTable from '../DataTable';
  */
 function ContentTable(props) {
     var _a, _b, _c;
+    // Default rendered columns
     const columns = [
         {
             field: 'title',
@@ -48,7 +47,7 @@ function ContentTable(props) {
         ...(_a = props.additionalColumns) !== null && _a !== void 0 ? _a : [],
     ];
     // Add Actions column only if ActionPanel component specified
-    // Prioritizes Actions column, Name column, followed by custom columns
+    // Prioritizes Actions column, default columns, followed by custom columns
     if ((_b = props.components) === null || _b === void 0 ? void 0 : _b.ActionPanel) {
         const ActionPanel = props.components.ActionPanel;
         const ActionPanelProps = (_c = props.componentProps) === null || _c === void 0 ? void 0 : _c.ActionPanel;
@@ -65,6 +64,7 @@ function ContentTable(props) {
             },
         });
     }
+    // Only calls props.onSelectChange if it is not null
     const onSelectChange_ = React.useCallback((rows) => {
         if (props.onSelectChange) {
             props.onSelectChange(props.content, rows);

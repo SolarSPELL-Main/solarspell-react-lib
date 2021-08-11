@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   MetadataDisplay,
   BaseMetadata,
@@ -6,7 +7,6 @@ import {
 } from 'solarspell-react-lib';
 import MetadataActionPanel from './MetadataActionPanel';
 import MetadataKebabMenu from './MetadataKebabMenu';
-
 import { metadata, metadataTypes } from './MockData';
 
 function MockMetadataTable(): React.ReactElement {

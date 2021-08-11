@@ -1,5 +1,4 @@
 import { jsx as _jsx, Fragment as _Fragment } from "react/jsx-runtime";
-//Importing functions from other files of the projects
 import MetadataTable from './MetadataTable';
 /**
  * This component creates multiple tabs containg tables for each metadata type.

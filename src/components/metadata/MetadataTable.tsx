@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-//Importing libraries, APIs from outside the project
 import React from 'react';
+
 import {
   GridColDef,
   GridSelectionModelChangeParams,
@@ -10,49 +10,67 @@ import {
   GridFilterMenuItem,
 } from '@material-ui/data-grid';
 
-//Importing functions from other files of the projects
 import DataTable, { OtherDataGridProps } from '../DataTable';
 import ExpandPanel from '../ExpandPanel';
 import { BaseMetadata, BaseMetadataType } from '../../types';
 
-// Optional components addable to the table
+/** Optional components that can be added to the table */
 type ComponentsDef = {
+  /** Kebab menu component to display in upper right of each table */
   KebabMenu?: React.JSXElementConstructor<any>
+  /** Actions to display in the Actions column of the table */
   ActionPanel?: React.JSXElementConstructor<any>
 }
 
-// Corresponding properties to pass to optional components
+/** Corresponding properties to pass to optional components */
 type ComponentsPropsDef = {
   [Component in keyof ComponentsDef]: any
 }
 
-// Optional customizable properties of the table
+/** Optional customizable properties of the table */
 type MetadataTableOptionalProps<
   T extends BaseMetadataType,
   M extends BaseMetadata,
 > = {
+  /** Optional components associated with the component */
   components?: ComponentsDef
+  /** Props objects associated with optional components */
   componentProps?: ComponentsPropsDef
+  /** 
+   * Additional columns to display besides the default columns.
+   * Default columns include:
+   *  Metadata Name
+   */
   additionalColumns?: GridColDef[]
+  /** Whether the metadata rows should be selectable */
   selectable?: boolean
+  /** Callback to fire on metadata row selection */
   onSelectChange?: (
     metadata: M[],
     metadataType: T,
     rows: GridSelectionModelChangeParams,
   ) => void
+  /** Additional properties associated with the underlying DataGrid */
   additionalProps?: OtherDataGridProps
+  /** See ExpandPanel for prop description */
+  mountContents?: boolean
 }
 
-// Actual component props
+/** Main props object */
 type MetadataTableProps<
 T extends BaseMetadataType,
 M extends BaseMetadata,
 > = {
+  /** Metadata type associated with this table */
   metadataType: T
+  /** Metadata of one type to display in the table */
   metadata: M[]
 } & MetadataTableOptionalProps<T,M>
 
-// Removes unnecessary options from ColumnMenu
+/**
+ * Removes certain options from the original GridColumnMenu.
+ * These include the options to hide/show columns
+ */
 const CustomGridColumnMenu = React.forwardRef<
   HTMLUListElement,
   GridColumnMenuProps
@@ -79,6 +97,7 @@ function MetadataTable<
   T extends BaseMetadataType,
   M extends BaseMetadata,
 >(props: MetadataTableProps<T,M>): React.ReactElement {
+  // Default columns
   const columns: GridColDef[] = [
     {
       field: 'name',
@@ -92,7 +111,7 @@ function MetadataTable<
   ];
 
   // Add Actions column only if ActionPanel component specified
-  // Prioritizes Actions column, Name column, followed by custom columns
+  // Prioritizes Actions column, default columns, followed by custom columns
   if (props.components?.ActionPanel) {
     const ActionPanel = props.components.ActionPanel;
     const ActionPanelProps = props.componentProps?.ActionPanel;
@@ -130,6 +149,7 @@ function MetadataTable<
     );
   }
 
+  // Check if onSelectChange callback is null before firing
   const onSelectChange_ = React.useCallback((rows) => {
     if (props.onSelectChange) {
       props.onSelectChange(props.metadata, props.metadataType, rows);
@@ -140,6 +160,7 @@ function MetadataTable<
     <ExpandPanel
       header={props.metadataType.name}
       headerMenu={headerMenu}
+      mountContents={props.mountContents}
     >
       <DataTable
         columns={columns}

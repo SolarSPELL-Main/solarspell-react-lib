@@ -1,11 +1,13 @@
 import React from 'react';
+
+import { Edit, Delete } from '@material-ui/icons';
+
 import {
   ActionPanel,
   ActionPanelItem,
   BaseMetadata,
   BaseMetadataType
 } from 'solarspell-react-lib';
-import { Edit, Delete } from '@material-ui/icons';
 
 type MetadataActionPanelProps = {
   onEdit: (item: BaseMetadata, val: string) => void

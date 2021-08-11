@@ -1,35 +1,49 @@
-//Importing from outside the project
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
+
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-//Importing from other files of the projects
 import ConfirmationDialog from './ConfirmationDialog';
 import { fullEvery } from '../utils';
 import type { DialogConfirmationStyleProps } from './types';
 
+/** Specifies how each field in the form should be rendered */
 type FormFieldDescriptor<T> = {
+  /** The component to render for the form field */
   component: React.JSXElementConstructor<any>
+  /** Should return the props of the field component */
   propFactory: (
-    state: Partial<T>, // current state
-    reasons: Partial<Record<keyof T,any>>, // current error reasons
-    setter: (val: any) => void, // sets item's field in state to value
+    /** Current state of the form */
+    state: Partial<T>,
+    /** Current vlidation failure reasons in the form */
+    reasons: Partial<Record<keyof T,any>>,
+    /** Setter for this specific field */
+    setter: (val: any) => void,
+    /** Setter for any field in the form */
     genericSetter: (
       field: keyof T,
       val: any,
-    ) => void, // set any field in state to value
+    ) => void,
+    /** Setter for validation failure reason for any field in the form */
     genericReasonSetter: (
       field: keyof T,
       val: any,
-    ) => void, // set any field in reasons to value
+    ) => void,
   ) => any
+  /** Actual key of the field */
   field: keyof T
+  /** Initial value of the field if not otherwise specified in state */
   initialValue: any
+  /** Validator (can be async) for the field. Called on submit. */
   validator?: (state: Partial<T>) => any
+  /** Margin beneath this field. */
   mb?: string|number
 } | {
+  // Similar properties as above, but no rendered component
+  // Used for things such as properties that should be present
+  // in the state, but aren't explicitly editable by the user
   component?: never
   propFactory?: never
   field: keyof T
@@ -38,18 +52,32 @@ type FormFieldDescriptor<T> = {
   mb?: never
 }
 
+/** Specifies how the form itself should be rendered */
 type FormOptionalProps<T> = {
+  /** Indicates that the form should be rendered in a dialog */
   type: 'dialog'
-  onSubmit: (values?: Partial<T>) => void // null when submit cancelled
+  /** 
+   * Callback to fire on successful validation and submission.
+   * Since the form is now a dialog, also fires on dialog close,
+   * in which case values is undefined.
+   */
+  onSubmit: (values?: Partial<T>) => void
+  /** Additional style props for the dialog itself */
   dialogStyle: DialogConfirmationStyleProps
+  /** Whether the dialog is open or not */
   open: boolean
 } | {
+  /** Indicates that the form should be rendered as a regular page component */
   type?: never
+  /** Callback to fire on successful validation and submission */
   onSubmit: (values: Partial<T>) => void
 }
 
+/** Main props object */
 type FormProps<T> = {
+  /** Fields to display in the form */
   fields: FormFieldDescriptor<T>[]
+  /** Initial state of the fields */
   initialState?: Partial<T>
 } & FormOptionalProps<T>
 
@@ -71,6 +99,7 @@ function Form<T>(props: FormProps<T>): React.ReactElement {
     setReasons,
   ] = React.useState<Partial<Record<keyof T,any>>>({});
 
+  // Keeps track of this for async validation
   const [submitting, setSubmitting] = React.useState(false);
 
   // Setter factory functions
@@ -102,9 +131,9 @@ function Form<T>(props: FormProps<T>): React.ReactElement {
   // Performs validation on submission
   const onSubmit = React.useCallback(() => {
     if (!submitting) {
-      // To enable async validation, assume all results are promises
       setSubmitting(true);
 
+      // To enable async validation, assume all results are promises
       const promises = props.fields.map(item => item.validator ?
         item.validator(state)
         :
@@ -124,6 +153,7 @@ function Form<T>(props: FormProps<T>): React.ReactElement {
         setSubmitting(false);
         setReasons(reasonDraft);
 
+        // On successful validation, submit
         if (valid) {
           props.onSubmit(state);
         }
@@ -131,6 +161,7 @@ function Form<T>(props: FormProps<T>): React.ReactElement {
     }
   }, [props.onSubmit, setState, setReasons, state, props.fields]);
 
+  // Contains all the form fields in a grid
   const formBody = (
     <Grid container>
       {props.fields.map((item, idx) => {
@@ -161,51 +192,51 @@ function Form<T>(props: FormProps<T>): React.ReactElement {
   let finalRender = <></>;
   let deps = [];
 
-  switch (props.type) {
-    case 'dialog':
-      deps = [props.open, props.initialState];
-      finalRender = (
-        <ConfirmationDialog
-          onClose={(submitted: boolean) => {
-            // Form was submitted
-            if (submitted) {
-              // Submit with state
-              onSubmit();
-            // Form was closed
-            } else {
-              // Submit with nothing
-              props.onSubmit();
-            }
-          }}
-          open={props.open}
-          preventDefault={false}
-          confirmAdditionalProps={{
-            endIcon: submitting && <CircularProgress
-              size={'1em'}
-            />,
-          }}
-          {...props.dialogStyle}
+  if (props.type === 'dialog') {
+    // Form state initialization should reset on open/close
+    // Hence props.open is included in deps
+    deps = [props.open, props.initialState];
+    finalRender = (
+      <ConfirmationDialog
+        onClose={(submitted: boolean) => {
+          // Form was submitted
+          if (submitted) {
+            // Submit with state
+            onSubmit();
+          // Form was closed
+          } else {
+            // Submit with nothing
+            props.onSubmit();
+          }
+        }}
+        open={props.open}
+        preventDefault={false}
+        confirmAdditionalProps={{
+          endIcon: submitting && <CircularProgress
+            size={'1em'}
+          />,
+        }}
+        {...props.dialogStyle}
+      >
+        {formBody}
+      </ConfirmationDialog>
+    );
+  } else {
+    // Form state initialization should only depend on initialState prop
+    deps = [props.initialState];
+    finalRender = (
+      <>
+        {formBody}
+        <Button
+          onClick={onSubmit}
+          endIcon={submitting && <CircularProgress
+            size={'1em'}
+          />}
         >
-          {formBody}
-        </ConfirmationDialog>
-      );
-      break;
-    default:
-      deps = [props.initialState];
-      finalRender = (
-        <>
-          {formBody}
-          <Button
-            onClick={onSubmit}
-            endIcon={submitting && <CircularProgress
-              size={'1em'}
-            />}
-          >
-            Submit
-          </Button>
-        </>
-      );
-      break;
+          Submit
+        </Button>
+      </>
+    );
   }
 
   // Initializes state with initial values and initial state

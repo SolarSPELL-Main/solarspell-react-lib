@@ -1,5 +1,7 @@
 import React from 'react';
+
 import Button from '@material-ui/core/Button';
+
 import { format } from 'date-fns';
 
 import { ContentViewer } from 'solarspell-react-lib';
@@ -16,7 +18,7 @@ function MockContentViewer(): React.ReactElement {
         onClose={() => setOpen(false)}
         content={content[0]}
         metadataTypes={metadataTypes}
-        items={[
+        fields={[
           {
             title: 'Title',
             field: 'title',

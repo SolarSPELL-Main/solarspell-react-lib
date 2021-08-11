@@ -1,10 +1,11 @@
 import React from 'react';
+
+import { Edit, CheckCircleOutline, HighlightOff, Visibility } from '@material-ui/icons';
+
 import {
   ActionPanel,
   ActionPanelItem,
 } from 'solarspell-react-lib';
-import { Edit, CheckCircleOutline, HighlightOff, Visibility } from '@material-ui/icons';
-
 import MockEditContentModal from './MockEditContentModal';
 import { DLMSContent } from './MockData';
 

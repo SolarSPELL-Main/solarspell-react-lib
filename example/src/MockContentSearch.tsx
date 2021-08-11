@@ -1,12 +1,13 @@
 import React from 'react';
+
+import { format } from 'date-fns';
+
 import {
   ContentSearch,
   ContentMetadataDisplay,
   BaseMetadataType,
   BaseMetadata,
 } from 'solarspell-react-lib';
-import { format } from 'date-fns';
-
 import { metadata, metadataTypes } from './MockData';
 
 function MockContentSearch(): React.ReactElement {
@@ -45,13 +46,17 @@ function MockContentSearch(): React.ReactElement {
           unit: 'MB',
           width: 2,
           min: 0,
+          formatter: (
+            val,
+          ) => val * 1024 * 1024,
+          parseAs: 'float',
         },
         {
           field: 'reviewed',
           title: 'Reviewed',
           type: 'date',
           width: 2,
-          stringifier: (val: Date) => format(val, 'yyyy-MM-dd'),
+          formatter: (val: Date) => format(val, 'yyyy-MM-dd'),
         },
         {
           field: 'active',

@@ -1,9 +1,7 @@
 import { __rest } from "tslib";
 import { jsx as _jsx } from "react/jsx-runtime";
-//Importing libraries, APIs from outside the project
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
-//Importing functions from other files of the projects
 import ConfirmationDialog from './ConfirmationDialog';
 /**
  * Creates a dialog with a text input box that will call a callback.
@@ -36,6 +34,7 @@ function TextInputDialog(_a) {
             }, onKeyDown: e => {
                 if (props.allowEnter && e.key === 'Enter') {
                     onClose(true);
+                    e.preventDefault();
                 }
                 e.stopPropagation();
             } }, void 0) }), void 0));

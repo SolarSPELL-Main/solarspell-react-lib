@@ -1,31 +1,42 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-//Importing from outside the project
 import React from 'react';
+
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 
-//Importing from other files of the projects
 import ButtonDialog from '../ButtonDialog';
 import { DialogButtonStyleProps } from '../types';
 import { BaseContent, BaseMetadataType } from '../../types';
 
-type ItemDescriptor<T> = {
+/** How each field in the viewer should be displayed */
+type FieldDescriptor<T> = {
+  /** Title to display for the field */
   title: string
+  /** Actual key of the field */
   field: keyof T
+  /** How the value should be formatted */
   formatter?: (val: any) => any
+  /** What to display if the value is undefined */
   defaultValue?: string
 }
 
+/** Main props object */
 type ContentViewerProps<T,M> = {
+  /** The content to extract fields from */
   content: T
+  /** The metadata types available for contnt tags */
   metadataTypes: M[]
-  items: ItemDescriptor<T>[]
+  /** The fields of the content to display */
+  fields: FieldDescriptor<T>[]
+  /** Additional styling props for the dialog itself */
   dialogStyle?: DialogButtonStyleProps
+  /** Whether the dialog is open */
   open: boolean
+  /** Callback to fire on closing the dialog */
   onClose: () => void
+  /** How to display the file associated with the content */
   fileDisplay: {
     field: keyof T
     formatter: (val: any) => any
@@ -41,7 +52,7 @@ function ContentViewer<
   T extends BaseContent,
   M extends BaseMetadataType,
 >({
-  items,
+  fields,
   dialogStyle,
   open,
   onClose,
@@ -58,17 +69,17 @@ function ContentViewer<
     >
       <Grid container>
         <Grid item xs={4} >
-          {items.map((item, idx) => (
+          {fields.map((field, idx) => (
             <Box mb={1} key={idx}>
-              <Typography variant={'h6'} >{item.title}</Typography>
-              <Typography>{content[item.field] != null ?
-                item.formatter ?
-                  item.formatter(content[item.field])
+              <Typography variant={'h6'} >{field.title}</Typography>
+              <Typography>{content[field.field] != null ?
+                field.formatter ?
+                  field.formatter(content[field.field])
                   :
-                  content[item.field]
+                  content[field.field]
                 :
-                item.defaultValue != null ?
-                  item.defaultValue
+                field.defaultValue != null ?
+                  field.defaultValue
                   :
                   <i>Not Available</i>
               }</Typography>
@@ -85,7 +96,7 @@ function ContentViewer<
                 </div>
               );
             } else {
-              body = <Typography>No entries</Typography>;
+              body = <Typography><i>No entries</i></Typography>;
             }
 
             return (

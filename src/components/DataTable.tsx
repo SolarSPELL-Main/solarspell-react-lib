@@ -1,5 +1,5 @@
-//Importing libraries, APIs from outside the project
 import React from 'react';
+
 import {
   DataGrid,
   GridColDef,
@@ -9,6 +9,7 @@ import {
   GridSlotsComponentsProps,
 } from '@material-ui/data-grid';
 
+/** Excludes props of DataGrid that are covered by other props */
 type OtherDataGridProps = Partial<
   Exclude<
     React.ComponentProps<typeof DataGrid>,
@@ -17,18 +18,25 @@ type OtherDataGridProps = Partial<
   >
 >
 
-// Any optional props
+/** Any optional props */
 type DataTableOptionalProps = {
+  /** Whether the rows of the DataGrid should be selectable */
   selectable?: boolean
+  /** Callback to fire on selecting rows */
   onSelectChange?: (rows: GridSelectionModelChangeParams) => void
+  /** Additional optional components associated with the DataGrid */
   components?: GridSlotsComponent
+  /** Props objects associated with the optional components */
   componentsProps?: GridSlotsComponentsProps
+  /** Any other props of the DataGrid */
   additionalProps?: OtherDataGridProps
 }
 
-// Actual component props
+/** Main props object */
 type DataTableProps = {
+  /** Columns to display in the DataGrid */
   columns: GridColDef[]
+  /** Rows to display in the DataGrid */
   rows: GridRowData[]
 } & DataTableOptionalProps
 
@@ -40,7 +48,9 @@ type DataTableProps = {
 function DataTable(props: DataTableProps): React.ReactElement {
   return (
     <DataGrid
+      // Ensures DataGrid properly grows
       autoHeight
+      // Disables this rather odd user interaction
       disableSelectionOnClick
       columns={props.columns}
       rows={props.rows}

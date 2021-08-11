@@ -1,48 +1,48 @@
 import React from 'react';
+
 import Checkbox from '@material-ui/core/Checkbox';
 // Form components only used for layout
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
+import Grid from '@material-ui/core/Grid';
 
 import ButtonDialog from './ButtonDialog';
 import { DialogButtonStyleProps } from './types';
-import Grid from '@material-ui/core/Grid';
 
+/** Specifies how a field should be displayed in the dialog */
 type SelectionFieldDescriptor<T> = {
+  /** The displayed name of the field */
   title: string
+  /** The actual key of the field */
   field: keyof T
 }
 
+/** Main props object */
 type SelectionProps<T> = {
+  /** The fields available for selection */
   fields: SelectionFieldDescriptor<T>[]
-  initialState?: Record<string,boolean>
+  /** Whether the selection dialog is open */
   open: boolean
-  onClose: (state: Record<string,boolean>) => void
+  /** Which fields are currently checked/unchecked */
+  value: Record<string,boolean>
+  /** Callback on dialog close */
+  onClose: () => void
+  /** Callback when state changes */
+  onChange?: (field: SelectionFieldDescriptor<T>, checked: boolean) => void
+  /** Additional styling props */
   dialogStyle?: Partial<DialogButtonStyleProps>
 }
 
 /**
  * Dialog form for selecting keys of an object using checkboxes.
+ * Currently displays checkboxes in two columns.
  * @param props Context, callback, and styling of the component.
  * @returns A dialog form.
  */
 function Selection<T>(props: SelectionProps<T>): React.ReactElement {
-    const [state, setState] = React.useState<Record<string,boolean>>(
-        props.initialState ?? {}
-    );
-
-  const setterFactory = React.useCallback(
-    (field: keyof T) =>
-      (_e: React.SyntheticEvent, checked: boolean) => setState(state => ({
-        ...state,
-        [field]: checked,
-      })),
-    [],
-  );
-
   const onClose = React.useCallback(
-    () => props.onClose(state),
-    [props.onClose, state],
+    () => props.onClose(),
+    [props.onClose],
   );
 
   return (
@@ -63,8 +63,12 @@ function Selection<T>(props: SelectionProps<T>): React.ReactElement {
             >
               <FormControlLabel
                 control={<Checkbox
-                  checked={state[field.field] ?? false}
-                  onChange={setterFactory(field.field)}
+                  checked={props.value[field.field] ?? false}
+                  onChange={(_e, checked) => {
+                    if (props.onChange) {
+                      props.onChange(field, checked);
+                    }
+                  }}
                 />}
                 label={field.title}
               />

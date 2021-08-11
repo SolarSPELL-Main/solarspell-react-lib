@@ -1,16 +1,17 @@
 import React from 'react';
+
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 import { KeyboardDatePicker } from '@material-ui/pickers';
+
 import {
   ContentModal,
   ContentMetadataDisplay,
   BaseMetadataType,
   BaseMetadata,
 } from 'solarspell-react-lib';
-
 import { metadata, metadataTypes, DLMSContent } from './MockData';
 
 type MockEditContentModalProps = {

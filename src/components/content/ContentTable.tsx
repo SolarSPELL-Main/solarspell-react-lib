@@ -1,40 +1,54 @@
-//Importing from outside the project
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
+
 import {
   GridColDef,
   GridSelectionModelChangeParams,
 } from '@material-ui/data-grid';
 
-//Importing from other files of the projects
 import DataTable, { OtherDataGridProps } from '../DataTable';
 import { BaseContent } from '../../types';
 
-// Optional components addable to the table
+/** Optional components that can be added to the table */
 type ComponentsDef = {
+  /** The actions to display in the 'Actions' column */
   ActionPanel?: React.JSXElementConstructor<any>
 }
 
-// Corresponding properties to pass to optional components
+/** Corresponding properties to pass to optional components */
 type ComponentsPropsDef = {
   [Component in keyof ComponentsDef]: any
 }
 
-// Optional customizable properties of the table
+/** Optional customizable properties of the table */
 type ContentTableOptionalProps<C> = {
+  /** Optional components associated with the table */
   components?: ComponentsDef
+  /** Properties associated with the optional components */
   componentProps?: ComponentsPropsDef
+  /**
+   * Additional columns to render in the table.
+   * By default includes:
+   *  Title
+   *  Description
+   *  Year of publication
+   *  File name
+   */
   additionalColumns?: GridColDef[]
+  /** Whether the rows are selectable or not */
   selectable?: boolean
+  /** Callback on selection change */
   onSelectChange?: (
     content: C[],
     rows: GridSelectionModelChangeParams,
   ) => void
+  /** Just about any other props associated with a DataGrid */
   additionalProps?: OtherDataGridProps
 }
 
-// Actual component props
+/** Main props object */
 type ContentTableProps<C> = {
+  /** The content to display in the table */
   content: C[]
 } & ContentTableOptionalProps<C>
 
@@ -47,6 +61,7 @@ type ContentTableProps<C> = {
 function ContentTable<
   C extends BaseContent,
 >(props: ContentTableProps<C>): React.ReactElement {
+  // Default rendered columns
   const columns: GridColDef[] = [
     {
       field: 'title',
@@ -84,7 +99,7 @@ function ContentTable<
   ];
 
   // Add Actions column only if ActionPanel component specified
-  // Prioritizes Actions column, Name column, followed by custom columns
+  // Prioritizes Actions column, default columns, followed by custom columns
   if (props.components?.ActionPanel) {
     const ActionPanel = props.components.ActionPanel;
     const ActionPanelProps = props.componentProps?.ActionPanel;
@@ -109,6 +124,7 @@ function ContentTable<
     });
   }
 
+  // Only calls props.onSelectChange if it is not null
   const onSelectChange_ = React.useCallback((rows) => {
     if (props.onSelectChange) {
       props.onSelectChange(props.content, rows);
