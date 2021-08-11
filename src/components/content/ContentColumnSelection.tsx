@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import { GridColDef, GridValueFormatterParams } from '@material-ui/data-grid';
+import { GridCellParams, GridColDef, GridValueFormatterParams } from '@material-ui/data-grid';
 
 import Selection, { SelectionFieldDescriptor } from '../Selection';
 import { BaseMetadataType, BaseContent } from '../../types';
+import {Chip} from '@material-ui/core';
 
 type ContentColumnSelectionFieldDescriptor<T> = {
   column?: (
@@ -50,12 +51,21 @@ function ContentColumnSelection<
           filterable: false,
           sortable: false,
           hide: b,
-          valueFormatter: (params: GridValueFormatterParams) => {
+            // valueFormatter: (params: GridValueFormatterParams) => {
+            //   const metadata = (
+            //     params.row.metadata as Record<number,M[]>
+            //   )[metadataType.id];
+            //   return metadata?.map(m => m.name).join(', ') ?? '';
+            // },
+          renderCell: (params: GridCellParams) => {
             const metadata = (
               params.row.metadata as Record<number,M[]>
             )[metadataType.id];
-            return metadata?.map(m => m.name).join(', ') ?? '';
-          },
+            return <>{metadata ?
+              metadata.map(m => <Chip label={m.name} />) :
+              undefined
+            }</>
+          }
         }),
       })
     ),
