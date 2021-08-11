@@ -31,12 +31,6 @@ function ContentColumnSelection(props) {
                 // Currently not implemented, so not recommended
                 sortable: false,
                 hide: b,
-                // valueFormatter: (params: GridValueFormatterParams) => {
-                //   const metadata = (
-                //     params.row.metadata as Record<number,M[]>
-                //   )[metadataType.id];
-                //   return metadata?.map(m => m.name).join(', ') ?? '';
-                // },
                 renderCell: (params) => {
                     const metadata = params.row.metadata[metadataType.id];
                     return _jsx(_Fragment, { children: metadata ?
