@@ -9,7 +9,12 @@ import { BaseContent } from '../../types';
 type ContentModalProps<T> = {
   /** Fields to show in the form */
   fields: FormFieldDescriptor<T>[]
-  /** Callback on the user clicking the 'Submit' button */
+  /** 
+   * Callback on dialog close.
+   * The values arg is defined when the user succesfully submits.
+   * The values arg is undefined when the user closes the dialog without
+   * submitting.
+   */
   onSubmit: (values?: Partial<T>) => void
   /** Additional dialog styling props */
   dialogStyle: DialogConfirmationStyleProps
