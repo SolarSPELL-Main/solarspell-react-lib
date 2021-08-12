@@ -63,7 +63,7 @@ function ContentColumnSelection<
           flex: 1,
           disableColumnMenu: true,
           filterable: false,
-          // Turn this off to enable sorting for metadata type columns
+          // Turn this to true to enable sorting for metadata type columns
           // Currently not implemented, so not recommended
           sortable: false,
           hide: b,
@@ -72,10 +72,10 @@ function ContentColumnSelection<
               params.row.metadata as Record<number,M[]>
             )[metadataType.id];
             return <>{metadata ?
-              metadata.map(m => <Chip label={m.name} />) :
+              metadata.map(m => <Chip label={m.name} key={m.id} />) :
               undefined
-            }</>
-          }
+            }</>;
+          },
         }),
       })
     ),

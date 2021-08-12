@@ -85,8 +85,7 @@ function Form(props) {
     else {
         // Form state initialization should only depend on initialState prop
         deps = [props.initialState];
-        finalRender = (_jsxs(_Fragment, { children: [formBody,
-                _jsx(Button, Object.assign({ onClick: onSubmit, endIcon: submitting && _jsx(CircularProgress, { size: '1em' }, void 0) }, { children: "Submit" }), void 0)] }, void 0));
+        finalRender = (_jsxs(_Fragment, { children: [formBody, _jsx(Button, Object.assign({ onClick: onSubmit, endIcon: submitting && _jsx(CircularProgress, { size: '1em' }, void 0) }, { children: "Submit" }), void 0)] }, void 0));
     }
     // Initializes state with initial values and initial state
     // initialState takes priority over initialValue properties
