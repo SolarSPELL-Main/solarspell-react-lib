@@ -17,8 +17,6 @@ function ExpandPanel(props) {
     var _a;
     return (_jsxs(Accordion, Object.assign({ TransitionProps: {
             unmountOnExit: !((_a = props.mountContents) !== null && _a !== void 0 ? _a : true),
-        } }, { children: [_jsx(AccordionSummary, { children: _jsxs(Grid, Object.assign({ container: true }, { children: [_jsx(Grid, Object.assign({ item: true, xs: 6, style: { textAlign: 'left' } }, { children: _jsx(Typography, Object.assign({ style: accordionHeaderStyle }, { children: props.header }), void 0) }), void 0),
-                        props.headerMenu && _jsx(Grid, Object.assign({ item: true, xs: 6, style: { textAlign: 'right' } }, { children: props.headerMenu }), void 0)] }), void 0) }, void 0),
-            _jsx(AccordionDetails, { children: props.children }, void 0)] }), void 0));
+        } }, { children: [_jsx(AccordionSummary, { children: _jsxs(Grid, Object.assign({ container: true }, { children: [_jsx(Grid, Object.assign({ item: true, xs: 6, style: { textAlign: 'left' } }, { children: _jsx(Typography, Object.assign({ style: accordionHeaderStyle }, { children: props.header }), void 0) }), void 0), props.headerMenu && _jsx(Grid, Object.assign({ item: true, xs: 6, style: { textAlign: 'right' } }, { children: props.headerMenu }), void 0)] }), void 0) }, void 0), _jsx(AccordionDetails, { children: props.children }, void 0)] }), void 0));
 }
 export default ExpandPanel;

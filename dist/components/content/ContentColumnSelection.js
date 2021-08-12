@@ -27,16 +27,16 @@ function ContentColumnSelection(props) {
                 flex: 1,
                 disableColumnMenu: true,
                 filterable: false,
-                // Turn this off to enable sorting for metadata type columns
+                // Turn this to true to enable sorting for metadata type columns
                 // Currently not implemented, so not recommended
                 sortable: false,
                 hide: b,
                 renderCell: (params) => {
                     const metadata = params.row.metadata[metadataType.id];
                     return _jsx(_Fragment, { children: metadata ?
-                            metadata.map(m => _jsx(Chip, { label: m.name }, void 0)) :
+                            metadata.map(m => _jsx(Chip, { label: m.name }, m.id)) :
                             undefined }, void 0);
-                }
+                },
             }),
         })),
     ];
