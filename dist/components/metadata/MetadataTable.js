@@ -1,7 +1,7 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { GridColumnMenuContainer, GridFilterMenuItem, SortGridMenuItems } from '@material-ui/data-grid';
 import React from 'react';
-import { GridColumnMenuContainer, SortGridMenuItems, GridFilterMenuItem, } from '@material-ui/data-grid';
 import DataTable from '../DataTable';
 import ExpandPanel from '../ExpandPanel';
 /**
@@ -65,6 +65,6 @@ function MetadataTable(props) {
     }, [props.onSelectChange, props.metadata, props.metadataType]);
     return (_jsx(ExpandPanel, Object.assign({ header: props.metadataType.name, headerMenu: headerMenu, mountContents: props.mountContents }, { children: _jsx(DataTable, { columns: columns, rows: props.metadata, selectable: props.selectable, onSelectChange: props.onSelectChange ? onSelectChange_ : undefined, components: {
                 ColumnMenu: CustomGridColumnMenu,
-            }, additionalProps: props.additionalProps }, void 0) }), void 0));
+            }, additionalProps: props.additionalProps, paginationProps: props.paginationProps }, void 0) }), void 0));
 }
 export default MetadataTable;

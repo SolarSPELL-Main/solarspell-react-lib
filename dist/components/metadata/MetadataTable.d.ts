@@ -1,7 +1,7 @@
-import React from 'react';
 import { GridColDef, GridSelectionModelChangeParams } from '@material-ui/data-grid';
-import { OtherDataGridProps } from '../DataTable';
+import React from 'react';
 import { BaseMetadata, BaseMetadataType } from '../../types';
+import { OtherDataGridProps } from '../DataTable';
 /** Optional components that can be added to the table */
 declare type ComponentsDef = {
     /** Kebab menu component to display in upper right of each table */
@@ -33,6 +33,7 @@ declare type MetadataTableOptionalProps<T extends BaseMetadataType, M extends Ba
     additionalProps?: OtherDataGridProps;
     /** See ExpandPanel for prop description */
     mountContents?: boolean;
+    paginationProps?: any;
 };
 /** Main props object */
 declare type MetadataTableProps<T extends BaseMetadataType, M extends BaseMetadata> = {

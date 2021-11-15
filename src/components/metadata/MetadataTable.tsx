@@ -1,18 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
-
 import {
-  GridColDef,
-  GridSelectionModelChangeParams,
-  GridColumnMenuProps,
-  GridColumnMenuContainer,
-  SortGridMenuItems,
-  GridFilterMenuItem,
+  GridColDef, GridColumnMenuContainer, GridColumnMenuProps, GridFilterMenuItem, GridSelectionModelChangeParams, SortGridMenuItems
 } from '@material-ui/data-grid';
-
+import React from 'react';
+import { BaseMetadata, BaseMetadataType } from '../../types';
 import DataTable, { OtherDataGridProps } from '../DataTable';
 import ExpandPanel from '../ExpandPanel';
-import { BaseMetadata, BaseMetadataType } from '../../types';
+
+
 
 /** Optional components that can be added to the table */
 type ComponentsDef = {
@@ -54,6 +49,7 @@ type MetadataTableOptionalProps<
   additionalProps?: OtherDataGridProps
   /** See ExpandPanel for prop description */
   mountContents?: boolean
+  paginationProps?: any
 }
 
 /** Main props object */
@@ -171,6 +167,7 @@ function MetadataTable<
           ColumnMenu: CustomGridColumnMenu,
         }}
         additionalProps={props.additionalProps}
+        paginationProps={...props.paginationProps}
       />
     </ExpandPanel>
   );

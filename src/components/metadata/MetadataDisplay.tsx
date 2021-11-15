@@ -1,7 +1,7 @@
 import React from 'react';
-
-import MetadataTable, { MetadataTableOptionalProps } from './MetadataTable';
 import { BaseMetadata, BaseMetadataType } from '../../types';
+import MetadataTable, { MetadataTableOptionalProps } from './MetadataTable';
+
 
 /** Main props object */
 type MetadataDisplayProps<
@@ -14,6 +14,16 @@ type MetadataDisplayProps<
   metadata: Record<number, M[]>
   /** Additional properties for the tables */
   tableProps?: MetadataTableOptionalProps<T,M>
+  /** Pagination properties for the table */
+  paginationProps?: PaginationProps
+}
+
+/** Props for passing down functions to dispatch pagination actions for a specific Metadata id */
+type PaginationProps = {
+  pageSize:(id: number) => Number
+  page: (id: number) => Number
+  update: (action: any) => void
+  dispatch: (...args: any[]) => void
 }
 
 /**
@@ -37,6 +47,21 @@ function MetadataDisplay<
             metadataType={metadataType}
             metadata={metadata ?? []}
             {...props.tableProps}
+            paginationProps={{
+              onPageSizeChange: (params: any) => 
+                  props.paginationProps?.dispatch(props.paginationProps.update({
+                      id: metadataType.id,
+                      pageSize: params.pageSize,
+                      page: params.page,
+              })),
+              onPageChange: (params: any) => 
+                  props.paginationProps?.dispatch(props.paginationProps.update({
+                      id: metadataType.id,
+                      page: params.page,
+              })),
+              pageSize: props.paginationProps?.pageSize(metadataType.id),
+              page: props.paginationProps?.page(metadataType.id),
+          }}
           />
         );
       })}

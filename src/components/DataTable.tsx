@@ -1,13 +1,13 @@
-import React from 'react';
-
 import {
   DataGrid,
   GridColDef,
   GridRowData,
   GridSelectionModelChangeParams,
   GridSlotsComponent,
-  GridSlotsComponentsProps,
+  GridSlotsComponentsProps
 } from '@material-ui/data-grid';
+import React from 'react';
+
 
 /** Excludes props of DataGrid that are covered by other props */
 type OtherDataGridProps = Partial<
@@ -30,6 +30,7 @@ type DataTableOptionalProps = {
   componentsProps?: GridSlotsComponentsProps
   /** Any other props of the DataGrid */
   additionalProps?: OtherDataGridProps
+  paginationProps?: any
 }
 
 /** Main props object */
@@ -59,6 +60,7 @@ function DataTable(props: DataTableProps): React.ReactElement {
       components={props.components}
       componentsProps={props.componentsProps}
       {...props.additionalProps}
+      {...props.paginationProps}
     />
   );
 }

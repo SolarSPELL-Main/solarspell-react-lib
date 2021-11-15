@@ -9,8 +9,27 @@ import MetadataTable from './MetadataTable';
  */
 function MetadataDisplay(props) {
     return (_jsx(_Fragment, { children: props.metadataTypes.map(metadataType => {
+            var _a, _b;
             const metadata = props.metadata[metadataType.id];
-            return (_jsx(MetadataTable, Object.assign({ metadataType: metadataType, metadata: metadata !== null && metadata !== void 0 ? metadata : [] }, props.tableProps), metadataType.id));
+            return (_jsx(MetadataTable, Object.assign({ metadataType: metadataType, metadata: metadata !== null && metadata !== void 0 ? metadata : [] }, props.tableProps, { paginationProps: {
+                    onPageSizeChange: (params) => {
+                        var _a;
+                        return (_a = props.paginationProps) === null || _a === void 0 ? void 0 : _a.dispatch(props.paginationProps.update({
+                            id: metadataType.id,
+                            pageSize: params.pageSize,
+                            page: params.page,
+                        }));
+                    },
+                    onPageChange: (params) => {
+                        var _a;
+                        return (_a = props.paginationProps) === null || _a === void 0 ? void 0 : _a.dispatch(props.paginationProps.update({
+                            id: metadataType.id,
+                            page: params.page,
+                        }));
+                    },
+                    pageSize: (_a = props.paginationProps) === null || _a === void 0 ? void 0 : _a.pageSize(metadataType.id),
+                    page: (_b = props.paginationProps) === null || _b === void 0 ? void 0 : _b.page(metadataType.id),
+                } }), metadataType.id));
         }) }, void 0));
 }
 export default MetadataDisplay;

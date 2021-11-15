@@ -1,6 +1,6 @@
 import React from 'react';
-import { MetadataTableOptionalProps } from './MetadataTable';
 import { BaseMetadata, BaseMetadataType } from '../../types';
+import { MetadataTableOptionalProps } from './MetadataTable';
 /** Main props object */
 declare type MetadataDisplayProps<T extends BaseMetadataType, M extends BaseMetadata> = {
     /** Metadata types to display in separate tables */
@@ -9,6 +9,15 @@ declare type MetadataDisplayProps<T extends BaseMetadataType, M extends BaseMeta
     metadata: Record<number, M[]>;
     /** Additional properties for the tables */
     tableProps?: MetadataTableOptionalProps<T, M>;
+    /** Pagination properties for the table */
+    paginationProps?: PaginationProps;
+};
+/** Props for passing down functions to dispatch pagination actions for a specific Metadata id */
+declare type PaginationProps = {
+    pageSize: (id: number) => Number;
+    page: (id: number) => Number;
+    update: (action: any) => void;
+    dispatch: (...args: any[]) => void;
 };
 /**
  * This component creates multiple tabs containg tables for each metadata type.
