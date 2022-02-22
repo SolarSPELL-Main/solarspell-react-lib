@@ -43,6 +43,46 @@ export const metadata: Record<number, BaseMetadata[]> = {
       name: 'History',
       metadataType: metadataTypes[1],
     },
+    {
+      id: 4,
+      name: 'Geography',
+      metadataType: metadataTypes[1],
+    },
+    {
+      id: 5,
+      name: 'Physics',
+      metadataType: metadataTypes[1],
+    },
+    {
+      id: 6,
+      name: 'Chemistry',
+      metadataType: metadataTypes[1],
+    },
+    {
+      id: 7,
+      name: 'Biology',
+      metadataType: metadataTypes[1],
+    },
+    {
+      id: 8,
+      name: 'Zoology',
+      metadataType: metadataTypes[1],
+    },
+    {
+      id: 9,
+      name: 'Commerce',
+      metadataType: metadataTypes[1],
+    },
+    {
+      id: 10,
+      name: 'Accounts',
+      metadataType: metadataTypes[1],
+    },
+    {
+      id: 11,
+      name: 'ComputerScience',
+      metadataType: metadataTypes[1],
+    },
   ],
 };
 
