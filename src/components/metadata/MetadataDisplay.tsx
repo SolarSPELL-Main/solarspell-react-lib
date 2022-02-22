@@ -54,17 +54,17 @@ function MetadataDisplay<
                       id: metadataType.id,
                       pageSize: params.pageSize,
                       page: params.page,
-                      rowCount: params.total,
+                      //rowCount: params.total,
               })),
               onPageChange: (params: any) => 
                   props.paginationProps?.dispatch(props.paginationProps.update({
                       id: metadataType.id,
                       page: params.page,
-                      rowCount: params.total,
+                      //rowCount: params.total,
               })),
               pageSize: props.paginationProps?.pageSize(metadataType.id),
               page: props.paginationProps?.page(metadataType.id),
-              rowCount: props.paginationProps?.rowCount(metadataType.id),
+              //rowCount: props.paginationProps?.rowCount(metadataType.id),
           }}
           />
         );
