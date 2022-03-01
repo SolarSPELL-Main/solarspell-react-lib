@@ -19,6 +19,7 @@ declare type PaginationProps = {
     update: (action: any) => void;
     dispatch: (...args: any[]) => void;
     rowCount: (id: number) => Number;
+    paginationMode: (id: String) => String;
 };
 /**
  * This component creates multiple tabs containg tables for each metadata type.
