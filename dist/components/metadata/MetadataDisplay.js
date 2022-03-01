@@ -32,6 +32,7 @@ function MetadataDisplay(props) {
                             rowCount: params.total,
                         }));
                     },
+                    paginationMode: 'server',
                     pageSize: (_a = props.paginationProps) === null || _a === void 0 ? void 0 : _a.pageSize(metadataType.id),
                     page: (_b = props.paginationProps) === null || _b === void 0 ? void 0 : _b.page(metadataType.id),
                     rowCount: (_c = props.paginationProps) === null || _c === void 0 ? void 0 : _c.rowCount(metadataType.id),

@@ -25,7 +25,7 @@ type PaginationProps = {
   update: (action: any) => void
   dispatch: (...args: any[]) => void
   rowCount:(id:number) => Number
-  paginationMode:(id:String) => String
+  paginationMode: string
 }
 
 /**
@@ -66,6 +66,7 @@ function MetadataDisplay<
                       page: params.page,
                       rowCount: params.total,
               })),
+              paginationMode: 'server',
               pageSize: props.paginationProps?.pageSize(metadataType.id),
               page: props.paginationProps?.page(metadataType.id),
               rowCount: props.paginationProps?.rowCount(metadataType.id),
